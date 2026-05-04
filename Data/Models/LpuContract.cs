@@ -17,7 +17,5 @@ public partial class LpuContract
 
     public virtual Lpu Lpu { get; set; } = null!;
 
-    public virtual ICollection<Pattern> Patterns { get; set; } = new List<Pattern>();
-
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 }

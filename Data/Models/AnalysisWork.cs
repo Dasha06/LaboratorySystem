@@ -11,7 +11,11 @@ public partial class AnalysisWork
 
     public long? AnalysisId { get; set; }
 
+    public int MaterialId { get; set; }
+
     public virtual Analysise? Analysis { get; set; }
+
+    public virtual Material Material { get; set; } = null!;
 
     public virtual ICollection<QualitativeStandart> QualitativeStandarts { get; set; } = new List<QualitativeStandart>();
 

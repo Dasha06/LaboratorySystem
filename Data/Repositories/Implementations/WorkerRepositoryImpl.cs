@@ -27,34 +27,16 @@ public class WorkerRepositoryImpl : IWorkerRepository
         return _context.Workers.First(x => x.WorkerLogin == login && x.WorkerPassword == password);
     }
 
-    public bool CreateWorker(string name, string login, string password, List<Role> roles)
+    public bool CreateWorker(Worker worker)
     {
-        var newWorker = new Worker
-        {
-            WorkerFio = name,
-            WorkerLogin = login,
-            WorkerPassword = password,
-            Roles = roles
-        };
-        _context.Workers.Add(newWorker);
+        _context.Workers.Add(worker);
         _context.SaveChanges();
         return true;
     }
 
-    public bool CreateWorkers(List<(string name, string login, string password, List<Role> roles)> workersInfo)
+    public bool CreateWorkers(List<Worker> workersInfo)
     {
-        foreach (var workerInfo in workersInfo)
-        {
-            var newWorker = new Worker
-            {
-                WorkerFio = workerInfo.name,
-                WorkerLogin = workerInfo.login,
-                WorkerPassword = workerInfo.password,
-                Roles = workerInfo.roles
-            };
-            _context.Workers.Add(newWorker);
-        }
-
+        _context.Workers.AddRange(workersInfo);
         _context.SaveChanges();
         return true;
     }

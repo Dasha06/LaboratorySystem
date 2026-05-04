@@ -11,17 +11,15 @@ public partial class Analysise
 
     public int? AnalysisDepId { get; set; }
 
-    public int? MaterialId { get; set; }
-
     public string AnalysisCodeName { get; set; } = null!;
 
     public virtual AnalysisDepartment? AnalysisDep { get; set; }
 
     public virtual ICollection<AnalysisWork> AnalysisWorks { get; set; } = new List<AnalysisWork>();
 
+    public virtual ICollection<AnalysisesTemplate> AnalysisesTemplates { get; set; } = new List<AnalysisesTemplate>();
+
     public virtual ICollection<BarcodeAnalysise> BarcodeAnalysises { get; set; } = new List<BarcodeAnalysise>();
 
     public virtual ICollection<ContractAnalysise> ContractAnalysises { get; set; } = new List<ContractAnalysise>();
-
-    public virtual Material? Material { get; set; }
 }

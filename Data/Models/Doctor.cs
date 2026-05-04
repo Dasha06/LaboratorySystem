@@ -14,6 +14,4 @@ public partial class Doctor
     public virtual Lpu? Lpu { get; set; }
 
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
-
-    public virtual ICollection<Pattern> Patterns { get; set; } = new List<Pattern>();
 }

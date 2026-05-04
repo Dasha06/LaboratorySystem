@@ -21,6 +21,8 @@ public partial class SystemdatabaseContext : DbContext
 
     public virtual DbSet<Analysise> Analysises { get; set; }
 
+    public virtual DbSet<AnalysisesTemplate> AnalysisesTemplates { get; set; }
+
     public virtual DbSet<BarcodeAnalysise> BarcodeAnalysises { get; set; }
 
     public virtual DbSet<BarcodeMaterial> BarcodeMaterials { get; set; }
@@ -46,10 +48,6 @@ public partial class SystemdatabaseContext : DbContext
     public virtual DbSet<Patient> Patients { get; set; }
 
     public virtual DbSet<PatientChange> PatientChanges { get; set; }
-
-    public virtual DbSet<Pattern> Patterns { get; set; }
-
-    public virtual DbSet<PatternAnalysise> PatternAnalysises { get; set; }
 
     public virtual DbSet<QualitativeStandart> QualitativeStandarts { get; set; }
 
@@ -96,10 +94,16 @@ public partial class SystemdatabaseContext : DbContext
                 .HasColumnName("analysis_work_id");
             entity.Property(e => e.AnalysisId).HasColumnName("analysis_id");
             entity.Property(e => e.AnalysisWorkName).HasColumnName("analysis_work_name");
+            entity.Property(e => e.MaterialId).HasColumnName("material_id");
 
             entity.HasOne(d => d.Analysis).WithMany(p => p.AnalysisWorks)
                 .HasForeignKey(d => d.AnalysisId)
                 .HasConstraintName("analysis_works_analysis_id_fkey");
+
+            entity.HasOne(d => d.Material).WithMany(p => p.AnalysisWorks)
+                .HasForeignKey(d => d.MaterialId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("analysis_works_material_id_fkey");
         });
 
         modelBuilder.Entity<Analysise>(entity =>
@@ -114,15 +118,26 @@ public partial class SystemdatabaseContext : DbContext
             entity.Property(e => e.AnalysisCodeName).HasColumnName("analysis_code_name");
             entity.Property(e => e.AnalysisDepId).HasColumnName("analysis_dep_id");
             entity.Property(e => e.AnalysisName).HasColumnName("analysis_name");
-            entity.Property(e => e.MaterialId).HasColumnName("material_id");
 
             entity.HasOne(d => d.AnalysisDep).WithMany(p => p.Analysises)
                 .HasForeignKey(d => d.AnalysisDepId)
                 .HasConstraintName("analysises_dep_id_fkey");
+        });
 
-            entity.HasOne(d => d.Material).WithMany(p => p.Analysises)
-                .HasForeignKey(d => d.MaterialId)
-                .HasConstraintName("analysises_material_id_fkey");
+        modelBuilder.Entity<AnalysisesTemplate>(entity =>
+        {
+            entity.HasKey(e => new { e.AnalysisTempId, e.AnalysisId }).HasName("analysises_temp_id_pkey");
+
+            entity.ToTable("analysises_templates", "Lab");
+
+            entity.Property(e => e.AnalysisTempId).HasColumnName("analysis_temp_id");
+            entity.Property(e => e.AnalysisId).HasColumnName("analysis_id");
+            entity.Property(e => e.AnalysisTempName).HasColumnName("analysis_temp_name");
+
+            entity.HasOne(d => d.Analysis).WithMany(p => p.AnalysisesTemplates)
+                .HasForeignKey(d => d.AnalysisId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("analysises_templates_analysis_id_fkey");
         });
 
         modelBuilder.Entity<BarcodeAnalysise>(entity =>
@@ -411,51 +426,6 @@ public partial class SystemdatabaseContext : DbContext
                 .HasForeignKey(d => d.WorkerId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("patient_changes_worker_id_fkey");
-        });
-
-        modelBuilder.Entity<Pattern>(entity =>
-        {
-            entity.HasKey(e => e.PatternId).HasName("patterns_pkey");
-
-            entity.ToTable("patterns", "Lab");
-
-            entity.Property(e => e.PatternId)
-                .HasDefaultValueSql("nextval('\"Lab\".patterns_pattern_id_seq1'::regclass)")
-                .HasColumnName("pattern_id");
-            entity.Property(e => e.ConLpuId).HasColumnName("con_lpu_id");
-            entity.Property(e => e.DocId).HasColumnName("doc_id");
-            entity.Property(e => e.PatternName).HasColumnName("pattern_name");
-            entity.Property(e => e.PatternShortcut).HasColumnName("pattern_shortcut");
-
-            entity.HasOne(d => d.ConLpu).WithMany(p => p.Patterns)
-                .HasForeignKey(d => d.ConLpuId)
-                .HasConstraintName("patterns_con_lpu_id_fkey");
-
-            entity.HasOne(d => d.Doc).WithMany(p => p.Patterns)
-                .HasForeignKey(d => d.DocId)
-                .HasConstraintName("patterns_doc_id_fkey");
-        });
-
-        modelBuilder.Entity<PatternAnalysise>(entity =>
-        {
-            entity.HasKey(e => new { e.PatternId, e.MaterialNumber, e.AnalysisId }).HasName("pattern_material_analysis_pk_key");
-
-            entity.ToTable("pattern_analysises", "Lab");
-
-            entity.Property(e => e.PatternId).HasColumnName("pattern_id");
-            entity.Property(e => e.MaterialNumber).HasColumnName("material_number");
-            entity.Property(e => e.AnalysisId).HasColumnName("analysis_id");
-            entity.Property(e => e.MaterialId).HasColumnName("material_id");
-            entity.Property(e => e.PatAnalysisIsActive).HasColumnName("pat_analysis_is_active");
-
-            entity.HasOne(d => d.Material).WithMany(p => p.PatternAnalysises)
-                .HasForeignKey(d => d.MaterialId)
-                .HasConstraintName("pattern_analysises_material_id_fkey");
-
-            entity.HasOne(d => d.Pattern).WithMany(p => p.PatternAnalysises)
-                .HasForeignKey(d => d.PatternId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("pattern_analysises_pattern_id_fkey");
         });
 
         modelBuilder.Entity<QualitativeStandart>(entity =>
