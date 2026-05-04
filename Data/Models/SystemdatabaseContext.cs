@@ -65,10 +65,6 @@ public partial class SystemdatabaseContext : DbContext
 
     public virtual DbSet<Worker> Workers { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Host=176.123.161.45;Port=5432;Database=systemdatabase;Username=labsyastemdb;Password=DatabaseSystem");
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<AnalysisDepartment>(entity =>
