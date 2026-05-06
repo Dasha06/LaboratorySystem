@@ -17,6 +17,8 @@ public partial class BarcodeMaterial
 
     public virtual ICollection<BarcodeAnalysise> BarcodeAnalysises { get; set; } = new List<BarcodeAnalysise>();
 
+    public virtual ICollection<BarcodeComplex> BarcodeComplexes { get; set; } = new List<BarcodeComplex>();
+
     public virtual Material? Material { get; set; }
 
     public virtual Order? Order { get; set; }

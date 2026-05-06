@@ -9,7 +9,7 @@ public partial class QualitativeStandart
 
     public int RefGroupId { get; set; }
 
-    public int AnalysisWorkId { get; set; }
+    public long AnalysisWorkId { get; set; }
 
     public string QualityStandartCondition { get; set; } = null!;
 

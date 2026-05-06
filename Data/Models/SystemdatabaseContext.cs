@@ -15,6 +15,8 @@ public partial class SystemdatabaseContext : DbContext
     {
     }
 
+    public virtual DbSet<AnalysisComplex> AnalysisComplexes { get; set; }
+
     public virtual DbSet<AnalysisDepartment> AnalysisDepartments { get; set; }
 
     public virtual DbSet<AnalysisWork> AnalysisWorks { get; set; }
@@ -25,11 +27,15 @@ public partial class SystemdatabaseContext : DbContext
 
     public virtual DbSet<BarcodeAnalysise> BarcodeAnalysises { get; set; }
 
+    public virtual DbSet<BarcodeComplex> BarcodeComplexes { get; set; }
+
     public virtual DbSet<BarcodeMaterial> BarcodeMaterials { get; set; }
 
     public virtual DbSet<Contract> Contracts { get; set; }
 
     public virtual DbSet<ContractAnalysise> ContractAnalysises { get; set; }
+
+    public virtual DbSet<ContractComplex> ContractComplexes { get; set; }
 
     public virtual DbSet<Doctor> Doctors { get; set; }
 
@@ -67,6 +73,41 @@ public partial class SystemdatabaseContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<AnalysisComplex>(entity =>
+        {
+            entity.HasKey(e => e.ComplexId).HasName("analysis_complexes_pkey");
+
+            entity.ToTable("analysis_complexes", "Lab");
+
+            entity.Property(e => e.ComplexId).HasColumnName("complex_id");
+            entity.Property(e => e.AnalysisDepId).HasColumnName("analysis_dep_id");
+            entity.Property(e => e.ComplexCodeName).HasColumnName("complex_code_name");
+            entity.Property(e => e.ComplexDescription).HasColumnName("complex_description");
+            entity.Property(e => e.ComplexName).HasColumnName("complex_name");
+
+            entity.HasOne(d => d.AnalysisDep).WithMany(p => p.AnalysisComplexes)
+                .HasForeignKey(d => d.AnalysisDepId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("analysis_complexes_dep_id_fkey");
+
+            entity.HasMany(d => d.Analyses).WithMany(p => p.Complexes)
+                .UsingEntity<Dictionary<string, object>>(
+                    "ComplexAnalysise",
+                    r => r.HasOne<Analysise>().WithMany()
+                        .HasForeignKey("AnalysisId")
+                        .HasConstraintName("complex_analysises_analysis_id_fkey"),
+                    l => l.HasOne<AnalysisComplex>().WithMany()
+                        .HasForeignKey("ComplexId")
+                        .HasConstraintName("complex_analysises_complex_id_fkey"),
+                    j =>
+                    {
+                        j.HasKey("ComplexId", "AnalysisId").HasName("complex_analysises_pkey");
+                        j.ToTable("complex_analysises", "Lab");
+                        j.IndexerProperty<int>("ComplexId").HasColumnName("complex_id");
+                        j.IndexerProperty<long>("AnalysisId").HasColumnName("analysis_id");
+                    });
+        });
+
         modelBuilder.Entity<AnalysisDepartment>(entity =>
         {
             entity.HasKey(e => e.AnalysisDepId).HasName("departments_pkey");
@@ -98,7 +139,6 @@ public partial class SystemdatabaseContext : DbContext
 
             entity.HasOne(d => d.Material).WithMany(p => p.AnalysisWorks)
                 .HasForeignKey(d => d.MaterialId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("analysis_works_material_id_fkey");
         });
 
@@ -117,6 +157,7 @@ public partial class SystemdatabaseContext : DbContext
 
             entity.HasOne(d => d.AnalysisDep).WithMany(p => p.Analysises)
                 .HasForeignKey(d => d.AnalysisDepId)
+                .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("analysises_dep_id_fkey");
         });
 
@@ -132,7 +173,6 @@ public partial class SystemdatabaseContext : DbContext
 
             entity.HasOne(d => d.Analysis).WithMany(p => p.AnalysisesTemplates)
                 .HasForeignKey(d => d.AnalysisId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("analysises_templates_analysis_id_fkey");
         });
 
@@ -153,13 +193,34 @@ public partial class SystemdatabaseContext : DbContext
 
             entity.HasOne(d => d.Analysis).WithMany(p => p.BarcodeAnalysises)
                 .HasForeignKey(d => d.AnalysisId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("barcode_analysises_analysis_id_fkey");
 
             entity.HasOne(d => d.BarcodeMaterial).WithMany(p => p.BarcodeAnalysises)
                 .HasForeignKey(d => new { d.BarcodeId, d.AnalysisDepId })
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_barcode_analysises_barcode_id");
+        });
+
+        modelBuilder.Entity<BarcodeComplex>(entity =>
+        {
+            entity.HasKey(e => new { e.BarcodeMatId, e.ComplexId }).HasName("barcode_complexes_pkey");
+
+            entity.ToTable("barcode_complexes", "Lab");
+
+            entity.Property(e => e.BarcodeMatId)
+                .HasPrecision(11)
+                .HasColumnName("barcode_mat_id");
+            entity.Property(e => e.ComplexId).HasColumnName("complex_id");
+            entity.Property(e => e.AnalysisDepId).HasColumnName("analysis_dep_id");
+
+            entity.HasOne(d => d.Complex).WithMany(p => p.BarcodeComplexes)
+                .HasForeignKey(d => d.ComplexId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("barcode_complexes_complex_id_fkey");
+
+            entity.HasOne(d => d.BarcodeMaterial).WithMany(p => p.BarcodeComplexes)
+                .HasForeignKey(d => new { d.BarcodeMatId, d.AnalysisDepId })
+                .HasConstraintName("barcode_complexes_barcode_mat_id_fkey");
         });
 
         modelBuilder.Entity<BarcodeMaterial>(entity =>
@@ -177,15 +238,17 @@ public partial class SystemdatabaseContext : DbContext
 
             entity.HasOne(d => d.AnalysisDep).WithMany(p => p.BarcodeMaterials)
                 .HasForeignKey(d => d.AnalysisDepId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("barcode_materials_analysis_dep_id_fkey");
 
             entity.HasOne(d => d.Material).WithMany(p => p.BarcodeMaterials)
                 .HasForeignKey(d => d.MaterialId)
+                .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("barcode_materials_material_id_fkey");
 
             entity.HasOne(d => d.Order).WithMany(p => p.BarcodeMaterials)
                 .HasForeignKey(d => d.OrderId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("barcode_materials_order_id_fkey");
         });
 
@@ -215,13 +278,32 @@ public partial class SystemdatabaseContext : DbContext
 
             entity.HasOne(d => d.Analysis).WithMany(p => p.ContractAnalysises)
                 .HasForeignKey(d => d.AnalysisId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("contract_analysises_analysis_id_fkey");
 
             entity.HasOne(d => d.Contract).WithMany(p => p.ContractAnalysises)
                 .HasForeignKey(d => d.ContractId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("contract_analysises_contract_id_fkey");
+        });
+
+        modelBuilder.Entity<ContractComplex>(entity =>
+        {
+            entity.HasKey(e => new { e.ContractId, e.ComplexId }).HasName("contract_complexes_pkey");
+
+            entity.ToTable("contract_complexes", "Lab");
+
+            entity.Property(e => e.ContractId).HasColumnName("contract_id");
+            entity.Property(e => e.ComplexId).HasColumnName("complex_id");
+            entity.Property(e => e.ContractComplexCost).HasColumnName("contract_complex_cost");
+
+            entity.HasOne(d => d.Complex).WithMany(p => p.ContractComplexes)
+                .HasForeignKey(d => d.ComplexId)
+                .HasConstraintName("contract_complexes_complex_id_fkey");
+
+            entity.HasOne(d => d.Contract).WithMany(p => p.ContractComplexes)
+                .HasForeignKey(d => d.ContractId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("contract_complexes_contract_id_fkey");
         });
 
         modelBuilder.Entity<Doctor>(entity =>
@@ -238,6 +320,7 @@ public partial class SystemdatabaseContext : DbContext
 
             entity.HasOne(d => d.Lpu).WithMany(p => p.Doctors)
                 .HasForeignKey(d => d.LpuId)
+                .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("doctors_lpu_id_fkey");
         });
 
@@ -269,12 +352,12 @@ public partial class SystemdatabaseContext : DbContext
 
             entity.HasOne(d => d.Contract).WithMany(p => p.LpuContracts)
                 .HasForeignKey(d => d.ContractId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("lpu_contracts_contract_id_fkey");
 
             entity.HasOne(d => d.Lpu).WithMany(p => p.LpuContracts)
                 .HasForeignKey(d => d.LpuId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("lpu_contracts_lpu_id_fkey");
         });
 
@@ -320,16 +403,17 @@ public partial class SystemdatabaseContext : DbContext
 
             entity.HasOne(d => d.Doc).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.DocId)
+                .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("orders_doc_id_fkey");
 
             entity.HasOne(d => d.Lpu).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.LpuId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("orders_lpu_id_fkey");
 
             entity.HasOne(d => d.Patient).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.PatientId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("orders_patient_id_fkey");
 
             entity.HasMany(d => d.ConLpus).WithMany(p => p.Orders)
@@ -337,11 +421,10 @@ public partial class SystemdatabaseContext : DbContext
                     "OrderContract",
                     r => r.HasOne<LpuContract>().WithMany()
                         .HasForeignKey("ConLpuId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("order_contracts_con_lpu_id_fkey"),
                     l => l.HasOne<Order>().WithMany()
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
                         .HasConstraintName("order_contracts_order_id_fkey"),
                     j =>
                     {
@@ -367,17 +450,14 @@ public partial class SystemdatabaseContext : DbContext
 
             entity.HasOne(d => d.Order).WithMany(p => p.OrderChanges)
                 .HasForeignKey(d => d.OrderId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("order_changes_order_id_fkey");
 
             entity.HasOne(d => d.Type).WithMany(p => p.OrderChanges)
                 .HasForeignKey(d => d.TypeId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("order_changes_type_id_fkey");
 
             entity.HasOne(d => d.Worker).WithMany(p => p.OrderChanges)
                 .HasForeignKey(d => d.WorkerId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("order_changes_worker_id_fkey");
         });
 
@@ -413,17 +493,15 @@ public partial class SystemdatabaseContext : DbContext
 
             entity.HasOne(d => d.Patient).WithMany(p => p.PatientChanges)
                 .HasForeignKey(d => d.PatientId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("patient_changes_patient_id_fkey");
 
             entity.HasOne(d => d.Type).WithMany(p => p.PatientChanges)
                 .HasForeignKey(d => d.TypeId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("patient_changes_type_id_fkey");
 
             entity.HasOne(d => d.Worker).WithMany(p => p.PatientChanges)
                 .HasForeignKey(d => d.WorkerId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("patient_changes_worker_id_fkey");
         });
 
@@ -444,12 +522,10 @@ public partial class SystemdatabaseContext : DbContext
 
             entity.HasOne(d => d.AnalysisWork).WithMany(p => p.QualitativeStandarts)
                 .HasForeignKey(d => d.AnalysisWorkId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("qualitative_standarts_analysis_work_id_fkey");
 
             entity.HasOne(d => d.RefGroup).WithMany(p => p.QualitativeStandarts)
                 .HasForeignKey(d => d.RefGroupId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("qualitative_standarts_ref_group_id_fkey");
         });
 
@@ -475,17 +551,14 @@ public partial class SystemdatabaseContext : DbContext
 
             entity.HasOne(d => d.AnalysisWork).WithMany(p => p.QuantitativeStandarts)
                 .HasForeignKey(d => d.AnalysisWorkId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("quantitative_standarts_analysis_work_id_fkey");
 
             entity.HasOne(d => d.Measurements).WithMany(p => p.QuantitativeStandarts)
                 .HasForeignKey(d => d.MeasurementsId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("quantitative_standarts_measurements_id_fkey");
 
             entity.HasOne(d => d.RefGroup).WithMany(p => p.QuantitativeStandarts)
                 .HasForeignKey(d => d.RefGroupId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("quantitative_standarts_ref_group_id_fkey");
         });
 
@@ -547,12 +620,10 @@ public partial class SystemdatabaseContext : DbContext
 
             entity.HasOne(d => d.Tripod).WithMany(p => p.TripodBarcodeMaterials)
                 .HasForeignKey(d => d.TripodId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("tripod_barcode_materials_tripod_id_fkey");
 
             entity.HasOne(d => d.BarcodeMaterial).WithMany(p => p.TripodBarcodeMaterials)
                 .HasForeignKey(d => new { d.BarcodeMatId, d.AnalysisDepId })
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_tripod_barcode_materials_barcode_mat_id");
         });
 
@@ -586,11 +657,9 @@ public partial class SystemdatabaseContext : DbContext
                     "WorkerRole",
                     r => r.HasOne<Role>().WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
                         .HasConstraintName("worker_role_role_id_fkey"),
                     l => l.HasOne<Worker>().WithMany()
                         .HasForeignKey("WorkerId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
                         .HasConstraintName("worker_role_worker_id_fkey"),
                     j =>
                     {

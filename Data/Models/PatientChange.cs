@@ -11,11 +11,11 @@ public partial class PatientChange
 
     public DateTime PatientChangeTime { get; set; }
 
-    public int TypeId { get; set; }
+    public int? TypeId { get; set; }
 
     public virtual Patient Patient { get; set; } = null!;
 
-    public virtual TypeChange Type { get; set; } = null!;
+    public virtual TypeChange? Type { get; set; }
 
     public virtual Worker Worker { get; set; } = null!;
 }

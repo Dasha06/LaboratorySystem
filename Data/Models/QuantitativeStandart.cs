@@ -7,7 +7,7 @@ public partial class QuantitativeStandart
 {
     public int QuantStandartId { get; set; }
 
-    public int AnalysisWorkId { get; set; }
+    public long AnalysisWorkId { get; set; }
 
     public int RefGroupId { get; set; }
 

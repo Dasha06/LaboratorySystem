@@ -22,4 +22,6 @@ public partial class Analysise
     public virtual ICollection<BarcodeAnalysise> BarcodeAnalysises { get; set; } = new List<BarcodeAnalysise>();
 
     public virtual ICollection<ContractAnalysise> ContractAnalysises { get; set; } = new List<ContractAnalysise>();
+
+    public virtual ICollection<AnalysisComplex> Complexes { get; set; } = new List<AnalysisComplex>();
 }
