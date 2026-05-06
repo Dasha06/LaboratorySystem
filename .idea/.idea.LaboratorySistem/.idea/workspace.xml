@@ -17,9 +17,17 @@
   <component name="ChangeListManager">
     <list default="true" id="f8863308-d313-4b1c-bf9f-2527ba4c7f42" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.LaboratorySistem/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.LaboratorySistem/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Data.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Data.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Models/Contract.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Models/Contract.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Models/Order.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Models/Order.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data/Models/SystemdatabaseContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Models/SystemdatabaseContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LaboratorySistem.sln" beforeDir="false" afterPath="$PROJECT_DIR$/LaboratorySistem.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysisDepartmentRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysisDepartmentRepositoryImpl.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysisWorkRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysisWorkRepositoryImpl.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysiseRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysiseRepositoryImpl.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysisesTemplateRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysisesTemplateRepositoryImpl.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/BarcodeAnalysiseRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/BarcodeAnalysiseRepositoryImpl.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/IAnalysisDepartmentRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/IAnalysisDepartmentRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/IAnalysiseRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/IAnalysiseRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/IAnalysisesTemplateRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/IAnalysisesTemplateRepository.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,6 +174,8 @@
       <workItem from="1777894633700" duration="623000" />
       <workItem from="1777895291980" duration="96000" />
       <workItem from="1777895414917" duration="69000" />
+      <workItem from="1777895519523" duration="1843000" />
+      <workItem from="1777911962357" duration="9219000" />
     </task>
     <task id="LOCAL-00001" summary="init worker">
       <option name="closed" value="true" />
@@ -183,7 +193,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777892636711</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="created webapi, need to create everything needed for it to work">
+      <option name="closed" value="true" />
+      <created>1777895763029</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1777895763030</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -195,7 +213,8 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="init worker" />
     <MESSAGE value="change in db" />
-    <option name="LAST_COMMIT_MESSAGE" value="change in db" />
+    <MESSAGE value="created webapi, need to create everything needed for it to work" />
+    <option name="LAST_COMMIT_MESSAGE" value="created webapi, need to create everything needed for it to work" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

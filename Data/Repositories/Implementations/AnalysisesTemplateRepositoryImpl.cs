@@ -21,6 +21,18 @@ public class AnalysisesTemplateRepositoryImpl : IAnalysisesTemplateRepository
         return _context.AnalysisesTemplates.First(x => x.AnalysisTempId == analysisTempId && x.AnalysisId == analysisId);
     }
 
+    public List<Analysise> GetAnalysesFromTemplate(int analysisTempId)
+    {
+        var result = _context.AnalysisesTemplates.Where(x => x.AnalysisTempId == analysisTempId)
+            .Select(x => x.Analysis).ToList();
+        return result;
+    }
+
+    // TODO: public bool UpdateAnalysisTemplate(AnalysisesTemplate analysisesTemplate)
+    // {
+    //     
+    // }
+
     public bool CreateAnalysisesTemplate(AnalysisesTemplate analysisesTemplate)
     {
         _context.AnalysisesTemplates.Add(analysisesTemplate);

@@ -11,17 +11,19 @@ public partial class Order
 
     public string? OrderLpuDepartment { get; set; }
 
-    public string? OrderStatus { get; set; }
+    public string OrderStatus { get; set; } = null!;
 
     public long PatientId { get; set; }
 
-    public long? LpuId { get; set; }
+    public long LpuId { get; set; }
+
+    public bool OrderIsCountingInContract { get; set; }
 
     public virtual ICollection<BarcodeMaterial> BarcodeMaterials { get; set; } = new List<BarcodeMaterial>();
 
     public virtual Doctor? Doc { get; set; }
 
-    public virtual Lpu? Lpu { get; set; }
+    public virtual Lpu Lpu { get; set; } = null!;
 
     public virtual ICollection<OrderChange> OrderChanges { get; set; } = new List<OrderChange>();
 

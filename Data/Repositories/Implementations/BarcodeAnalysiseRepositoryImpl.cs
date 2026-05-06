@@ -15,7 +15,7 @@ public class BarcodeAnalysiseRepositoryImpl : IBarcodeAnalysiseRepository
     {
         return _context.BarcodeAnalysises.ToList();
     }
-
+//maybe? TODO: need to create another one but with only barcode for getting every analysis, add result
     public BarcodeAnalysise GetBarcodeAnalysiseByBarcodeIdAndAnalysisId(decimal barcodeId, long analysisId)
     {
         return _context.BarcodeAnalysises.First(x => x.BarcodeId == barcodeId && x.AnalysisId == analysisId);

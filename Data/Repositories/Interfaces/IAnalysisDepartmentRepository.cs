@@ -8,6 +8,5 @@ public interface IAnalysisDepartmentRepository
     AnalysisDepartment GetAnalysisDepartmentByAnalysisDepId(int analysisDepId);
     bool CreateAnalysisDepartment(AnalysisDepartment analysisDepartment);
     bool DeleteAnalysisDepartment(int analysisDepId);
-    bool CreateAnalysisDepartments(List<AnalysisDepartment> analysisDepartments);
 
 }

@@ -27,14 +27,7 @@ public class AnalysisDepartmentRepositoryImpl : IAnalysisDepartmentRepository
         _context.SaveChanges();
         return true;
     }
-    // get dep by analysis?
-
-    public bool CreateAnalysisDepartments(List<AnalysisDepartment> analysisDepartments)
-    {
-        _context.AnalysisDepartments.AddRange(analysisDepartments);
-        _context.SaveChanges();
-        return true;
-    }
+    //TODO: get dep by analysis? mb do it in analyses?
 
     public bool DeleteAnalysisDepartment(int analysisDepId)
     {

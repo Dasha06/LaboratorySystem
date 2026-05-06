@@ -11,33 +11,45 @@ public class AnalysiseRepositoryImpl : IAnalysiseRepository
         _context = remoteDatabaseContext;
     }
 
-    public List<Analysise> GetAllAnalysises()
+    public List<Analysise> GetAllAnalyses()
     {
         return _context.Analysises.ToList();
     }
 
-    public Analysise GetAnalysiseByAnalysisId(long analysisId)
+    public Array GetAnalysesByDepartments()
+    {
+        var analysises = _context.Analysises.GroupBy(x => x.AnalysisDep.AnalysisDepName).ToArray();
+        return analysises;
+    }
+    
+    public Analysise GetAnalysisByAnalysisId(long analysisId)
     {
         return _context.Analysises.First(x => x.AnalysisId == analysisId);
     }
 
-    public bool CreateAnalysise(Analysise analysise)
+    public bool CreateAnalysis(Analysise analysis)
     {
-        _context.Analysises.Add(analysise);
+        _context.Analysises.Add(analysis);
         _context.SaveChanges();
         return true;
     }
 
-    public bool CreateAnalysises(List<Analysise> analysises)
+    public bool UpdateAnalysis(Analysise analysis)
     {
-        _context.Analysises.AddRange(analysises);
+        _context.Analysises.Update(analysis);
+        _context.SaveChanges();
+        return true;
+    }
+    //is it needed to be in departments?
+    public bool UpdateDepartmentOfAnalysis(Analysise analysise, AnalysisDepartment analysisDepartment)
+    {
+        analysise.AnalysisDepId = analysisDepartment.AnalysisDepId;
+        _context.Analysises.Update(analysise);
         _context.SaveChanges();
         return true;
     }
     
-    
-
-    public bool DeleteAnalysise(long analysisId)
+    public bool DeleteAnalysis(long analysisId)
     {
         var analysise = _context.Analysises.First(x => x.AnalysisId == analysisId);
         _context.Analysises.Remove(analysise);

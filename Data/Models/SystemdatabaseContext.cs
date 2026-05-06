@@ -200,6 +200,7 @@ public partial class SystemdatabaseContext : DbContext
                 .HasColumnName("contract_id");
             entity.Property(e => e.ContractMoney).HasColumnName("contract_money");
             entity.Property(e => e.ContractName).HasColumnName("contract_name");
+            entity.Property(e => e.ContractRemainsMoney).HasColumnName("contract_remains_money");
         });
 
         modelBuilder.Entity<ContractAnalysise>(entity =>
@@ -312,6 +313,7 @@ public partial class SystemdatabaseContext : DbContext
                 .HasColumnName("order_id");
             entity.Property(e => e.DocId).HasColumnName("doc_id");
             entity.Property(e => e.LpuId).HasColumnName("lpu_id");
+            entity.Property(e => e.OrderIsCountingInContract).HasColumnName("order_is_counting_in_contract");
             entity.Property(e => e.OrderLpuDepartment).HasColumnName("order_lpu_department");
             entity.Property(e => e.OrderStatus).HasColumnName("order_status");
             entity.Property(e => e.PatientId).HasColumnName("patient_id");
@@ -322,6 +324,7 @@ public partial class SystemdatabaseContext : DbContext
 
             entity.HasOne(d => d.Lpu).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.LpuId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("orders_lpu_id_fkey");
 
             entity.HasOne(d => d.Patient).WithMany(p => p.Orders)

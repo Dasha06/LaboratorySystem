@@ -21,6 +21,11 @@ public class AnalysisWorkRepositoryImpl : IAnalysisWorkRepository
         return _context.AnalysisWorks.First(x => x.AnalysisWorkId == analysisWorkId);
     }
 
+    public List<AnalysisWork> GetAnalysisWorkByAnalysis(Analysise analysis)
+    {
+        return _context.AnalysisWorks.Where(x => x.AnalysisId == analysis.AnalysisId).ToList();
+    }
+
     public bool CreateAnalysisWork(AnalysisWork analysisWork)
     {
         _context.AnalysisWorks.Add(analysisWork);

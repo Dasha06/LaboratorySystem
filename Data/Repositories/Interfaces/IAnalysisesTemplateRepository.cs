@@ -8,4 +8,5 @@ public interface IAnalysisesTemplateRepository
     AnalysisesTemplate GetAnalysisesTemplateByAnalysisTempIdAndAnalysisId(int analysisTempId, long analysisId);
     bool CreateAnalysisesTemplate(AnalysisesTemplate analysisesTemplate);
     bool DeleteAnalysisesTemplate(int analysisTempId, long analysisId);
+    List<Analysise> GetAnalysesFromTemplate(int analysisTempId);
 }
