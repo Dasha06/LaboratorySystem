@@ -7,5 +7,6 @@ public interface ITripodRepository
     List<Tripod> GetAllTripods();
     Tripod GetTripodByTripodId(long tripodId);
     bool CreateTripod(Tripod tripod);
+    bool UpdateTripod(Tripod tripod);
     bool DeleteTripod(long tripodId);
 }

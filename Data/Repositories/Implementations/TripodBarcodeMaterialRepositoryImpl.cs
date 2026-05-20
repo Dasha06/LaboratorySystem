@@ -29,6 +29,15 @@ public class TripodBarcodeMaterialRepositoryImpl : ITripodBarcodeMaterialReposit
         return true;
     }
 
+    public bool UpdateTripodBarcodeMaterial(TripodBarcodeMaterial tripodBarcodeMaterial)
+    {
+        var existing = _context.TripodBarcodeMaterials.First(x =>
+            x.TripodId == tripodBarcodeMaterial.TripodId && x.BarcodeMatId == tripodBarcodeMaterial.BarcodeMatId);
+        existing.AnalysisDepId = tripodBarcodeMaterial.AnalysisDepId;
+        _context.SaveChanges();
+        return true;
+    }
+
     public bool DeleteTripodBarcodeMaterial(long tripodId, decimal barcodeMatId)
     {
         var tripodBarcodeMaterial = _context.TripodBarcodeMaterials.First(x =>

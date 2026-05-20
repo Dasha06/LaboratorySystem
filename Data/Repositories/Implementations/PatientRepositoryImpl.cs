@@ -28,6 +28,19 @@ public class PatientRepositoryImpl : IPatientRepository
         return true;
     }
 
+    public bool UpdatePatient(Patient patient)
+    {
+        var existing = _context.Patients.First(x => x.PatientId == patient.PatientId);
+        existing.PatientFirstName = patient.PatientFirstName;
+        existing.PatientLastName = patient.PatientLastName;
+        existing.PatientSecondName = patient.PatientSecondName;
+        existing.PatientBirthday = patient.PatientBirthday;
+        existing.PatientGender = patient.PatientGender;
+        existing.PatientEmail = patient.PatientEmail;
+        _context.SaveChanges();
+        return true;
+    }
+
     public bool DeletePatient(long patientId)
     {
         var patient = _context.Patients.First(x => x.PatientId == patientId);

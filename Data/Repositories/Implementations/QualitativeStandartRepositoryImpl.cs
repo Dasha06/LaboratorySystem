@@ -16,7 +16,7 @@ public class QualitativeStandartRepositoryImpl : IQualitativeStandartRepository
         return _context.QualitativeStandarts.ToList();
     }
 
-    public QualitativeStandart GetQualitativeStandartByQualtityStandartId(int qualtityStandartId)
+    public QualitativeStandart GetQualitativeStandartByQualtityStandartId(long qualtityStandartId)
     {
         return _context.QualitativeStandarts.First(x => x.QualtityStandartId == qualtityStandartId);
     }
@@ -28,7 +28,25 @@ public class QualitativeStandartRepositoryImpl : IQualitativeStandartRepository
         return true;
     }
 
-    public bool DeleteQualitativeStandart(int qualtityStandartId)
+    public bool UpdateQualitativeStandart(QualitativeStandart qualitativeStandart)
+    {
+        var existing = _context.QualitativeStandarts.First(x =>
+            x.QualtityStandartId == qualitativeStandart.QualtityStandartId);
+        existing.AnalysisWorkId = qualitativeStandart.AnalysisWorkId;
+        existing.RefGroupId = qualitativeStandart.RefGroupId;
+        _context.SaveChanges();
+        return true;
+    }
+
+    public bool UpdateQualitativeStandartRefGroup(long qualtityStandartId, int refGroupId)
+    {
+        var existing = _context.QualitativeStandarts.First(x => x.QualtityStandartId == qualtityStandartId);
+        existing.RefGroupId = refGroupId;
+        _context.SaveChanges();
+        return true;
+    }
+
+    public bool DeleteQualitativeStandart(long qualtityStandartId)
     {
         var qualitativeStandart = _context.QualitativeStandarts.First(x => x.QualtityStandartId == qualtityStandartId);
         _context.QualitativeStandarts.Remove(qualitativeStandart);

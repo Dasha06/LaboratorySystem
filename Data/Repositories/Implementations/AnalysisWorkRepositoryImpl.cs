@@ -16,7 +16,7 @@ public class AnalysisWorkRepositoryImpl : IAnalysisWorkRepository
         return _context.AnalysisWorks.ToList();
     }
 
-    public AnalysisWork GetAnalysisWorkByAnalysisWorkId(int analysisWorkId)
+    public AnalysisWork GetAnalysisWorkByAnalysisWorkId(long analysisWorkId)
     {
         return _context.AnalysisWorks.First(x => x.AnalysisWorkId == analysisWorkId);
     }
@@ -33,7 +33,17 @@ public class AnalysisWorkRepositoryImpl : IAnalysisWorkRepository
         return true;
     }
 
-    public bool DeleteAnalysisWork(int analysisWorkId)
+    public bool UpdateAnalysisWork(AnalysisWork analysisWork)
+    {
+        var existing = _context.AnalysisWorks.First(x => x.AnalysisWorkId == analysisWork.AnalysisWorkId);
+        existing.AnalysisWorkName = analysisWork.AnalysisWorkName;
+        existing.MaterialId = analysisWork.MaterialId;
+        existing.AnalysisId = analysisWork.AnalysisId;
+        _context.SaveChanges();
+        return true;
+    }
+
+    public bool DeleteAnalysisWork(long analysisWorkId)
     {
         var analysisWork = _context.AnalysisWorks.First(x => x.AnalysisWorkId == analysisWorkId);
         _context.AnalysisWorks.Remove(analysisWork);

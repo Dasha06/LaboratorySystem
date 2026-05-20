@@ -7,5 +7,6 @@ public interface IReferentialGroupRepository
     List<ReferentialGroup> GetAllReferentialGroups();
     ReferentialGroup GetReferentialGroupByRefGroupId(int refGroupId);
     bool CreateReferentialGroup(ReferentialGroup referentialGroup);
+    bool UpdateReferentialGroup(ReferentialGroup referentialGroup);
     bool DeleteReferentialGroup(int refGroupId);
 }

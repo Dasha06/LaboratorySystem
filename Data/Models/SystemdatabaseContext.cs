@@ -6,14 +6,12 @@ namespace Data.Models;
 
 public partial class SystemdatabaseContext : DbContext
 {
-    public SystemdatabaseContext()
-    {
-    }
-
     public SystemdatabaseContext(DbContextOptions<SystemdatabaseContext> options)
         : base(options)
     {
     }
+
+    public virtual DbSet<AnalysesTemplate> AnalysesTemplates { get; set; }
 
     public virtual DbSet<AnalysisComplex> AnalysisComplexes { get; set; }
 
@@ -22,8 +20,6 @@ public partial class SystemdatabaseContext : DbContext
     public virtual DbSet<AnalysisWork> AnalysisWorks { get; set; }
 
     public virtual DbSet<Analysise> Analysises { get; set; }
-
-    public virtual DbSet<AnalysisesTemplate> AnalysisesTemplates { get; set; }
 
     public virtual DbSet<BarcodeAnalysise> BarcodeAnalysises { get; set; }
 
@@ -57,6 +53,8 @@ public partial class SystemdatabaseContext : DbContext
 
     public virtual DbSet<QualitativeStandart> QualitativeStandarts { get; set; }
 
+    public virtual DbSet<QualityParameter> QualityParameters { get; set; }
+
     public virtual DbSet<QuantitativeStandart> QuantitativeStandarts { get; set; }
 
     public virtual DbSet<ReferentialGroup> ReferentialGroups { get; set; }
@@ -73,6 +71,35 @@ public partial class SystemdatabaseContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<AnalysesTemplate>(entity =>
+        {
+            entity.HasKey(e => e.AnalysisTempId).HasName("analyses_templates_pkey");
+
+            entity.ToTable("analyses_templates", "Lab");
+
+            entity.Property(e => e.AnalysisTempId).HasColumnName("analysis_temp_id");
+            entity.Property(e => e.AnalysisTempName).HasColumnName("analysis_temp_name");
+
+            entity.HasMany(d => d.Analyses).WithMany(p => p.AnalysisTemps)
+                .UsingEntity<Dictionary<string, object>>(
+                    "AnalysesTemp",
+                    r => r.HasOne<Analysise>().WithMany()
+                        .HasForeignKey("AnalysisId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("analyses_temps_analysises_fk"),
+                    l => l.HasOne<AnalysesTemplate>().WithMany()
+                        .HasForeignKey("AnalysisTempId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("analyses_temps_analyses_templates_fk"),
+                    j =>
+                    {
+                        j.HasKey("AnalysisTempId", "AnalysisId").HasName("analysis_id_template_id_pkey");
+                        j.ToTable("analyses_temps", "Lab");
+                        j.IndexerProperty<int>("AnalysisTempId").HasColumnName("analysis_temp_id");
+                        j.IndexerProperty<long>("AnalysisId").HasColumnName("analysis_id");
+                    });
+        });
+
         modelBuilder.Entity<AnalysisComplex>(entity =>
         {
             entity.HasKey(e => e.ComplexId).HasName("analysis_complexes_pkey");
@@ -159,21 +186,6 @@ public partial class SystemdatabaseContext : DbContext
                 .HasForeignKey(d => d.AnalysisDepId)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("analysises_dep_id_fkey");
-        });
-
-        modelBuilder.Entity<AnalysisesTemplate>(entity =>
-        {
-            entity.HasKey(e => new { e.AnalysisTempId, e.AnalysisId }).HasName("analysises_temp_id_pkey");
-
-            entity.ToTable("analysises_templates", "Lab");
-
-            entity.Property(e => e.AnalysisTempId).HasColumnName("analysis_temp_id");
-            entity.Property(e => e.AnalysisId).HasColumnName("analysis_id");
-            entity.Property(e => e.AnalysisTempName).HasColumnName("analysis_temp_name");
-
-            entity.HasOne(d => d.Analysis).WithMany(p => p.AnalysisesTemplates)
-                .HasForeignKey(d => d.AnalysisId)
-                .HasConstraintName("analysises_templates_analysis_id_fkey");
         });
 
         modelBuilder.Entity<BarcodeAnalysise>(entity =>
@@ -515,9 +527,6 @@ public partial class SystemdatabaseContext : DbContext
                 .HasDefaultValueSql("nextval('\"Lab\".qualitative_standarts_qualtity_standart_id_seq1'::regclass)")
                 .HasColumnName("qualtity_standart_id");
             entity.Property(e => e.AnalysisWorkId).HasColumnName("analysis_work_id");
-            entity.Property(e => e.QualityStandartCondition).HasColumnName("quality_standart_condition");
-            entity.Property(e => e.QualityStandartDescription).HasColumnName("quality_standart_description");
-            entity.Property(e => e.QualityStandartTypeCodition).HasColumnName("quality_standart_type_codition");
             entity.Property(e => e.RefGroupId).HasColumnName("ref_group_id");
 
             entity.HasOne(d => d.AnalysisWork).WithMany(p => p.QualitativeStandarts)
@@ -527,6 +536,26 @@ public partial class SystemdatabaseContext : DbContext
             entity.HasOne(d => d.RefGroup).WithMany(p => p.QualitativeStandarts)
                 .HasForeignKey(d => d.RefGroupId)
                 .HasConstraintName("qualitative_standarts_ref_group_id_fkey");
+        });
+
+        modelBuilder.Entity<QualityParameter>(entity =>
+        {
+            entity.HasKey(e => new { e.QualityParamId, e.QualitativeStandartId }).HasName("quality_paramid_standart_id_pkey");
+
+            entity.ToTable("quality_parameters", "Lab");
+
+            entity.Property(e => e.QualityParamId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("quality_param_id");
+            entity.Property(e => e.QualitativeStandartId).HasColumnName("qualitative_standart_id");
+            entity.Property(e => e.QualityCondition).HasColumnName("quality_condition");
+            entity.Property(e => e.QualityDescription).HasColumnName("quality_description");
+            entity.Property(e => e.QualityTypeCondition).HasColumnName("quality_type_condition");
+
+            entity.HasOne(d => d.QualitativeStandart).WithMany(p => p.QualityParameters)
+                .HasForeignKey(d => d.QualitativeStandartId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("quality_parameters_qualitative_standart_id_fkey");
         });
 
         modelBuilder.Entity<QuantitativeStandart>(entity =>
@@ -601,9 +630,15 @@ public partial class SystemdatabaseContext : DbContext
             entity.Property(e => e.TripodId)
                 .HasDefaultValueSql("nextval('\"Lab\".tripods_tripod_id_seq1'::regclass)")
                 .HasColumnName("tripod_id");
+            entity.Property(e => e.AnalysisDepartmentId).HasColumnName("analysis_department_id");
             entity.Property(e => e.TripodCreateDate).HasColumnName("tripod_create_date");
             entity.Property(e => e.TripodMaxCell).HasColumnName("tripod_max_cell");
             entity.Property(e => e.TripodName).HasColumnName("tripod_name");
+
+            entity.HasOne(d => d.AnalysisDepartment).WithMany(p => p.Tripods)
+                .HasForeignKey(d => d.AnalysisDepartmentId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("tripods_analysis_department_id_fkey");
         });
 
         modelBuilder.Entity<TripodBarcodeMaterial>(entity =>

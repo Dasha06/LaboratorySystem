@@ -28,6 +28,14 @@ public class MeasurementRepositoryImpl : IMeasurementRepository
         return true;
     }
 
+    public bool UpdateMeasurement(Measurement measurement)
+    {
+        var existing = _context.Measurements.First(x => x.MeasurementId == measurement.MeasurementId);
+        existing.MeasurementName = measurement.MeasurementName;
+        _context.SaveChanges();
+        return true;
+    }
+
     public bool DeleteMeasurement(int measurementId)
     {
         var measurement = _context.Measurements.First(x => x.MeasurementId == measurementId);

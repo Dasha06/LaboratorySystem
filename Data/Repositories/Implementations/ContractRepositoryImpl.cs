@@ -28,6 +28,26 @@ public class ContractRepositoryImpl : IContractRepository
         return true;
     }
 
+    public bool UpdateContract(Contract contract)
+    {
+        var existing = _context.Contracts.First(x => x.ContractId == contract.ContractId);
+        existing.ContractName = contract.ContractName;
+        existing.ContractMoney = contract.ContractMoney;
+        existing.ContractRemainsMoney = contract.ContractRemainsMoney;
+        _context.SaveChanges();
+        return true;
+    }
+
+    public bool UpdateContractMoneyLimit(long contractId, int contractMoney, double? contractRemainsMoney = null)
+    {
+        var existing = _context.Contracts.First(x => x.ContractId == contractId);
+        existing.ContractMoney = contractMoney;
+        if (contractRemainsMoney.HasValue)
+            existing.ContractRemainsMoney = contractRemainsMoney.Value;
+        _context.SaveChanges();
+        return true;
+    }
+
     public bool DeleteContract(long contractId)
     {
         var contract = _context.Contracts.First(x => x.ContractId == contractId);

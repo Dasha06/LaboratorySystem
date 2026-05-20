@@ -13,14 +13,17 @@ public static class DataServiceCollectionExtensions
     {
         services.AddDbContext<SystemdatabaseContext>(configureDbContext);
 
+        services.AddScoped<IAnalysisComplexRepository, AnalysisComplexRepositoryImpl>();
         services.AddScoped<IAnalysisDepartmentRepository, AnalysisDepartmentRepositoryImpl>();
         services.AddScoped<IAnalysisWorkRepository, AnalysisWorkRepositoryImpl>();
         services.AddScoped<IAnalysiseRepository, AnalysiseRepositoryImpl>();
         services.AddScoped<IAnalysisesTemplateRepository, AnalysisesTemplateRepositoryImpl>();
         services.AddScoped<IBarcodeAnalysiseRepository, BarcodeAnalysiseRepositoryImpl>();
+        services.AddScoped<IBarcodeComplexRepository, BarcodeComplexRepositoryImpl>();
         services.AddScoped<IBarcodeMaterialRepository, BarcodeMaterialRepositoryImpl>();
         services.AddScoped<IContractRepository, ContractRepositoryImpl>();
         services.AddScoped<IContractAnalysiseRepository, ContractAnalysiseRepositoryImpl>();
+        services.AddScoped<IContractComplexRepository, ContractComplexRepositoryImpl>();
         services.AddScoped<IDoctorRepository, DoctorRepositoryImpl>();
         services.AddScoped<ILpuRepository, LpuRepositoryImpl>();
         services.AddScoped<ILpuContractRepository, LpuContractRepositoryImpl>();
@@ -31,6 +34,7 @@ public static class DataServiceCollectionExtensions
         services.AddScoped<IPatientRepository, PatientRepositoryImpl>();
         services.AddScoped<IPatientChangeRepository, PatientChangeRepositoryImpl>();
         services.AddScoped<IQualitativeStandartRepository, QualitativeStandartRepositoryImpl>();
+        services.AddScoped<IQualityParameterRepository, QualityParameterRepositoryImpl>();
         services.AddScoped<IQuantitativeStandartRepository, QuantitativeStandartRepositoryImpl>();
         services.AddScoped<IReferentialGroupRepository, ReferentialGroupRepositoryImpl>();
         services.AddScoped<IRoleRepository, RoleRepositoryImpl>();

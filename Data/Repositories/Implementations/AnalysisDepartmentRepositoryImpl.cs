@@ -27,7 +27,14 @@ public class AnalysisDepartmentRepositoryImpl : IAnalysisDepartmentRepository
         _context.SaveChanges();
         return true;
     }
-    //TODO: get dep by analysis? mb do it in analyses?
+
+    public bool UpdateAnalysisDepartment(AnalysisDepartment analysisDepartment)
+    {
+        var existing = _context.AnalysisDepartments.First(x => x.AnalysisDepId == analysisDepartment.AnalysisDepId);
+        existing.AnalysisDepName = analysisDepartment.AnalysisDepName;
+        _context.SaveChanges();
+        return true;
+    }
 
     public bool DeleteAnalysisDepartment(int analysisDepId)
     {

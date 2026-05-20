@@ -1,5 +1,6 @@
 using Data.Models;
 using Data.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repositories.Implementations;
 
@@ -11,40 +12,39 @@ public class AnalysisesTemplateRepositoryImpl : IAnalysisesTemplateRepository
         _context = remoteDatabaseContext;
     }
 
-    public List<AnalysisesTemplate> GetAllAnalysisesTemplates()
+    public List<AnalysesTemplate> GetAllAnalysisesTemplates()
     {
-        return _context.AnalysisesTemplates.ToList();
-    }
-
-    public AnalysisesTemplate GetAnalysisesTemplateByAnalysisTempIdAndAnalysisId(int analysisTempId, long analysisId)
-    {
-        return _context.AnalysisesTemplates.First(x => x.AnalysisTempId == analysisTempId && x.AnalysisId == analysisId);
+        return _context.AnalysesTemplates.ToList();
     }
 
     public List<Analysise> GetAnalysesFromTemplate(int analysisTempId)
     {
-        var result = _context.AnalysisesTemplates.Where(x => x.AnalysisTempId == analysisTempId)
-            .Select(x => x.Analysis).ToList();
-        return result;
+        var result = _context.AnalysesTemplates
+            .Include(x => x.Analyses).First(x => x.AnalysisTempId == analysisTempId);
+        return result.Analyses.ToList();
     }
 
-    // TODO: public bool UpdateAnalysisTemplate(AnalysisesTemplate analysisesTemplate)
-    // {
-    //     
-    // }
-
-    public bool CreateAnalysisesTemplate(AnalysisesTemplate analysisesTemplate)
+    public bool UpdateAnalysisTemplate(AnalysesTemplate analysisesTemplate)
     {
-        _context.AnalysisesTemplates.Add(analysisesTemplate);
+        var oldTemplate = _context.AnalysesTemplates.First(x => x.AnalysisTempId == analysisesTemplate.AnalysisTempId);
+        oldTemplate.AnalysisTempName = analysisesTemplate.AnalysisTempName;
+        oldTemplate.Analyses = analysisesTemplate.Analyses;
         _context.SaveChanges();
         return true;
     }
 
-    public bool DeleteAnalysisesTemplate(int analysisTempId, long analysisId)
+    public bool CreateAnalysisesTemplate(AnalysesTemplate analysisesTemplate)
     {
-        var analysisesTemplate = _context.AnalysisesTemplates.First(x =>
-            x.AnalysisTempId == analysisTempId && x.AnalysisId == analysisId);
-        _context.AnalysisesTemplates.Remove(analysisesTemplate);
+        _context.AnalysesTemplates.Add(analysisesTemplate);
+        _context.SaveChanges();
+        return true;
+    }
+
+    public bool DeleteAnalysisesTemplate(int analysisTempId)
+    {
+        var analysisesTemplate = _context.AnalysesTemplates.First(x =>
+            x.AnalysisTempId == analysisTempId);
+        _context.AnalysesTemplates.Remove(analysisesTemplate);
         _context.SaveChanges();
         return true;
     }

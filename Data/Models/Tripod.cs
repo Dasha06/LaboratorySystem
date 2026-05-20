@@ -13,5 +13,9 @@ public partial class Tripod
 
     public int TripodMaxCell { get; set; }
 
+    public int AnalysisDepartmentId { get; set; }
+
+    public virtual AnalysisDepartment AnalysisDepartment { get; set; } = null!;
+
     public virtual ICollection<TripodBarcodeMaterial> TripodBarcodeMaterials { get; set; } = new List<TripodBarcodeMaterial>();
 }

@@ -4,9 +4,9 @@ namespace Data.Repositories.Interfaces;
 
 public interface IAnalysisesTemplateRepository
 {
-    List<AnalysisesTemplate> GetAllAnalysisesTemplates();
-    AnalysisesTemplate GetAnalysisesTemplateByAnalysisTempIdAndAnalysisId(int analysisTempId, long analysisId);
-    bool CreateAnalysisesTemplate(AnalysisesTemplate analysisesTemplate);
-    bool DeleteAnalysisesTemplate(int analysisTempId, long analysisId);
+    List<AnalysesTemplate> GetAllAnalysisesTemplates();
+    bool CreateAnalysisesTemplate(AnalysesTemplate analysisesTemplate);
+    bool DeleteAnalysisesTemplate(int analysisTempId);
     List<Analysise> GetAnalysesFromTemplate(int analysisTempId);
+    bool UpdateAnalysisTemplate(AnalysesTemplate analysisesTemplate);
 }

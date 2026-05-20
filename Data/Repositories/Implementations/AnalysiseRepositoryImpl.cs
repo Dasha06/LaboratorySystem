@@ -36,7 +36,10 @@ public class AnalysiseRepositoryImpl : IAnalysiseRepository
 
     public bool UpdateAnalysis(Analysise analysis)
     {
-        _context.Analysises.Update(analysis);
+        var oldAnalysis = _context.Analysises.First(x => x.AnalysisId == analysis.AnalysisId);
+        oldAnalysis.AnalysisDepId = analysis.AnalysisDepId;
+        oldAnalysis.AnalysisName = analysis.AnalysisName;
+        oldAnalysis.AnalysisCodeName = analysis.AnalysisCodeName;
         _context.SaveChanges();
         return true;
     }

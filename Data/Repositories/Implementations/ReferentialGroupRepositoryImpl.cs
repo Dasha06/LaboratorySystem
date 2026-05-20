@@ -28,6 +28,20 @@ public class ReferentialGroupRepositoryImpl : IReferentialGroupRepository
         return true;
     }
 
+    public bool UpdateReferentialGroup(ReferentialGroup referentialGroup)
+    {
+        var existing = _context.ReferentialGroups.First(x => x.RefGroupId == referentialGroup.RefGroupId);
+        existing.RefGroupName = referentialGroup.RefGroupName;
+        existing.RefGroupGender = referentialGroup.RefGroupGender;
+        existing.RefGroupLowAge = referentialGroup.RefGroupLowAge;
+        existing.RefGroupHighAge = referentialGroup.RefGroupHighAge;
+        existing.RefGroupCondition = referentialGroup.RefGroupCondition;
+        existing.RefGroupLowIf = referentialGroup.RefGroupLowIf;
+        existing.RefGroupHighIf = referentialGroup.RefGroupHighIf;
+        _context.SaveChanges();
+        return true;
+    }
+
     public bool DeleteReferentialGroup(int refGroupId)
     {
         var referentialGroup = _context.ReferentialGroups.First(x => x.RefGroupId == refGroupId);

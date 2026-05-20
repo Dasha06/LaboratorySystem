@@ -5,19 +5,15 @@ namespace Data.Models;
 
 public partial class QualitativeStandart
 {
-    public int QualtityStandartId { get; set; }
+    public long QualtityStandartId { get; set; }
 
     public int RefGroupId { get; set; }
 
     public long AnalysisWorkId { get; set; }
 
-    public string QualityStandartCondition { get; set; } = null!;
-
-    public string? QualityStandartDescription { get; set; }
-
-    public string QualityStandartTypeCodition { get; set; } = null!;
-
     public virtual AnalysisWork AnalysisWork { get; set; } = null!;
+
+    public virtual ICollection<QualityParameter> QualityParameters { get; set; } = new List<QualityParameter>();
 
     public virtual ReferentialGroup RefGroup { get; set; } = null!;
 }

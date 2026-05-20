@@ -21,9 +21,24 @@ public class BarcodeMaterialRepositoryImpl : IBarcodeMaterialRepository
         return _context.BarcodeMaterials.First(x => x.BarcodeMatId == barcodeMatId && x.AnalysisDepId == analysisDepId);
     }
 
+    public List<BarcodeMaterial> GetBarcodeMaterialsByOrderId(long orderId)
+    {
+        return _context.BarcodeMaterials.Where(x => x.OrderId == orderId).ToList();
+    }
+
     public bool CreateBarcodeMaterial(BarcodeMaterial barcodeMaterial)
     {
         _context.BarcodeMaterials.Add(barcodeMaterial);
+        _context.SaveChanges();
+        return true;
+    }
+
+    public bool UpdateBarcodeMaterial(BarcodeMaterial barcodeMaterial)
+    {
+        var existing = _context.BarcodeMaterials.First(x =>
+            x.BarcodeMatId == barcodeMaterial.BarcodeMatId && x.AnalysisDepId == barcodeMaterial.AnalysisDepId);
+        existing.MaterialId = barcodeMaterial.MaterialId;
+        existing.OrderId = barcodeMaterial.OrderId;
         _context.SaveChanges();
         return true;
     }

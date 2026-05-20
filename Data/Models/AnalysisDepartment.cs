@@ -14,4 +14,6 @@ public partial class AnalysisDepartment
     public virtual ICollection<Analysise> Analysises { get; set; } = new List<Analysise>();
 
     public virtual ICollection<BarcodeMaterial> BarcodeMaterials { get; set; } = new List<BarcodeMaterial>();
+
+    public virtual ICollection<Tripod> Tripods { get; set; } = new List<Tripod>();
 }

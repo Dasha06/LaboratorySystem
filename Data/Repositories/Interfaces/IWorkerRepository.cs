@@ -11,6 +11,5 @@ public interface IWorkerRepository
     bool UpdateWorkersRole(int workerId, List<Role> roles);
     bool DeleteWorker(int workerId);
     Array GetCountOnCreatedOrdersByWorkersWithDates(DateOnly startDate, DateOnly endDate);
-    bool CreateWorkers(List<Worker> workersInfo);
-    bool UpdateMultipleWorkersRoles(List<(int workerId, List<Role> roles)> workersRoles);
+    bool UpdateWorker(Worker worker);
 }

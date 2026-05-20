@@ -34,23 +34,13 @@ public class WorkerRepositoryImpl : IWorkerRepository
         return true;
     }
 
-    public bool CreateWorkers(List<Worker> workersInfo)
+    public bool UpdateWorker(Worker worker)
     {
-        _context.Workers.AddRange(workersInfo);
-        _context.SaveChanges();
-        return true;
-    }
-
-    public bool UpdateMultipleWorkersRoles(List<(int workerId, List<Role> roles)> workersRoles)
-    {
-        foreach (var item in workersRoles)
-        {
-            var user = _context.Workers
-                .Include(w => w.Roles)
-                .First(w => w.WorkerId == item.workerId);
-            user.Roles = item.roles;
-        }
-
+        var oldWorker = _context.Workers.First(x => x.WorkerId == worker.WorkerId);
+        oldWorker.Roles = worker.Roles;
+        oldWorker.WorkerFio = worker.WorkerFio;
+        oldWorker.WorkerLogin = worker.WorkerLogin;
+        oldWorker.WorkerPassword = worker.WorkerPassword;
         _context.SaveChanges();
         return true;
     }
