@@ -17,6 +17,10 @@ public class TripodBarcodeMaterialsController : ApiControllerBase
     [HttpGet]
     public ActionResult<List<TripodBarcodeMaterial>> GetAll() => Execute(_repository.GetAllTripodBarcodeMaterials);
 
+    [HttpGet("by-tripod/{tripodId:long}")]
+    public ActionResult<List<TripodBarcodeMaterial>> GetByTripod(long tripodId) =>
+        Execute(() => _repository.GetTripodBarcodeMaterialsByTripodId(tripodId));
+
     [HttpGet("{tripodId:long}/{barcodeMatId:decimal}")]
     public ActionResult<TripodBarcodeMaterial> GetByKeys(long tripodId, decimal barcodeMatId) =>
         Execute(() => _repository.GetTripodBarcodeMaterialByTripodIdAndBarcodeMatId(tripodId, barcodeMatId));

@@ -1,5 +1,6 @@
 using Data.Models;
 using Data.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repositories.Implementations;
 
@@ -14,6 +15,20 @@ public class TripodBarcodeMaterialRepositoryImpl : ITripodBarcodeMaterialReposit
     public List<TripodBarcodeMaterial> GetAllTripodBarcodeMaterials()
     {
         return _context.TripodBarcodeMaterials.ToList();
+    }
+
+    public List<TripodBarcodeMaterial> GetTripodBarcodeMaterialsByTripodId(long tripodId)
+    {
+        return _context.TripodBarcodeMaterials
+            .Where(x => x.TripodId == tripodId)
+            .Include(x => x.BarcodeMaterial)
+            .ThenInclude(bm => bm.Material)
+            .Include(x => x.BarcodeMaterial)
+            .ThenInclude(bm => bm.AnalysisDep)
+            .Include(x => x.BarcodeMaterial)
+            .ThenInclude(bm => bm.BarcodeAnalysises)
+            .ThenInclude(ba => ba.Analysis)
+            .ToList();
     }
 
     public TripodBarcodeMaterial GetTripodBarcodeMaterialByTripodIdAndBarcodeMatId(long tripodId,

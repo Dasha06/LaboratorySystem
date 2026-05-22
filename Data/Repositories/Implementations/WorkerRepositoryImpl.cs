@@ -49,7 +49,19 @@ public class WorkerRepositoryImpl : IWorkerRepository
     {
         var user = _context.Workers.Include(x => x.Roles)
             .First(x => x.WorkerId == workerId);
-        user.Roles = roles;
+        
+        foreach (var role in roles)
+        {
+            if (user.Roles.Any(x => x.RoleId == role.RoleId))
+            {
+                user.Roles.Remove(user.Roles.First(x => x.RoleId == role.RoleId));
+            }
+            else
+            {
+                user.Roles.Add(_context.Roles.First(x => x.RoleId == role.RoleId));
+            }
+        }
+        _context.Update(user);
         _context.SaveChanges();
         return true;
     }

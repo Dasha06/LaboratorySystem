@@ -5,6 +5,7 @@ namespace Data.Repositories.Interfaces;
 public interface ITripodBarcodeMaterialRepository
 {
     List<TripodBarcodeMaterial> GetAllTripodBarcodeMaterials();
+    List<TripodBarcodeMaterial> GetTripodBarcodeMaterialsByTripodId(long tripodId);
     TripodBarcodeMaterial GetTripodBarcodeMaterialByTripodIdAndBarcodeMatId(long tripodId, decimal barcodeMatId);
     bool CreateTripodBarcodeMaterial(TripodBarcodeMaterial tripodBarcodeMaterial);
     bool UpdateTripodBarcodeMaterial(TripodBarcodeMaterial tripodBarcodeMaterial);

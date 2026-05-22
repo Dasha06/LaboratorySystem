@@ -4,20 +4,37 @@ using Microsoft.AspNetCore.Mvc;
 using WebApi.Infrastructure;
 using WebApi.Mapping;
 using WebApi.Models.Forms;
+using WebApi.Models.Responses;
 
 namespace WebApi.Controllers;
 
 public class TripodsController : ApiControllerBase
 {
     private readonly ITripodRepository _repository;
+    private readonly ITripodBarcodeMaterialRepository _tripodBarcodeMaterialRepository;
 
-    public TripodsController(ITripodRepository repository) => _repository = repository;
+    public TripodsController(
+        ITripodRepository repository,
+        ITripodBarcodeMaterialRepository tripodBarcodeMaterialRepository)
+    {
+        _repository = repository;
+        _tripodBarcodeMaterialRepository = tripodBarcodeMaterialRepository;
+    }
 
     [HttpGet]
     public ActionResult<List<Tripod>> GetAll() => Execute(_repository.GetAllTripods);
 
     [HttpGet("{tripodId:long}")]
     public ActionResult<Tripod> GetById(long tripodId) => Execute(() => _repository.GetTripodByTripodId(tripodId));
+
+    [HttpGet("{tripodId:long}/worksheets")]
+    public ActionResult<List<WorksheetRowDto>> GetWorksheets(long tripodId) =>
+        Execute(() =>
+        {
+            _ = _repository.GetTripodByTripodId(tripodId);
+            var items = _tripodBarcodeMaterialRepository.GetTripodBarcodeMaterialsByTripodId(tripodId);
+            return WorksheetMapper.ToWorksheetRows(items);
+        });
 
     [HttpPost]
     [FormInput]
