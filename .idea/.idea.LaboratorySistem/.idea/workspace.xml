@@ -17,52 +17,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f8863308-d313-4b1c-bf9f-2527ba4c7f42" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.LaboratorySistem/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.LaboratorySistem/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/DependencyInjection/DataServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/DependencyInjection/DataServiceCollectionExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Main.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Models/AnalysisDepartment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Models/AnalysisDepartment.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Models/Analysise.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Models/Analysise.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Models/QualitativeStandart.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Models/QualitativeStandart.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Models/SystemdatabaseContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Models/SystemdatabaseContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Models/Tripod.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Models/Tripod.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysisDepartmentRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysisDepartmentRepositoryImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysisWorkRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysisWorkRepositoryImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysiseRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysiseRepositoryImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysisesTemplateRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysisesTemplateRepositoryImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/BarcodeAnalysiseRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/BarcodeAnalysiseRepositoryImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/BarcodeMaterialRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/BarcodeMaterialRepositoryImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/ContractAnalysiseRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/ContractAnalysiseRepositoryImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/ContractRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/ContractRepositoryImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/DoctorRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/DoctorRepositoryImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/LpuContractRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/LpuContractRepositoryImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/LpuRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/LpuRepositoryImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/MeasurementRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/MeasurementRepositoryImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/OrderRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/OrderRepositoryImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/PatientRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/PatientRepositoryImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/QualitativeStandartRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/QualitativeStandartRepositoryImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/QuantitativeStandartRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/QuantitativeStandartRepositoryImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/ReferentialGroupRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/ReferentialGroupRepositoryImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/TripodBarcodeMaterialRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/TripodBarcodeMaterialRepositoryImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/TripodRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/TripodRepositoryImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/WorkerRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/WorkerRepositoryImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/IAnalysisDepartmentRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/IAnalysisDepartmentRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/IAnalysisWorkRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/IAnalysisWorkRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/IAnalysisesTemplateRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/IAnalysisesTemplateRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/IBarcodeAnalysiseRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/IBarcodeAnalysiseRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/IBarcodeMaterialRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/IBarcodeMaterialRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/IContractAnalysiseRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/IContractAnalysiseRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/IContractRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/IContractRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/IDoctorRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/IDoctorRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/ILpuContractRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/ILpuContractRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/ILpuRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/ILpuRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/IMeasurementRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/IMeasurementRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/IOrderRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/IOrderRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/IPatientRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/IPatientRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/IQualitativeStandartRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/IQualitativeStandartRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/IQuantitativeStandartRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/IQuantitativeStandartRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/IReferentialGroupRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/IReferentialGroupRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/ITripodBarcodeMaterialRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/ITripodBarcodeMaterialRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/ITripodRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/ITripodRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/IWorkerRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/IWorkerRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApi/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/Program.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -222,7 +177,8 @@
       <workItem from="1779047487879" duration="5000" />
       <workItem from="1779227803329" duration="54000" />
       <workItem from="1779285562126" duration="398000" />
-      <workItem from="1779290121069" duration="1983000" />
+      <workItem from="1779290121069" duration="2162000" />
+      <workItem from="1779343535164" duration="2000" />
     </task>
     <task id="LOCAL-00001" summary="init worker">
       <option name="closed" value="true" />
@@ -264,7 +220,15 @@
       <option name="project" value="LOCAL" />
       <updated>1778089137183</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="data done?">
+      <option name="closed" value="true" />
+      <created>1779296897384</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1779296897384</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -278,7 +242,8 @@
     <MESSAGE value="created webapi, need to create everything needed for it to work" />
     <MESSAGE value="little adding in functions" />
     <MESSAGE value="change in db" />
-    <option name="LAST_COMMIT_MESSAGE" value="change in db" />
+    <MESSAGE value="data done?" />
+    <option name="LAST_COMMIT_MESSAGE" value="data done?" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
