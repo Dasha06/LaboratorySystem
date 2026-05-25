@@ -1,0 +1,13 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Desktop.ViewModels"
+             x:Class="Desktop.Views.WorkflowsView"
+             x:DataType="vm:WorkflowsViewModel">
+    <StackPanel>
+        <TextBlock Classes="page-title" Text="Рабочие процессы"/>
+        <Border Classes="liis-card" MinHeight="400">
+            <TextBlock Text="Раздел в разработке. Управление рабочими процессами будет доступно в следующей версии."
+                       TextWrapping="Wrap" Foreground="{StaticResource LiisMutedBrush}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </Border>
+    </StackPanel>
+</UserControl>

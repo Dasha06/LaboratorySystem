@@ -2,7 +2,7 @@ using Data.Models;
 using WebApi.Models.Responses;
 
 namespace WebApi.Mapping;
-
+// создание списка работ необходимые провести у биоматериала
 public static class WorksheetMapper
 {
     public static List<WorksheetRowDto> ToWorksheetRows(IEnumerable<TripodBarcodeMaterial> items)

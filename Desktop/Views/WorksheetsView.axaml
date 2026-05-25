@@ -1,0 +1,21 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Desktop.ViewModels"
+             x:Class="Desktop.Views.WorksheetsView"
+             x:DataType="vm:WorksheetsViewModel">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="12" Margin="0,0,0,16">
+            <Button Classes="liis-secondary" Content="← Назад" Command="{Binding BackCommand}"/>
+            <TextBlock Classes="page-title" Text="Рабочие листы" Margin="0"/>
+        </StackPanel>
+        <TextBlock DockPanel.Dock="Bottom" Text="{Binding StatusMessage}" Foreground="{StaticResource LiisMutedBrush}" Margin="0,8,0,0"/>
+        <Border Classes="liis-card" Padding="0">
+            <DataGrid ItemsSource="{Binding ExpandedRows}" AutoGenerateColumns="False" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Штрих код" Binding="{Binding BiomaterialBarcode}" Width="150"/>
+                    <DataGridTextColumn Header="Вид" Binding="{Binding Kind}" Width="120"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+    </DockPanel>
+</UserControl>

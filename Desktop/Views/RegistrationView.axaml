@@ -1,0 +1,49 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Desktop.ViewModels"
+             x:Class="Desktop.Views.RegistrationView"
+             x:DataType="vm:RegistrationViewModel">
+    <ScrollViewer>
+        <StackPanel Spacing="16">
+            <TextBlock Classes="page-title" Text="Регистрация"/>
+            <Grid ColumnDefinitions="*,2*" RowDefinitions="Auto,Auto">
+                <StackPanel Grid.Column="0" Spacing="8" Margin="0,0,16,0">
+                    <TextBox Classes="liis-input" Watermark="Фамилия" Text="{Binding LastName}"/>
+                    <TextBox Classes="liis-input" Watermark="Имя" Text="{Binding FirstName}"/>
+                    <TextBox Classes="liis-input" Watermark="Отчество" Text="{Binding MiddleName}"/>
+                    <TextBox Classes="liis-input" Watermark="Дата рождения" Text="{Binding BirthDate}"/>
+                </StackPanel>
+                <UniformGrid Grid.Column="1" Columns="2" Rows="2">
+                    <Button Classes="liis-primary" Content="Найти пациента" Command="{Binding SearchCommand}" Margin="4"/>
+                    <Button Classes="liis-primary" Content="Добавить пациента" Command="{Binding AddPatientCommand}" Margin="4"/>
+                    <Button Classes="liis-primary" Content="Создать заказ" Command="{Binding CreateOrderCommand}" Margin="4"/>
+                    <Button Classes="liis-secondary" Content="Шаблон" Margin="4"/>
+                </UniformGrid>
+            </Grid>
+            <TextBlock Text="Найдено" FontSize="20" FontWeight="SemiBold"/>
+            <Border Classes="liis-card" Padding="0">
+                <DataGrid ItemsSource="{Binding FoundPatients}" SelectedItem="{Binding SelectedPatient}" AutoGenerateColumns="False" IsReadOnly="True" Height="200">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ПИН" Binding="{Binding PatientId}" Width="80"/>
+                        <DataGridTextColumn Header="Фамилия" Binding="{Binding PatientLastName}" Width="*"/>
+                        <DataGridTextColumn Header="Имя" Binding="{Binding PatientFirstName}" Width="*"/>
+                        <DataGridTextColumn Header="Отчество" Binding="{Binding PatientSecondName}" Width="*"/>
+                        <DataGridTextColumn Header="Дата рождения" Binding="{Binding PatientBirthday}" Width="120"/>
+                        <DataGridTextColumn Header="Пол" Binding="{Binding PatientGender}" Width="60"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+            <TextBlock Text="Заказы" FontSize="20" FontWeight="SemiBold"/>
+            <Border Classes="liis-card" Padding="0">
+                <DataGrid ItemsSource="{Binding Orders}" AutoGenerateColumns="False" IsReadOnly="True" Height="160">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="№ заказа" Binding="{Binding OrderId}" Width="*"/>
+                        <DataGridTextColumn Header="Статус" Binding="{Binding OrderStatus}" Width="*"/>
+                        <DataGridTextColumn Header="Отделение" Binding="{Binding OrderLpuDepartment}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+            <TextBlock Text="{Binding StatusMessage}" Foreground="{StaticResource LiisMutedBrush}"/>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -18,7 +18,11 @@
   <component name="ChangeListManager">
     <list default="true" id="f8863308-d313-4b1c-bf9f-2527ba4c7f42" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.LaboratorySistem/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.LaboratorySistem/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LaboratorySistem.sln" beforeDir="false" afterPath="$PROJECT_DIR$/LaboratorySistem.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysisesTemplateRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysisesTemplateRepositoryImpl.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApi/Infrastructure/FormInputAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/Infrastructure/FormInputAttribute.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApi/Mapping/WorksheetMapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/Mapping/WorksheetMapper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApi/Models/Forms/EntityForms.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/Models/Forms/EntityForms.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,12 +48,12 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Data/Repositories/IWorkerRepository.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Data/Repositories/WorkerRepositoryImpl.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0ceaca09f3944680b668dee8e1e0370b100a00/78/fd2f2e13/UserControl.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0ceaca09f3944680b668dee8e1e0370b100a00/ff/984000d8/AppBuilder.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="Toolset" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
@@ -63,6 +67,7 @@
   &quot;keyToString&quot;: {
     &quot;.NET Launch Settings Profile.WebApi: http.executor&quot;: &quot;Run&quot;,
     &quot;.NET Launch Settings Profile.WebApi: https.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Project.Desktop.executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
@@ -79,10 +84,11 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.WebApi: http">
+  <component name="RunManager" selected=".NET Project.Desktop">
     <configuration name="Data" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -204,6 +210,19 @@
       <workItem from="1779290121069" duration="2162000" />
       <workItem from="1779343535164" duration="2000" />
       <workItem from="1779433772839" duration="53000" />
+      <workItem from="1779443846494" duration="632000" />
+      <workItem from="1779444946753" duration="1756000" />
+      <workItem from="1779447173048" duration="1085000" />
+      <workItem from="1779542671800" duration="3242000" />
+      <workItem from="1779553718102" duration="84000" />
+      <workItem from="1779553816261" duration="17000" />
+      <workItem from="1779554271247" duration="5192000" />
+      <workItem from="1779563937154" duration="4153000" />
+      <workItem from="1779615493405" duration="406000" />
+      <workItem from="1779623227933" duration="226000" />
+      <workItem from="1779623487804" duration="2005000" />
+      <workItem from="1779626038536" duration="149000" />
+      <workItem from="1779626201219" duration="2892000" />
     </task>
     <task id="LOCAL-00001" summary="init worker">
       <option name="closed" value="true" />

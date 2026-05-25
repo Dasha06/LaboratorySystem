@@ -1,0 +1,70 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Styles.Resources>
+        <SolidColorBrush x:Key="LiisBackgroundBrush" Color="#F5F5F5"/>
+        <SolidColorBrush x:Key="LiisPrimaryBrush" Color="#00AEEF"/>
+        <SolidColorBrush x:Key="LiisPrimaryLightBrush" Color="#E8F4FC"/>
+        <SolidColorBrush x:Key="LiisCardBrush" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="LiisTextBrush" Color="#333333"/>
+        <SolidColorBrush x:Key="LiisMutedBrush" Color="#888888"/>
+        <SolidColorBrush x:Key="LiisSidebarActiveBrush" Color="#E0EEF5"/>
+        <CornerRadius x:Key="LiisCornerRadius">12</CornerRadius>
+    </Styles.Resources>
+
+    <Style Selector="Window">
+        <Setter Property="Background" Value="{StaticResource LiisBackgroundBrush}"/>
+        <Setter Property="FontFamily" Value="Inter"/>
+    </Style>
+
+    <Style Selector="Button.liis-primary">
+        <Setter Property="Background" Value="{StaticResource LiisPrimaryBrush}"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="CornerRadius" Value="12"/>
+        <Setter Property="Padding" Value="20,14"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
+
+    <Style Selector="Button.liis-secondary">
+        <Setter Property="Background" Value="#E8E8E8"/>
+        <Setter Property="Foreground" Value="{StaticResource LiisTextBrush}"/>
+        <Setter Property="CornerRadius" Value="12"/>
+        <Setter Property="Padding" Value="20,14"/>
+        <Setter Property="FontSize" Value="16"/>
+    </Style>
+
+    <Style Selector="TextBox.liis-input">
+        <Setter Property="Background" Value="#EFEFEF"/>
+        <Setter Property="CornerRadius" Value="10"/>
+        <Setter Property="Padding" Value="14,12"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+
+    <Style Selector="Border.liis-card">
+        <Setter Property="Background" Value="{StaticResource LiisCardBrush}"/>
+        <Setter Property="CornerRadius" Value="12"/>
+        <Setter Property="Padding" Value="16"/>
+        <Setter Property="BoxShadow" Value="0 2 8 0 #20000000"/>
+    </Style>
+
+    <Style Selector="TextBlock.page-title">
+        <Setter Property="FontSize" Value="32"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="{StaticResource LiisTextBrush}"/>
+        <Setter Property="Margin" Value="0,0,0,20"/>
+    </Style>
+
+    <Style Selector="DataGrid">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="CornerRadius" Value="12"/>
+        <Setter Property="GridLinesVisibility" Value="None"/>
+        <Setter Property="HeadersVisibility" Value="Column"/>
+    </Style>
+
+    <Style Selector="DataGridColumnHeader">
+        <Setter Property="Background" Value="{StaticResource LiisPrimaryLightBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource LiisTextBrush}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Padding" Value="12,10"/>
+    </Style>
+</Styles>

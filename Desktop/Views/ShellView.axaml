@@ -1,0 +1,44 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Desktop.ViewModels"
+             xmlns:v="using:Desktop.Views"
+             x:Class="Desktop.Views.ShellView"
+             x:DataType="vm:ShellViewModel">
+    <Grid ColumnDefinitions="240,*">
+        <Border Grid.Column="0" Background="#FAFAFA" Padding="16">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="12" Margin="0,0,0,24">
+                    <Border Width="40" Height="40" CornerRadius="20" Background="{StaticResource LiisPrimaryBrush}"/>
+                    <TextBlock Text="{Binding UserDisplayName}" VerticalAlignment="Center" FontSize="16"/>
+                </StackPanel>
+                <Button DockPanel.Dock="Bottom" Classes="liis-secondary" Content="Выход" Command="{Binding LogoutCommand}" HorizontalAlignment="Stretch" Margin="0,16,0,0"/>
+                <StackPanel Spacing="4">
+                    <Button Content="Регистрация" Command="{Binding NavigateCommand}" CommandParameter="Registration" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="12,10" CornerRadius="10" Background="{StaticResource LiisSidebarActiveBrush}" IsVisible="{Binding IsRegistrationActive}"/>
+                    <Button Content="Регистрация" Command="{Binding NavigateCommand}" CommandParameter="Registration" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="12,10" CornerRadius="10" Background="Transparent" IsVisible="{Binding !IsRegistrationActive}"/>
+                    <Button Content="Трекер" Command="{Binding NavigateCommand}" CommandParameter="Tracker" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="12,10" CornerRadius="10" Background="{StaticResource LiisSidebarActiveBrush}" IsVisible="{Binding IsTrackerActive}"/>
+                    <Button Content="Трекер" Command="{Binding NavigateCommand}" CommandParameter="Tracker" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="12,10" CornerRadius="10" Background="Transparent" IsVisible="{Binding !IsTrackerActive}"/>
+                    <Button Content="Штативы" Command="{Binding NavigateCommand}" CommandParameter="Racks" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="12,10" CornerRadius="10" Background="{StaticResource LiisSidebarActiveBrush}" IsVisible="{Binding IsRacksActive}"/>
+                    <Button Content="Штативы" Command="{Binding NavigateCommand}" CommandParameter="Racks" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="12,10" CornerRadius="10" Background="Transparent" IsVisible="{Binding !IsRacksActive}"/>
+                    <Button Content="Результаты" Command="{Binding NavigateCommand}" CommandParameter="Results" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="12,10" CornerRadius="10" Background="{StaticResource LiisSidebarActiveBrush}" IsVisible="{Binding IsResultsActive}"/>
+                    <Button Content="Результаты" Command="{Binding NavigateCommand}" CommandParameter="Results" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="12,10" CornerRadius="10" Background="Transparent" IsVisible="{Binding !IsResultsActive}"/>
+                    <Button Content="Отчёты" Command="{Binding NavigateCommand}" CommandParameter="Reports" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="12,10" CornerRadius="10" Background="{StaticResource LiisSidebarActiveBrush}" IsVisible="{Binding IsReportsActive}"/>
+                    <Button Content="Отчёты" Command="{Binding NavigateCommand}" CommandParameter="Reports" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="12,10" CornerRadius="10" Background="Transparent" IsVisible="{Binding !IsReportsActive}"/>
+                    <Button Content="Рабочие процессы" Command="{Binding NavigateCommand}" CommandParameter="Workflows" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="12,10" CornerRadius="10" Background="{StaticResource LiisSidebarActiveBrush}" IsVisible="{Binding IsWorkflowsActive}"/>
+                    <Button Content="Рабочие процессы" Command="{Binding NavigateCommand}" CommandParameter="Workflows" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="12,10" CornerRadius="10" Background="Transparent" IsVisible="{Binding !IsWorkflowsActive}"/>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+        <ContentControl Grid.Column="1" Margin="24" Content="{Binding CurrentPage}">
+            <ContentControl.DataTemplates>
+                <DataTemplate DataType="vm:RegistrationViewModel"><v:RegistrationView /></DataTemplate>
+                <DataTemplate DataType="vm:TrackerViewModel"><v:TrackerView /></DataTemplate>
+                <DataTemplate DataType="vm:RacksViewModel"><v:RacksView /></DataTemplate>
+                <DataTemplate DataType="vm:WorksheetsViewModel"><v:WorksheetsView /></DataTemplate>
+                <DataTemplate DataType="vm:ResultsViewModel"><v:ResultsView /></DataTemplate>
+                <DataTemplate DataType="vm:ReportsViewModel"><v:ReportsView /></DataTemplate>
+                <DataTemplate DataType="vm:WorkflowsViewModel"><v:WorkflowsView /></DataTemplate>
+                <DataTemplate DataType="vm:CreateOrderViewModel"><v:CreateOrderView /></DataTemplate>
+            </ContentControl.DataTemplates>
+        </ContentControl>
+    </Grid>
+</UserControl>

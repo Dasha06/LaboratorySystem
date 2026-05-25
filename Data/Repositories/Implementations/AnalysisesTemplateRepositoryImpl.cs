@@ -26,9 +26,18 @@ public class AnalysisesTemplateRepositoryImpl : IAnalysisesTemplateRepository
 
     public bool UpdateAnalysisTemplate(AnalysesTemplate analysisesTemplate)
     {
-        var oldTemplate = _context.AnalysesTemplates.First(x => x.AnalysisTempId == analysisesTemplate.AnalysisTempId);
+        var oldTemplate = _context.AnalysesTemplates
+            .Include(x => x.Analyses)
+            .First(x => x.AnalysisTempId == analysisesTemplate.AnalysisTempId);
         oldTemplate.AnalysisTempName = analysisesTemplate.AnalysisTempName;
-        oldTemplate.Analyses = analysisesTemplate.Analyses;
+        oldTemplate.Analyses.Clear();
+        
+        foreach (var analysis in analysisesTemplate.Analyses)
+        {
+            oldTemplate.Analyses.Add(analysis);
+        }
+        
+        _context.Update(oldTemplate);
         _context.SaveChanges();
         return true;
     }

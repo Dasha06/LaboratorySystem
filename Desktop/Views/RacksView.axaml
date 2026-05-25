@@ -1,0 +1,70 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Desktop.ViewModels"
+             xmlns:conv="using:Desktop.Converters"
+             xmlns:prims="clr-namespace:Avalonia.Controls.Primitives;assembly=Avalonia.Controls"
+             x:Class="Desktop.Views.RacksView"
+             x:DataType="vm:RacksViewModel">
+    <DockPanel>
+        <TextBlock DockPanel.Dock="Top" Classes="page-title" Text="Штативы"/>
+        <Grid ColumnDefinitions="*,280" RowDefinitions="Auto,*">
+            <Grid Grid.Row="0" Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TabControl Grid.Column="0" ItemsSource="{Binding Tripods}" SelectedItem="{Binding SelectedTripod}" Margin="0,0,12,12">
+                    <TabControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding TripodName}"/>
+                        </DataTemplate>
+                    </TabControl.ItemTemplate>
+                    <TabControl.ContentTemplate>
+                        <DataTemplate/>
+                    </TabControl.ContentTemplate>
+                </TabControl>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center" Margin="0,0,0,12">
+                    <TextBox Width="180" Watermark="Название штатива" Text="{Binding NewTripodName}"/>
+                    <Button Classes="liis-primary" Content="Добавить" Command="{Binding CreateTripodCommand}"/>
+                </StackPanel>
+            </Grid>
+            <Border Grid.Row="1" Grid.Column="0" Classes="liis-card" Margin="0,0,16,0" Padding="8">
+                <ItemsControl ItemsSource="{Binding RackCells}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <prims:UniformGrid Rows="{Binding Rows}" Columns="{Binding Columns}" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="{Binding MaterialType, Converter={x:Static conv:MaterialTypeToBrushConverter.Instance}}"
+                                    CornerRadius="8" Margin="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <TextBlock Text="{Binding Label}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                           Foreground="White" FontWeight="SemiBold" FontSize="10"/>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Border>
+            <StackPanel Grid.Row="1" Grid.Column="1" Spacing="12">
+                <Border Classes="liis-card">
+                    <StackPanel>
+                        <TextBlock Text="Приоритет" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                        <ItemsControl ItemsSource="{Binding Priorities}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Text}" Margin="0,4"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+                
+                <Button Classes="liis-primary" Content="Рабочие листы" 
+                Command="{Binding OpenWorksheetsCommand}" HorizontalAlignment="Stretch" Height="115"/>
+                <ComboBox ItemsSource="{Binding GridSizeOptions}" 
+                SelectedItem="{Binding SelectedGridSizeOption}" PlaceholderText="Размер штатива" HorizontalAlignment="Stretch"/>
+            </StackPanel>
+        </Grid>
+    </DockPanel>
+</UserControl>

@@ -1,0 +1,19 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+             xmlns:vm="using:Desktop.ViewModels"
+             x:Class="Desktop.Views.LoginView"
+             Width="400" Height="370"
+             x:DataType="vm:LoginViewModel">
+    <DockPanel Background="{StaticResource LiisBackgroundBrush}">
+        <Border Classes="liis-card" Width="325" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="32">
+            <StackPanel Spacing="20">
+                <asyncImageLoader:AdvancedImage Source="avares://Desktop/Assets/Vector1.png" Width="250" HorizontalAlignment="Center"/>
+                <TextBox Classes="liis-input" Watermark="Логин" Text="{Binding Login}"/>
+                <TextBox Classes="liis-input" Watermark="Пароль" PasswordChar="*" Text="{Binding Password}"/>
+                <TextBlock Text="{Binding ErrorMessage}" Foreground="Red"/>
+                <Button Classes="liis-primary" Content="Войти" Command="{Binding LoginCommand}" HorizontalAlignment="Stretch"/>
+            </StackPanel>
+        </Border>
+    </DockPanel>
+</UserControl>

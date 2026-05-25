@@ -1,0 +1,40 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Desktop.ViewModels"
+             x:Class="Desktop.Views.ReportsView"
+             x:DataType="vm:ReportsViewModel">
+    <DockPanel>
+        <TextBlock DockPanel.Dock="Top" Classes="page-title" Text="Отчёты"/>
+        <Grid ColumnDefinitions="220,*">
+            <Border Classes="liis-card" Margin="0,0,12,0">
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top" Text="Список отчётов" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                    <ListBox ItemsSource="{Binding ReportFiles}" SelectedItem="{Binding SelectedReportFile, Mode=TwoWay}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" Padding="8,6"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+            </Border>
+            <DockPanel Grid.Column="1">
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="12" Margin="0,0,0,12">
+                    <Button Classes="liis-primary" Content="Выбрать"/>
+                    <Button Classes="liis-primary" Content="Построить отчёт"/>
+                </StackPanel>
+                <Border Classes="liis-card" Padding="0">
+                    <DataGrid ItemsSource="{Binding ServiceRows}" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Шифр" Binding="{Binding Cipher}" Width="*"/>
+                            <DataGridTextColumn Header="Код услуги" Binding="{Binding ServiceCode}" Width="*"/>
+                            <DataGridTextColumn Header="Услуга" Binding="{Binding Service}" Width="*"/>
+                            <DataGridTextColumn Header="Количество" Binding="{Binding Quantity}" Width="*"/>
+                            <DataGridTextColumn Header="Цена" Binding="{Binding Price}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Border>
+            </DockPanel>
+        </Grid>
+    </DockPanel>
+</UserControl>

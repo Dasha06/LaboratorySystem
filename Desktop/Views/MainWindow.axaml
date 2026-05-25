@@ -1,0 +1,21 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Desktop.ViewModels"
+        xmlns:v="using:Desktop.Views"
+        x:Class="Desktop.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="ЛИИС"
+        WindowState="Maximized"
+        Width="1280" Height="800"
+        Background="{StaticResource LiisBackgroundBrush}">
+    <ContentControl Content="{Binding CurrentContent}">
+        <ContentControl.DataTemplates>
+            <DataTemplate DataType="vm:LoginViewModel">
+                <v:LoginView />
+            </DataTemplate>
+            <DataTemplate DataType="vm:ShellViewModel">
+                <v:ShellView />
+            </DataTemplate>
+        </ContentControl.DataTemplates>
+    </ContentControl>
+</Window>

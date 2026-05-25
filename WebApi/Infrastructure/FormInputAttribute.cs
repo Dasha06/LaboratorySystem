@@ -2,9 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Infrastructure;
 
-/// <summary>
-/// POST/PUT принимают поля формы (Swagger показывает отдельные inputs, не JSON).
-/// </summary>
+// показ полей ввода
 [AttributeUsage(AttributeTargets.Method)]
 public sealed class FormInputAttribute : ConsumesAttribute
 {

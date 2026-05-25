@@ -115,7 +115,7 @@ public class AnalysisWorkForm
 public class AnalysesTemplateForm
 {
     public string AnalysisTempName { get; set; } = string.Empty;
-    /// <summary>Id анализов через запятую, например: 1,2,5</summary>
+    //Id анализов через запятую, например: 1,2,5
     public string? AnalysisIds { get; set; }
 }
 
@@ -251,6 +251,6 @@ public class WorkerLoginForm
 
 public class UpdateWorkerRolesForm
 {
-    /// <summary>Id ролей через запятую, например: 1,2</summary>
+    //Id ролей через запятую, например: 1,2
     public string RoleIds { get; set; } = string.Empty;
 }
