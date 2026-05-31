@@ -21,6 +21,8 @@ public class PatientRepositoryImpl : IPatientRepository
         return _context.Patients.First(x => x.PatientId == patientId);
     }
 
+    
+
     public bool CreatePatient(Patient patient)
     {
         _context.Patients.Add(patient);

@@ -1,0 +1,25 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Desktop.ViewModels"
+        x:Class="Desktop.Views.CreatePatientWindow"
+        Width="420" Height="500" WindowStartupLocation="CenterScreen"
+        Title="Создать пациента"
+        x:DataType="vm:CreatePatientViewModel">
+  <StackPanel Margin="12" Spacing="8">
+    <TextBlock Text="Фамилия*"/>
+    <TextBox Text="{Binding LastName}" Classes="liis-input"/>
+    <TextBlock Text="Имя*"/>
+    <TextBox Text="{Binding FirstName}" Classes="liis-input"/>
+    <TextBlock Text="Отчество"/>
+    <TextBox Text="{Binding MiddleName}" Classes="liis-input"/>
+    <TextBlock Text="Дата рождения (гггг-MM-дд)*" />
+    <TextBox Text="{Binding BirthDate}" Classes="liis-input"/>
+    <TextBlock Text="Пол*"/>
+    <ComboBox ItemsSource="{Binding GenderOptions}" SelectedItem="{Binding Gender}"/>
+    <TextBlock Name="ErrorsBlock"/>
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+      <Button Classes="liis-primary" Content="Отмена" Command="{Binding CancelCommand}"/>
+      <Button Classes="liis-primary" Content="Создать" Command="{Binding OkCommand}"/>
+    </StackPanel>
+  </StackPanel>
+</Window>

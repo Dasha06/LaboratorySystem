@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Linq;
 using Desktop.Models;
+using Desktop.Views;
 using Desktop.Services;
 using ReactiveUI;
 
@@ -52,6 +53,8 @@ public class RegistrationViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> SearchCommand { get; }
     public ReactiveCommand<Unit, Unit> CreateOrderCommand { get; }
     public ReactiveCommand<Unit, Unit> AddPatientCommand { get; }
+
+    public Func<Desktop.ViewModels.CreatePatientViewModel, System.Threading.Tasks.Task<PatientDto?>>? ShowCreatePatientDialog { get; set; }
 
     private async Task SearchAsync()
     {
@@ -113,17 +116,38 @@ public class RegistrationViewModel : ViewModelBase
     {
         try
         {
-            var patient = new PatientDto
+            if (ShowCreatePatientDialog != null)
             {
-                PatientFirstName = string.IsNullOrWhiteSpace(FirstName) ? "Имя" : FirstName,
-                PatientLastName = LastName,
-                PatientSecondName = MiddleName,
-                PatientGender = "Ж",
-                PatientBirthday = DateOnly.TryParse(BirthDate, out var d) ? d : null
-            };
-            await AppServices.Api.CreatePatientAsync(patient);
-            await SearchAsync();
-            StatusMessage = "Пациент добавлен";
+                var vm = new Desktop.ViewModels.CreatePatientViewModel
+                {
+                    LastName = LastName,
+                    FirstName = FirstName,
+                    MiddleName = MiddleName,
+                    BirthDate = BirthDate,
+                    Gender = "Ж"
+                };
+                var created = await ShowCreatePatientDialog(vm);
+                if (created != null)
+                {
+                    await AppServices.Api.CreatePatientAsync(created);
+                    await SearchAsync();
+                    StatusMessage = "Пациент добавлен";
+                }
+            }
+            else
+            {
+                var patient = new PatientDto
+                {
+                    PatientFirstName = string.IsNullOrWhiteSpace(FirstName) ? "Имя" : FirstName,
+                    PatientLastName = LastName,
+                    PatientSecondName = MiddleName,
+                    PatientGender = "Ж",
+                    PatientBirthday = DateOnly.TryParse(BirthDate, out var d) ? d : null
+                };
+                await AppServices.Api.CreatePatientAsync(patient);
+                await SearchAsync();
+                StatusMessage = "Пациент добавлен";
+            }
         }
         catch (Exception ex)
         {

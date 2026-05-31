@@ -6,6 +6,7 @@
         <entry key="Desktop/App.axaml" value="Desktop/Desktop.csproj" />
         <entry key="Desktop/Styles/LiisTheme.axaml" value="Desktop/Desktop.csproj" />
         <entry key="Desktop/Views/CreateOrderView.axaml" value="Desktop/Desktop.csproj" />
+        <entry key="Desktop/Views/CreatePatientWindow.axaml" value="Desktop/Desktop.csproj" />
         <entry key="Desktop/Views/LoginView.axaml" value="Desktop/Desktop.csproj" />
         <entry key="Desktop/Views/MainWindow.axaml" value="Desktop/Desktop.csproj" />
         <entry key="Desktop/Views/RacksView.axaml" value="Desktop/Desktop.csproj" />

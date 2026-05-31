@@ -15,7 +15,7 @@
                     <Button Classes="liis-primary" Content="Найти" Command="{Binding SearchCommand}"/>
                 </StackPanel>
             </Border>
-            <Border Classes="liis-card" Padding="0">
+            <Border Classes="liis-card" Padding="0" Grid.Column="1">
                 <DataGrid ItemsSource="{Binding Results}" SelectedItem="{Binding SelectedRow}" AutoGenerateColumns="False" IsReadOnly="True" Height="220">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Комментарий" Binding="{Binding Comment}" Width="*"/>

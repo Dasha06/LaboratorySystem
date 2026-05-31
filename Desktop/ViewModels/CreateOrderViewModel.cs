@@ -41,7 +41,7 @@ public class CreateOrderViewModel : ViewModelBase
         _ = InitializeAsync();
     }
 
-    public string PatientInfo => $"{_patient.FullName}\nДата рождения: {_patient.PatientBirthday:dd.MM.yyyy}\nШифр: {_cipher}";
+    public string PatientInfo => $"{_patient.FullName}\n\n\n Дата рождения: {_patient.PatientBirthday:dd.MM.yyyy}";
 
     public ObservableCollection<LpuDto> Lpus { get; }
     public ObservableCollection<DoctorDto> Doctors { get; }

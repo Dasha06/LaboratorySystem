@@ -143,6 +143,20 @@ public class LaboratoryApiClient
         response.EnsureSuccessStatusCode();
     }
 
+    public async Task UpdateTripodAsync(long tripodId, string name, int maxCell, int analysisDepartmentId, CancellationToken ct = default)
+    {
+        using var content = new MultipartFormDataContent
+        {
+            { new StringContent(name), "TripodName" },
+            { new StringContent(DateOnly.FromDateTime(DateTime.UtcNow).ToString("O")), "TripodCreateDate" },
+            { new StringContent(maxCell.ToString()), "TripodMaxCell" },
+            { new StringContent(analysisDepartmentId.ToString()), "AnalysisDepartmentId" }
+        };
+
+        var response = await _http.PutAsync($"api/Tripods/{tripodId}", content, ct);
+        response.EnsureSuccessStatusCode();
+    }
+
     public async Task<List<TripodBarcodeMaterialDto>> GetTripodBarcodeMaterialsByTripodAsync(long tripodId, CancellationToken ct = default) =>
         await _http.GetFromJsonAsync<List<TripodBarcodeMaterialDto>>($"api/TripodBarcodeMaterials/by-tripod/{tripodId}", JsonOptions, ct) ?? [];
 

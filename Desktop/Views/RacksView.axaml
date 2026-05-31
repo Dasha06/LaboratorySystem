@@ -28,23 +28,27 @@
                     <Button Classes="liis-primary" Content="Добавить" Command="{Binding CreateTripodCommand}"/>
                 </StackPanel>
             </Grid>
-            <Border Grid.Row="1" Grid.Column="0" Classes="liis-card" Margin="0,0,16,0" Padding="8">
-                <ItemsControl ItemsSource="{Binding RackCells}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <prims:UniformGrid Rows="{Binding Rows}" Columns="{Binding Columns}" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border Background="{Binding MaterialType, Converter={x:Static conv:MaterialTypeToBrushConverter.Instance}}"
-                                    CornerRadius="8" Margin="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <TextBlock Text="{Binding Label}" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                           Foreground="White" FontWeight="SemiBold" FontSize="10"/>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+            <Border Grid.Row="1" Grid.Column="0" Classes="liis-card" Margin="0,0,16,0" Padding="6">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding RackCells}" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                  Background="Transparent">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <prims:UniformGrid Rows="{Binding Rows}" Columns="{Binding Columns}" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                    <Border Background="{Binding MaterialType, Converter={x:Static conv:MaterialTypeToBrushConverter.Instance}}"
+                                        CornerRadius="6" Margin="0,0,5,5" Width="120" Height="70"
+                                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                    <TextBlock Text="{Binding Label}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                               Foreground="White" FontWeight="SemiBold" FontSize="10"/>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
             </Border>
             <StackPanel Grid.Row="1" Grid.Column="1" Spacing="12">
                 <Border Classes="liis-card">
@@ -60,10 +64,11 @@
                     </StackPanel>
                 </Border>
                 
-                <Button Classes="liis-primary" Content="Рабочие листы" 
+                <Button Classes="liis-primary" Content="Рабочие листы" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                 Command="{Binding OpenWorksheetsCommand}" HorizontalAlignment="Stretch" Height="115"/>
                 <ComboBox ItemsSource="{Binding GridSizeOptions}" 
-                SelectedItem="{Binding SelectedGridSizeOption}" PlaceholderText="Размер штатива" HorizontalAlignment="Stretch"/>
+                SelectedItem="{Binding SelectedGridSizeOption}" 
+                PlaceholderText="Размер штатива" HorizontalAlignment="Stretch"/>
             </StackPanel>
         </Grid>
     </DockPanel>

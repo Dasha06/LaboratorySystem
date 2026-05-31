@@ -98,6 +98,8 @@ public class RacksViewModel : ViewModelBase
                 {
                     Rows = r;
                     Columns = c;
+                    // persist new size to backend for selected tripod
+                    _ = ApplySelectedGridSizeAsync();
                 }
             }
         }
@@ -115,6 +117,34 @@ public class RacksViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> LoadCommand { get; }
     public ReactiveCommand<Unit, Unit> OpenWorksheetsCommand { get; }
     public ReactiveCommand<Unit, Unit> CreateTripodCommand { get; }
+
+    private bool _isApplyingGridSize = false;
+
+    private async Task ApplySelectedGridSizeAsync()
+    {
+        if (_isApplyingGridSize)
+            return;
+        if (SelectedTripod == null || SelectedGridSizeOption == null)
+            return;
+
+        try
+        {
+            _isApplyingGridSize = true;
+            var maxCell = Rows * Columns;
+            await AppServices.Api.UpdateTripodAsync(SelectedTripod.TripodId, SelectedTripod.TripodName, maxCell, SelectedTripod.AnalysisDepartmentId);
+            SelectedTripod.TripodMaxCell = maxCell;
+            await LoadRackAsync(SelectedTripod.TripodId);
+            StatusMessage = "Размер штатива обновлён";
+        }
+        catch (Exception ex)
+        {
+            StatusMessage = ex.Message;
+        }
+        finally
+        {
+            _isApplyingGridSize = false;
+        }
+    }
 
     private List<TripodDto> _allTripods = [];
 

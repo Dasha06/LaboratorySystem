@@ -17,12 +17,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f8863308-d313-4b1c-bf9f-2527ba4c7f42" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.LaboratorySistem/.idea/avalonia.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.LaboratorySistem/.idea/avalonia.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.LaboratorySistem/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.LaboratorySistem/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysisesTemplateRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysisesTemplateRepositoryImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApi/Infrastructure/FormInputAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/Infrastructure/FormInputAttribute.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApi/Mapping/WorksheetMapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/Mapping/WorksheetMapper.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApi/Models/Forms/EntityForms.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/Models/Forms/EntityForms.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/PatientRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/PatientRepositoryImpl.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/Services/LaboratoryApiClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Services/LaboratoryApiClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/ViewModels/RacksViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/ViewModels/RacksViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/ViewModels/RegistrationViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/ViewModels/RegistrationViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/Views/CreateOrderView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Views/CreateOrderView.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/Views/RacksView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Views/RacksView.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/Views/RegistrationView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Views/RegistrationView.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/Views/RegistrationView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Views/RegistrationView.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/Views/ShellView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Views/ShellView.axaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -223,6 +228,7 @@
       <workItem from="1779623487804" duration="2005000" />
       <workItem from="1779626038536" duration="149000" />
       <workItem from="1779626201219" duration="2892000" />
+      <workItem from="1779965651733" duration="1401000" />
     </task>
     <task id="LOCAL-00001" summary="init worker">
       <option name="closed" value="true" />
