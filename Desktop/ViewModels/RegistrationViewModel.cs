@@ -112,6 +112,12 @@ public class RegistrationViewModel : ViewModelBase
             _shell.OpenCreateOrder(SelectedPatient);
     }
 
+    public async Task EditOrderAsync(OrderDto order)
+    {
+        var details = await AppServices.Api.GetOrderDetailsAsync(order.OrderId);
+        _shell.OpenEditOrder(details);
+    }
+
     private async Task AddPatientAsync()
     {
         try

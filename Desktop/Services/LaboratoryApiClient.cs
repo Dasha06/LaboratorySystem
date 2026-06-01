@@ -45,6 +45,24 @@ public class LaboratoryApiClient
         return patient;
     }
 
+    public async Task UpdatePatientAsync(long patientId, PatientDto patient, CancellationToken ct = default)
+    {
+        using var content = new MultipartFormDataContent
+        {
+            { new StringContent(patient.PatientFirstName ?? string.Empty), "PatientFirstName" },
+            { new StringContent(patient.PatientGender ?? string.Empty), "PatientGender" }
+        };
+        if (!string.IsNullOrEmpty(patient.PatientSecondName))
+            content.Add(new StringContent(patient.PatientSecondName), "PatientSecondName");
+        if (!string.IsNullOrEmpty(patient.PatientLastName))
+            content.Add(new StringContent(patient.PatientLastName), "PatientLastName");
+        if (patient.PatientBirthday.HasValue)
+            content.Add(new StringContent(patient.PatientBirthday.Value.ToString("O")), "PatientBirthday");
+
+        var response = await _http.PutAsync($"api/Patients/{patientId}", content, ct);
+        response.EnsureSuccessStatusCode();
+    }
+
     public async Task<List<OrderDto>> GetOrdersAsync(CancellationToken ct = default) =>
         await _http.GetFromJsonAsync<List<OrderDto>>("api/Orders", JsonOptions, ct) ?? [];
 
@@ -71,6 +89,24 @@ public class LaboratoryApiClient
         return order;
     }
 
+    public async Task UpdateOrderAsync(long orderId, OrderDto order, CancellationToken ct = default)
+    {
+        using var content = new MultipartFormDataContent
+        {
+            { new StringContent(order.OrderStatus ?? string.Empty), "OrderStatus" },
+            { new StringContent(order.PatientId.ToString()), "PatientId" },
+            { new StringContent(order.LpuId.ToString()), "LpuId" },
+            { new StringContent(order.OrderIsCountingInContract.ToString()), "OrderIsCountingInContract" }
+        };
+        if (order.DocId.HasValue)
+            content.Add(new StringContent(order.DocId.Value.ToString()), "DocId");
+        if (!string.IsNullOrEmpty(order.OrderLpuDepartment))
+            content.Add(new StringContent(order.OrderLpuDepartment), "OrderLpuDepartment");
+
+        var response = await _http.PutAsync($"api/Orders/{orderId}", content, ct);
+        response.EnsureSuccessStatusCode();
+    }
+
     public async Task<List<LpuDto>> GetLpusAsync(CancellationToken ct = default) =>
         await _http.GetFromJsonAsync<List<LpuDto>>("api/Lpus", JsonOptions, ct) ?? [];
 
@@ -85,6 +121,9 @@ public class LaboratoryApiClient
 
     public async Task<List<AnalysiseDto>> GetAnalysesAsync(CancellationToken ct = default) =>
         await _http.GetFromJsonAsync<List<AnalysiseDto>>("api/Analyses", JsonOptions, ct) ?? [];
+
+    public async Task<List<LpuContractDto>> GetLpuContractsAsync(long lpuId, CancellationToken ct = default) =>
+        await _http.GetFromJsonAsync<List<LpuContractDto>>($"api/Lpus/{lpuId}/contracts", JsonOptions, ct) ?? [];
 
     public async Task<List<RoleDto>> GetRolesAsync(CancellationToken ct = default) =>
         await _http.GetFromJsonAsync<List<RoleDto>>("api/Roles", JsonOptions, ct) ?? [];

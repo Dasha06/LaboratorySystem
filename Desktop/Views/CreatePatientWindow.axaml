@@ -12,8 +12,8 @@
     <TextBox Text="{Binding FirstName}" Classes="liis-input"/>
     <TextBlock Text="Отчество"/>
     <TextBox Text="{Binding MiddleName}" Classes="liis-input"/>
-    <TextBlock Text="Дата рождения (гггг-MM-дд)*" />
-    <TextBox Text="{Binding BirthDate}" Classes="liis-input"/>
+    <TextBlock Text="Дата рождения*" />
+    <MaskedTextBox Text="{Binding BirthDate}" Classes="liis-input" Mask="00.00.0000"/>
     <TextBlock Text="Пол*"/>
     <ComboBox ItemsSource="{Binding GenderOptions}" SelectedItem="{Binding Gender}"/>
     <TextBlock Name="ErrorsBlock"/>

@@ -10,6 +10,7 @@ public class CreateOrderViewModel : ViewModelBase
 {
     private readonly ShellViewModel _shell;
     private readonly PatientDto _patient;
+    private readonly OrderDto? _editingOrder;
     private LpuDto? _selectedLpu;
     private DoctorDto? _selectedDoctor;
     private MaterialDto? _selectedMaterial;
@@ -18,13 +19,20 @@ public class CreateOrderViewModel : ViewModelBase
     private string _department = string.Empty;
     private string _newBarcodeId = string.Empty;
     private DateTimeOffset _takenDate = DateTime.Today;
+    private string _orderStatus = "Новый";
+    private bool _orderIsCountingInContract;
     private string? _statusMessage;
     private long? _orderId;
+    private AnalysisSelectionItem? _selectedAnalysis;
+    private List<ContractAnalysisDto> _selectedLpuContractAnalyses = new List<ContractAnalysisDto>();
 
-    public CreateOrderViewModel(ShellViewModel shell, PatientDto patient)
+    public CreateOrderViewModel(ShellViewModel shell, PatientDto patient, OrderDto? editingOrder = null)
     {
         _shell = shell;
         _patient = patient;
+        _editingOrder = editingOrder;
+        OrderStatus = editingOrder?.OrderStatus ?? "Новый";
+        OrderIsCountingInContract = editingOrder?.OrderIsCountingInContract ?? false;
         Lpus = new ObservableCollection<LpuDto>();
         Doctors = new ObservableCollection<DoctorDto>();
         FilteredDoctors = new ObservableCollection<DoctorDto>();
@@ -40,7 +48,7 @@ public class CreateOrderViewModel : ViewModelBase
         SetYesterdayCommand = ReactiveCommand.Create(() => { TakenDate = DateTimeOffset.Parse(DateTime.Today.AddDays(-1).ToString()); });
         
         ToggleAnalysisCommand = ReactiveCommand.Create<AnalysisSelectionItem>(ToggleAnalysisItem);
-        CreateCommand = ReactiveCommand.CreateFromTask(CreateOrderAsync);
+        CreateCommand = ReactiveCommand.CreateFromTask(SubmitOrderAsync);
         CancelCommand = ReactiveCommand.Create(_shell.BackFromCreateOrder);
         _ = InitializeAsync();
     }
@@ -57,6 +65,33 @@ public class CreateOrderViewModel : ViewModelBase
     public ObservableCollection<AnalysisSelectionItem> AnalysisChoices { get; }
     public ObservableCollection<OrderSummaryRow> SummaryRows { get; }
 
+    public AnalysisSelectionItem? SelectedAnalysis
+    {
+        get => _selectedAnalysis;
+        set
+        {
+            if (EqualityComparer<AnalysisSelectionItem?>.Default.Equals(_selectedAnalysis, value))
+                return;
+
+            this.RaiseAndSetIfChanged(ref _selectedAnalysis, value);
+
+            if (value == null)
+                return;
+
+            if (value.IsSelected)
+            {
+                RemoveAnalysisItem(value);
+            }
+            else
+            {
+                AddAnalysisItem(value);
+            }
+
+            _selectedAnalysis = null;
+            this.RaisePropertyChanged(nameof(SelectedAnalysis));
+        }
+    }
+
     public LpuDto? SelectedLpu
     {
         get => _selectedLpu;
@@ -64,7 +99,7 @@ public class CreateOrderViewModel : ViewModelBase
         {
             this.RaiseAndSetIfChanged(ref _selectedLpu, value);
             UpdateFilteredDoctors();
-            LoadAnalysesForSelectedLpu();
+            _ = LoadAnalysesForSelectedLpuAsync();
             this.RaisePropertyChanged(nameof(IsLpuSelected));
         }
     }
@@ -80,6 +115,12 @@ public class CreateOrderViewModel : ViewModelBase
             LoadAnalysesForDepartment();
         }
     }
+
+    public string OrderStatus { get => _orderStatus; set => this.RaiseAndSetIfChanged(ref _orderStatus, value); }
+    public bool OrderIsCountingInContract { get => _orderIsCountingInContract; set => this.RaiseAndSetIfChanged(ref _orderIsCountingInContract, value); }
+    public bool IsEditMode => _editingOrder != null;
+    public string PageTitle => IsEditMode ? "Редактирование заказа" : "Создание заказа";
+    public string SubmitButtonText => IsEditMode ? "Сохранить" : "Создать";
 
     public string Cipher { get => _cipher; set => this.RaiseAndSetIfChanged(ref _cipher, value); }
     public string Department { get => _department; set => this.RaiseAndSetIfChanged(ref _department, value); }
@@ -124,11 +165,36 @@ public class CreateOrderViewModel : ViewModelBase
             foreach (var m in await AppServices.Api.GetMaterialsAsync()) Materials.Add(m);
             foreach (var dep in await AppServices.Api.GetAnalysisDepartmentsAsync()) Departments.Add(dep);
             _allAnalyses = await AppServices.Api.GetAnalysesAsync();
-            if (Lpus.Count > 0) SelectedLpu = Lpus[0];
-            if (FilteredDoctors.Count > 0) SelectedDoctor = FilteredDoctors[0];
+            if (Lpus.Count > 0)
+            {
+                if (_editingOrder != null)
+                {
+                    var desiredLpu = Lpus.FirstOrDefault(l => l.LpuId == _editingOrder.LpuId) ?? Lpus[0];
+                    this.RaiseAndSetIfChanged(ref _selectedLpu, desiredLpu);
+                    UpdateFilteredDoctors();
+                    await LoadAnalysesForSelectedLpuAsync();
+                }
+                else
+                {
+                    SelectedLpu = Lpus[0];
+                }
+            }
+
+            if (_editingOrder != null)
+            {
+                SelectedDoctor = FilteredDoctors.FirstOrDefault(d => d.DocId == _editingOrder.DocId);
+            }
+            else if (FilteredDoctors.Count > 0)
+            {
+                SelectedDoctor = FilteredDoctors[0];
+            }
+
             if (Materials.Count > 0) SelectedMaterial = Materials[0];
             if (Departments.Count > 0) SelectedDepartment = Departments[0];
             NewBarcodeId = DateTime.UtcNow.Ticks.ToString()[..12];
+
+            if (_editingOrder != null)
+                await ApplyEditingOrderAsync();
         }
         catch (Exception ex)
         {
@@ -155,44 +221,134 @@ public class CreateOrderViewModel : ViewModelBase
             SelectedDoctor = null;
     }
 
-    private void LoadAnalysesForSelectedLpu()
+    private async Task ApplyEditingOrderAsync()
+    {
+        if (_editingOrder == null)
+            return;
+
+        Department = _editingOrder.OrderLpuDepartment ?? string.Empty;
+        OrderStatus = _editingOrder.OrderStatus;
+        OrderIsCountingInContract = _editingOrder.OrderIsCountingInContract;
+
+        if (_editingOrder.BarcodeMaterials != null)
+        {
+            foreach (var bm in _editingOrder.BarcodeMaterials)
+            {
+                var materialId = bm.MaterialId ?? 0;
+                MaterialRows.Add(new OrderMaterialRow
+                {
+                    MaterialType = bm.Material?.MaterialName ?? string.Empty,
+                    Ids = bm.BarcodeMatId.ToString("0"),
+                    TakenDate = string.Empty,
+                    Comment = string.Empty,
+                    BarcodeMatId = bm.BarcodeMatId,
+                    MaterialId = materialId,
+                    AnalysisDepId = bm.AnalysisDepId
+                });
+
+                if (bm.BarcodeAnalysises != null)
+                {
+                    foreach (var ba in bm.BarcodeAnalysises)
+                    {
+                        SummaryRows.Add(new OrderSummaryRow
+                        {
+                            Ids = bm.BarcodeMatId.ToString("0"),
+                            Code = ba.Analysis?.AnalysisCodeName ?? string.Empty,
+                            Cipher = Cipher,
+                            Name = ba.Analysis?.AnalysisName ?? string.Empty,
+                            AnalysisId = ba.AnalysisId,
+                            BarcodeMatId = bm.BarcodeMatId
+                        });
+                    }
+                }
+            }
+        }
+    }
+
+    private async Task LoadAnalysesForSelectedLpuAsync()
     {
         AnalysisChoices.Clear();
-        if (SelectedLpu == null) return;
+        DepartmentCategories.Clear();
+        MaterialRows.Clear();
+        SummaryRows.Clear();
+        _selectedLpuContractAnalyses = [];
 
-        foreach (var analysis in _allAnalyses)
-            AnalysisChoices.Add(new AnalysisSelectionItem
+        if (SelectedLpu == null)
+            return;
+
+        try
+        {
+            var lpuContracts = await AppServices.Api.GetLpuContractsAsync(SelectedLpu.LpuId);
+            if (lpuContracts.Count == 0)
+                return;
+
+            var activeContracts = lpuContracts.Where(c => c.ConLpuIsActive).ToList();
+            if (activeContracts.Count == 0)
+                activeContracts = lpuContracts;
+
+            var contractAnalyses = new List<ContractAnalysisDto>();
+            foreach (var lpuContract in activeContracts)
             {
-                Code = analysis.AnalysisCodeName,
-                Name = analysis.AnalysisName,
-                AnalysisId = analysis.AnalysisId,
-                AnalysisDepId = analysis.AnalysisDepId ?? 0
-            });
+                if (lpuContract.Contract == null)
+                    continue;
+
+                var analyses = await AppServices.Api.GetContractAnalysesByContractAsync(lpuContract.Contract.ContractId);
+                contractAnalyses.AddRange(analyses);
+            }
+
+            _selectedLpuContractAnalyses = contractAnalyses
+                .Where(a => a.Analysis != null)
+                .GroupBy(a => a.AnalysisId)
+                .Select(g => g.First())
+                .ToList();
+
+            foreach (var contractAnalysis in _selectedLpuContractAnalyses)
+            {
+                AnalysisChoices.Add(new AnalysisSelectionItem
+                {
+                    Code = contractAnalysis.Analysis?.AnalysisCodeName ?? string.Empty,
+                    Name = contractAnalysis.Analysis?.AnalysisName ?? string.Empty,
+                    AnalysisId = contractAnalysis.AnalysisId,
+                    AnalysisDepId = contractAnalysis.Analysis?.AnalysisDepId ?? 0,
+                    ToggleCommand = ToggleAnalysisCommand
+                });
+            }
+        }
+        catch (Exception ex)
+        {
+            StatusMessage = ex.Message;
+        }
     }
 
     private void LoadAnalysesForDepartment()
     {
         AnalysisChoices.Clear();
         DepartmentCategories.Clear();
-        if (SelectedDepartment == null) return;
+        if (SelectedDepartment == null)
+            return;
 
-        var depAnalyses = _allAnalyses.Where(a => a.AnalysisDepId == SelectedDepartment.AnalysisDepId).ToList();
+        var depAnalyses = _selectedLpuContractAnalyses
+            .Where(a => a.Analysis?.AnalysisDepId == SelectedDepartment.AnalysisDepId)
+            .ToList();
+
         foreach (var a in depAnalyses.Take(8))
             DepartmentCategories.Add(new AnalysisSelectionItem
             {
-                Code = a.AnalysisCodeName,
-                Name = a.AnalysisName,
+                Code = a.Analysis?.AnalysisCodeName ?? string.Empty,
+                Name = a.Analysis?.AnalysisName ?? string.Empty,
                 AnalysisId = a.AnalysisId,
-                AnalysisDepId = SelectedDepartment.AnalysisDepId
+                AnalysisDepId = SelectedDepartment.AnalysisDepId,
+                ToggleCommand = ToggleAnalysisCommand
             });
 
         foreach (var a in depAnalyses)
             AnalysisChoices.Add(new AnalysisSelectionItem
             {
-                Code = a.AnalysisCodeName,
-                Name = a.AnalysisName,
+                Code = a.Analysis?.AnalysisCodeName ?? string.Empty,
+                Name = a.Analysis?.AnalysisName ?? string.Empty,
                 AnalysisId = a.AnalysisId,
-                AnalysisDepId = SelectedDepartment.AnalysisDepId
+                AnalysisDepId = SelectedDepartment.AnalysisDepId,
+                ToggleCommand = ToggleAnalysisCommand
             });
     }
 
@@ -207,6 +363,23 @@ public class CreateOrderViewModel : ViewModelBase
 
         var material = ResolveMaterialByAnalysis(item);
         if (material == null) return;
+
+        var existingRow = MaterialRows.FirstOrDefault(m => m.MaterialId == material.MaterialId && m.AnalysisDepId == item.AnalysisDepId);
+        if (existingRow != null)
+        {
+            item.BarcodeMatId = existingRow.BarcodeMatId;
+            item.IsSelected = true;
+            SummaryRows.Add(new OrderSummaryRow
+            {
+                Ids = existingRow.Ids,
+                Code = item.Code,
+                Cipher = Cipher,
+                Name = item.Name,
+                AnalysisId = item.AnalysisId,
+                BarcodeMatId = existingRow.BarcodeMatId
+            });
+            return;
+        }
 
         if (!decimal.TryParse(NewBarcodeId, out var barcodeId))
         {
@@ -250,15 +423,19 @@ public class CreateOrderViewModel : ViewModelBase
         item.IsSelected = false;
         item.BarcodeMatId = null;
 
-        if (barcode.HasValue)
+        if (!barcode.HasValue)
+            return;
+
+        var summaryRow = SummaryRows.FirstOrDefault(s => s.BarcodeMatId == barcode.Value && s.AnalysisId == item.AnalysisId);
+        if (summaryRow != null)
+            SummaryRows.Remove(summaryRow);
+
+        var remainingSummaryForBarcode = SummaryRows.Any(s => s.BarcodeMatId == barcode.Value);
+        if (!remainingSummaryForBarcode)
         {
             var materialRow = MaterialRows.FirstOrDefault(m => m.BarcodeMatId == barcode.Value);
             if (materialRow != null)
                 MaterialRows.Remove(materialRow);
-
-            var summaryRows = SummaryRows.Where(s => s.BarcodeMatId == barcode.Value).ToList();
-            foreach (var summary in summaryRows)
-                SummaryRows.Remove(summary);
         }
     }
 
@@ -303,9 +480,9 @@ public class CreateOrderViewModel : ViewModelBase
                 PatientId = _patient.PatientId,
                 LpuId = SelectedLpu.LpuId,
                 DocId = SelectedDoctor?.DocId,
-                OrderStatus = "Новый",
+                OrderStatus = OrderStatus,
                 OrderLpuDepartment = Department,
-                OrderIsCountingInContract = false
+                OrderIsCountingInContract = OrderIsCountingInContract
             };
             await AppServices.Api.CreateOrderAsync(order);
             var orders = await AppServices.Api.GetOrdersAsync();
@@ -346,4 +523,39 @@ public class CreateOrderViewModel : ViewModelBase
             StatusMessage = ex.Message;
         }
     }
+
+    private async Task UpdateOrderAsync()
+    {
+        try
+        {
+            if (_editingOrder == null)
+                return;
+
+            if (SelectedLpu == null)
+            {
+                StatusMessage = "Выберите ЛПУ";
+                return;
+            }
+
+            var order = new OrderDto
+            {
+                PatientId = _patient.PatientId,
+                LpuId = SelectedLpu.LpuId,
+                DocId = SelectedDoctor?.DocId,
+                OrderStatus = OrderStatus,
+                OrderLpuDepartment = Department,
+                OrderIsCountingInContract = OrderIsCountingInContract
+            };
+
+            await AppServices.Api.UpdateOrderAsync(_editingOrder.OrderId, order);
+            StatusMessage = "Заказ обновлён";
+            _shell.Navigate(NavSection.Registration);
+        }
+        catch (Exception ex)
+        {
+            StatusMessage = ex.Message;
+        }
+    }
+
+    private Task SubmitOrderAsync() => _editingOrder != null ? UpdateOrderAsync() : CreateOrderAsync();
 }

@@ -1,3 +1,4 @@
+using System.Reactive;
 using ReactiveUI;
 
 namespace Desktop.Models;
@@ -20,7 +21,7 @@ public class PatientDto
     public string PatientGender { get; set; } = string.Empty;
 
     public string FullName =>
-        string.Join(" ", new[] { PatientLastName, PatientFirstName, PatientSecondName }
+        string.Join(" ", new[] { PatientSecondName, PatientFirstName, PatientLastName }
             .Where(s => !string.IsNullOrWhiteSpace(s)));
 }
 
@@ -144,6 +145,15 @@ public class ContractDto
     public string ContractName { get; set; } = string.Empty;
 }
 
+public class LpuContractDto
+{
+    public long ConLpuId { get; set; }
+    public long ContractId { get; set; }
+    public long LpuId { get; set; }
+    public bool ConLpuIsActive { get; set; }
+    public ContractDto? Contract { get; set; }
+}
+
 public class AnalysisSelectionItem : ReactiveUI.ReactiveObject
 {
     private bool _isSelected;
@@ -160,6 +170,8 @@ public class AnalysisSelectionItem : ReactiveUI.ReactiveObject
         get => _barcodeMatId;
         set => this.RaiseAndSetIfChanged(ref _barcodeMatId, value);
     }
+
+    public ReactiveCommand<AnalysisSelectionItem, Unit>? ToggleCommand { get; set; }
 
     public long AnalysisId { get; set; }
     public string Code { get; set; } = string.Empty;

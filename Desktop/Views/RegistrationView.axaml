@@ -24,7 +24,7 @@
             </Grid>
             <TextBlock Text="Найдено" FontSize="20" FontWeight="SemiBold"/>
             <Border Classes="liis-card" Padding="0">
-                <DataGrid ItemsSource="{Binding FoundPatients}" SelectedItem="{Binding SelectedPatient}" AutoGenerateColumns="False" IsReadOnly="True" Height="300">
+                <DataGrid x:Name="PatientsGrid" ItemsSource="{Binding FoundPatients}" SelectedItem="{Binding SelectedPatient}" AutoGenerateColumns="False" IsReadOnly="True" Height="300" DoubleTapped="PatientsGrid_DoubleTapped">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="ПИН" Binding="{Binding PatientId}" Width="100"/>
                         <DataGridTextColumn Header="Фамилия" Binding="{Binding PatientSecondName}" Width="300"/>
@@ -37,7 +37,7 @@
             </Border>
             <TextBlock Text="Заказы" FontSize="20" FontWeight="SemiBold"/>
             <Border Classes="liis-card" Padding="0">
-                <DataGrid ItemsSource="{Binding Orders}" AutoGenerateColumns="False" IsReadOnly="True" Height="250">
+                <DataGrid x:Name="OrdersGrid" ItemsSource="{Binding Orders}" AutoGenerateColumns="False" IsReadOnly="True" Height="250" DoubleTapped="OrdersGrid_DoubleTapped">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="№ заказа" Binding="{Binding OrderId}" Width="*"/>
                         <DataGridTextColumn Header="Статус" Binding="{Binding OrderStatus}" Width="*"/>

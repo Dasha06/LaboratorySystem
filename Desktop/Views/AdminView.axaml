@@ -22,7 +22,7 @@
                         </DataGrid>
                     </StackPanel>
                 </Border>
-                <Border Grid.Column="1" Padding="16" Classes="liis-card">
+                <Border Grid.Column="1" Padding="16" Classes="liis-card" Margin="0,0,16,16">
                     <StackPanel Spacing="12">
                         <TextBlock FontSize="16" FontWeight="SemiBold" Text="Работники"/>
                         <Grid ColumnDefinitions="2*,2*,2*" RowDefinitions="Auto,Auto">
@@ -47,7 +47,7 @@
                         </DataGrid>
                     </StackPanel>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="0" Padding="16" Classes="liis-card">
+                <Border Grid.Row="1" Grid.Column="0" Padding="16" Classes="liis-card" Margin="0,0,16,16">
                     <StackPanel Spacing="12">
                         <TextBlock FontSize="16" FontWeight="SemiBold" Text="Материалы и отделения"/>
                         <StackPanel Orientation="Horizontal" Spacing="8">
@@ -72,7 +72,7 @@
                         </DataGrid>
                     </StackPanel>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="1" Padding="16" Classes="liis-card">
+                <Border Grid.Row="1" Grid.Column="1" Padding="16" Classes="liis-card" Margin="0,0,16,16">
                     <StackPanel Spacing="12">
                         <TextBlock FontSize="16" FontWeight="SemiBold" Text="Анализы и единицы измерения"/>
                         <Grid ColumnDefinitions="2*,2*">
@@ -106,7 +106,7 @@
                         </DataGrid>
                     </StackPanel>
                 </Border>
-                <Border Grid.Row="2" Grid.Column="0" Padding="16" Classes="liis-card">
+                <Border Grid.Row="2" Grid.Column="0" Padding="16" Classes="liis-card" Margin="0,0,16,16">
                     <StackPanel Spacing="12">
                         <TextBlock FontSize="16" FontWeight="SemiBold" Text="ЛПУ и контракты"/>
                         <StackPanel Orientation="Horizontal" Spacing="8">
@@ -140,7 +140,7 @@
                         </StackPanel>
                     </StackPanel>
                 </Border>
-                <Border Grid.Row="2" Grid.Column="1" Padding="16" Classes="liis-card">
+                <Border Grid.Row="2" Grid.Column="1" Padding="16" Classes="liis-card" Margin="0,0,16,16">
                     <StackPanel Spacing="12">
                         <TextBlock FontSize="16" FontWeight="SemiBold" Text="Анализы в контракте"/>
                         <StackPanel Orientation="Horizontal" Spacing="8">

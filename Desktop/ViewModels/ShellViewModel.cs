@@ -86,6 +86,22 @@ public class ShellViewModel : ViewModelBase
         CurrentPage = new CreateOrderViewModel(this, patient);
     }
 
+    public void OpenEditOrder(OrderDto order)
+    {
+        var patient = order.Patient ?? new PatientDto
+        {
+            PatientId = order.PatientId,
+            PatientFirstName = order.Patient?.PatientFirstName ?? string.Empty,
+            PatientSecondName = order.Patient?.PatientSecondName,
+            PatientLastName = order.Patient?.PatientLastName,
+            PatientBirthday = order.Patient?.PatientBirthday,
+            PatientGender = order.Patient?.PatientGender ?? "Ж"
+        };
+
+        AppServices.Session.SelectedPatient = patient;
+        CurrentPage = new CreateOrderViewModel(this, patient, order);
+    }
+
     public void BackFromCreateOrder()
     {
         Navigate(NavSection.Registration);
