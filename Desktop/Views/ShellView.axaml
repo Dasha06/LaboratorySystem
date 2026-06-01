@@ -23,6 +23,8 @@
                     <Button Content="Результаты" Command="{Binding NavigateCommand}" CommandParameter="Results" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="12,10" CornerRadius="10" Background="Transparent" IsVisible="{Binding !IsResultsActive}"/>
                     <Button Content="Отчёты" Command="{Binding NavigateCommand}" CommandParameter="Reports" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="12,10" CornerRadius="10" Background="{StaticResource LiisSidebarActiveBrush}" IsVisible="{Binding IsReportsActive}"/>
                     <Button Content="Отчёты" Command="{Binding NavigateCommand}" CommandParameter="Reports" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="12,10" CornerRadius="10" Background="Transparent" IsVisible="{Binding !IsReportsActive}"/>
+                    <Button Content="Администрирование" Command="{Binding NavigateCommand}" CommandParameter="Admin" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="12,10" CornerRadius="10" Background="{StaticResource LiisSidebarActiveBrush}" IsVisible="{Binding IsAdminActive}"/>
+                    <Button Content="Администрирование" Command="{Binding NavigateCommand}" CommandParameter="Admin" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="12,10" CornerRadius="10" Background="Transparent" IsVisible="{Binding !IsAdminActive}"/>
                 </StackPanel>
             </DockPanel>
         </Border>
@@ -35,6 +37,7 @@
                 <DataTemplate DataType="vm:ResultsViewModel"><v:ResultsView /></DataTemplate>
                 <DataTemplate DataType="vm:ReportsViewModel"><v:ReportsView /></DataTemplate>
                 <DataTemplate DataType="vm:WorkflowsViewModel"><v:WorkflowsView /></DataTemplate>
+                <DataTemplate DataType="vm:AdminViewModel"><v:AdminView /></DataTemplate>
                 <DataTemplate DataType="vm:CreateOrderViewModel"><v:CreateOrderView /></DataTemplate>
             </ContentControl.DataTemplates>
         </ContentControl>

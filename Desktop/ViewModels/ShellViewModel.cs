@@ -40,6 +40,7 @@ public class ShellViewModel : ViewModelBase
     public bool IsResultsActive => ActiveSection == NavSection.Results;
     public bool IsReportsActive => ActiveSection == NavSection.Reports;
     public bool IsWorkflowsActive => ActiveSection == NavSection.Workflows;
+    public bool IsAdminActive => ActiveSection == NavSection.Admin;
 
     public ReactiveCommand<string, Unit> NavigateCommand { get; }
     public ReactiveCommand<Unit, Unit> LogoutCommand { get; }
@@ -64,6 +65,7 @@ public class ShellViewModel : ViewModelBase
             NavSection.Reports => new ReportsViewModel(this),
             NavSection.Workflows => new WorkflowsViewModel(this),
             NavSection.Worksheets => new WorksheetsViewModel(this),
+            NavSection.Admin => new AdminViewModel(this),
             _ => new RegistrationViewModel(this)
         };
     }

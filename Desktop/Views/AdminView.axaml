@@ -1,0 +1,177 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Desktop.ViewModels"
+             x:Class="Desktop.Views.AdminView"
+             x:DataType="vm:AdminViewModel">
+    <ScrollViewer>
+        <StackPanel Spacing="16">
+            <TextBlock Classes="page-title" Text="Администрирование"/>
+            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto">
+                <Border Grid.Column="0" Padding="16" Classes="liis-card" Margin="0,0,16,16">
+                    <StackPanel Spacing="12">
+                        <TextBlock FontSize="16" FontWeight="SemiBold" Text="Роли"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBox Width="240" Classes="liis-input" Watermark="Название роли" Text="{Binding NewRoleName}"/>
+                            <Button Classes="liis-primary" Content="Добавить роль" Command="{Binding CreateRoleCommand}"/>
+                        </StackPanel>
+                        <DataGrid ItemsSource="{Binding Roles}" AutoGenerateColumns="False" IsReadOnly="True" Height="180">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Binding="{Binding RoleId}" Width="80"/>
+                                <DataGridTextColumn Header="Название" Binding="{Binding RoleName}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="1" Padding="16" Classes="liis-card">
+                    <StackPanel Spacing="12">
+                        <TextBlock FontSize="16" FontWeight="SemiBold" Text="Работники"/>
+                        <Grid ColumnDefinitions="2*,2*,2*" RowDefinitions="Auto,Auto">
+                            <TextBox Classes="liis-input" Watermark="ФИО" Text="{Binding NewWorkerName}" />
+                            <TextBox Classes="liis-input" Watermark="Логин" Text="{Binding NewWorkerLogin}" />
+                            <TextBox Classes="liis-input" Watermark="Пароль" Text="{Binding NewWorkerPassword}" />
+                            <ComboBox Grid.Row="1" ItemsSource="{Binding Roles}" SelectedItem="{Binding SelectedRoleForWorker}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding RoleName}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                            <Button Grid.Row="1" Grid.Column="1" Classes="liis-primary" Content="Добавить работника" Command="{Binding CreateWorkerCommand}" />
+                        </Grid>
+                        <DataGrid ItemsSource="{Binding Workers}" AutoGenerateColumns="False" IsReadOnly="True" Height="180">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Binding="{Binding WorkerId}" Width="80"/>
+                                <DataGridTextColumn Header="ФИО" Binding="{Binding WorkerFio}" Width="*"/>
+                                <DataGridTextColumn Header="Логин" Binding="{Binding WorkerLogin}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="0" Padding="16" Classes="liis-card">
+                    <StackPanel Spacing="12">
+                        <TextBlock FontSize="16" FontWeight="SemiBold" Text="Материалы и отделения"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBox Width="240" Classes="liis-input" Watermark="Название материала" Text="{Binding NewMaterialName}"/>
+                            <Button Classes="liis-primary" Content="Добавить материал" Command="{Binding CreateMaterialCommand}"/>
+                        </StackPanel>
+                        <DataGrid ItemsSource="{Binding Materials}" AutoGenerateColumns="False" IsReadOnly="True" Height="140">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Binding="{Binding MaterialId}" Width="80"/>
+                                <DataGridTextColumn Header="Название" Binding="{Binding MaterialName}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBox Width="240" Classes="liis-input" Watermark="Название отдела" Text="{Binding NewDepartmentName}"/>
+                            <Button Classes="liis-primary" Content="Добавить отделение" Command="{Binding CreateDepartmentCommand}"/>
+                        </StackPanel>
+                        <DataGrid ItemsSource="{Binding Departments}" AutoGenerateColumns="False" IsReadOnly="True" Height="140">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Binding="{Binding AnalysisDepId}" Width="80"/>
+                                <DataGridTextColumn Header="Название" Binding="{Binding AnalysisDepName}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="1" Padding="16" Classes="liis-card">
+                    <StackPanel Spacing="12">
+                        <TextBlock FontSize="16" FontWeight="SemiBold" Text="Анализы и единицы измерения"/>
+                        <Grid ColumnDefinitions="2*,2*">
+                            <TextBox Classes="liis-input" Watermark="Название анализа" Text="{Binding NewAnalysisName}" />
+                            <TextBox Classes="liis-input" Watermark="Код анализа" Text="{Binding NewAnalysisCode}" />
+                            <ComboBox Grid.Row="1" ItemsSource="{Binding Departments}" SelectedItem="{Binding SelectedAnalysisDepartmentForAnalysis}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding AnalysisDepName}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <Button Grid.Row="1" Grid.Column="1" Classes="liis-primary" Content="Добавить анализ" Command="{Binding CreateAnalysisCommand}" />
+                        </Grid>
+                        <DataGrid ItemsSource="{Binding Analyses}" AutoGenerateColumns="False" IsReadOnly="True" Height="140">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Binding="{Binding AnalysisId}" Width="80"/>
+                                <DataGridTextColumn Header="Название" Binding="{Binding AnalysisName}" Width="*"/>
+                                <DataGridTextColumn Header="Код" Binding="{Binding AnalysisCodeName}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,8,0,0">
+                            <TextBox Width="240" Classes="liis-input" Watermark="Название единицы" Text="{Binding NewMeasurementName}"/>
+                            <Button Classes="liis-primary" Content="Добавить единицу" Command="{Binding CreateMeasurementCommand}"/>
+                        </StackPanel>
+                        <DataGrid ItemsSource="{Binding Measurements}" AutoGenerateColumns="False" IsReadOnly="True" Height="120">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Binding="{Binding MeasurementId}" Width="80"/>
+                                <DataGridTextColumn Header="Название" Binding="{Binding MeasurementName}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="0" Padding="16" Classes="liis-card">
+                    <StackPanel Spacing="12">
+                        <TextBlock FontSize="16" FontWeight="SemiBold" Text="ЛПУ и контракты"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBox Width="240" Classes="liis-input" Watermark="Название ЛПУ" Text="{Binding NewLpuName}"/>
+                            <TextBox Width="240" Classes="liis-input" Watermark="Email ЛПУ" Text="{Binding NewLpuEmail}"/>
+                            <Button Classes="liis-primary" Content="Добавить ЛПУ" Command="{Binding CreateLpuCommand}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,8,0,0">
+                            <TextBox Width="180" Classes="liis-input" Watermark="Название контракта" Text="{Binding NewContractName}"/>
+                            <TextBox Width="120" Classes="liis-input" Watermark="Сумма" Text="{Binding NewContractMoney}"/>
+                            <TextBox Width="120" Classes="liis-input" Watermark="Остаток" Text="{Binding NewContractRemainsMoney}"/>
+                            <Button Classes="liis-primary" Content="Добавить контракт" Command="{Binding CreateContractCommand}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,8,0,0">
+                            <ComboBox Width="220" ItemsSource="{Binding Contracts}" SelectedItem="{Binding SelectedContractForLpu}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding ContractName}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <ComboBox Width="220" ItemsSource="{Binding Lpus}" SelectedItem="{Binding SelectedLpuForContract}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding LpuName}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <CheckBox Content="Активно" IsChecked="{Binding NewLpuContractIsActive}" VerticalAlignment="Center"/>
+                            <Button Classes="liis-primary" Content="Связать ЛПУ и контракт" Command="{Binding CreateLpuContractCommand}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="1" Padding="16" Classes="liis-card">
+                    <StackPanel Spacing="12">
+                        <TextBlock FontSize="16" FontWeight="SemiBold" Text="Анализы в контракте"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <ComboBox Width="260" ItemsSource="{Binding Contracts}" SelectedItem="{Binding SelectedContractForAnalysis}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding ContractName}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <ComboBox Width="260" ItemsSource="{Binding Analyses}" SelectedItem="{Binding SelectedAnalysisForContract}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding AnalysisName}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <TextBox Width="120" Classes="liis-input" Watermark="Стоимость" Text="{Binding NewContractAnalysisCost}"/>
+                            <Button Classes="liis-primary" Content="Добавить связь" Command="{Binding CreateContractAnalysisCommand}"/>
+                        </StackPanel>
+                        <DataGrid ItemsSource="{Binding ContractAnalysisRows}" AutoGenerateColumns="False" IsReadOnly="True" Height="220">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Контракт" Binding="{Binding ContractId}" Width="100"/>
+                                <DataGridTextColumn Header="Анализ" Binding="{Binding Analysis.AnalysisName}" Width="*"/>
+                                <DataGridTextColumn Header="Стоимость" Binding="{Binding ContrAnalysisCost}" Width="100"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </Border>
+            </Grid>
+            <TextBlock Text="{Binding StatusMessage}" Foreground="{StaticResource LiisMutedBrush}"/>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

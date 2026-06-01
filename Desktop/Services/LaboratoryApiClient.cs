@@ -86,6 +86,148 @@ public class LaboratoryApiClient
     public async Task<List<AnalysiseDto>> GetAnalysesAsync(CancellationToken ct = default) =>
         await _http.GetFromJsonAsync<List<AnalysiseDto>>("api/Analyses", JsonOptions, ct) ?? [];
 
+    public async Task<List<RoleDto>> GetRolesAsync(CancellationToken ct = default) =>
+        await _http.GetFromJsonAsync<List<RoleDto>>("api/Roles", JsonOptions, ct) ?? [];
+
+    public async Task<List<WorkerDto>> GetWorkersAsync(CancellationToken ct = default) =>
+        await _http.GetFromJsonAsync<List<WorkerDto>>("api/Workers", JsonOptions, ct) ?? [];
+
+    public async Task CreateRoleAsync(string roleName, CancellationToken ct = default)
+    {
+        using var content = new MultipartFormDataContent
+        {
+            { new StringContent(roleName), "RoleName" }
+        };
+        var response = await _http.PostAsync("api/Roles", content, ct);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task CreateWorkerAsync(WorkerDto worker, CancellationToken ct = default)
+    {
+        using var content = new MultipartFormDataContent
+        {
+            { new StringContent(worker.WorkerFio), "WorkerFio" },
+            { new StringContent(worker.WorkerLogin), "WorkerLogin" }
+        };
+        if (!string.IsNullOrEmpty(worker.WorkerPassword))
+            content.Add(new StringContent(worker.WorkerPassword), "WorkerPassword");
+
+        var response = await _http.PostAsync("api/Workers", content, ct);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task CreateMaterialAsync(string materialName, CancellationToken ct = default)
+    {
+        using var content = new MultipartFormDataContent
+        {
+            { new StringContent(materialName), "MaterialName" }
+        };
+        var response = await _http.PostAsync("api/Materials", content, ct);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task UpdateWorkerRolesAsync(int workerId, IEnumerable<int> roleIds, CancellationToken ct = default)
+    {
+        using var content = new MultipartFormDataContent
+        {
+            { new StringContent(string.Join(",", roleIds)), "RoleIds" }
+        };
+        var response = await _http.PutAsync($"api/Workers/{workerId}/roles", content, ct);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task<List<MeasurementDto>> GetMeasurementsAsync(CancellationToken ct = default) =>
+        await _http.GetFromJsonAsync<List<MeasurementDto>>("api/Measurements", JsonOptions, ct) ?? [];
+
+    public async Task CreateMeasurementAsync(string measurementName, CancellationToken ct = default)
+    {
+        using var content = new MultipartFormDataContent
+        {
+            { new StringContent(measurementName), "MeasurementName" }
+        };
+        var response = await _http.PostAsync("api/Measurements", content, ct);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task CreateAnalysisDepartmentAsync(string name, CancellationToken ct = default)
+    {
+        using var content = new MultipartFormDataContent
+        {
+            { new StringContent(name), "AnalysisDepName" }
+        };
+        var response = await _http.PostAsync("api/AnalysisDepartments", content, ct);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task CreateAnalysisAsync(string name, int? departmentId, string codeName, CancellationToken ct = default)
+    {
+        using var content = new MultipartFormDataContent
+        {
+            { new StringContent(name), "AnalysisName" },
+            { new StringContent(codeName), "AnalysisCodeName" }
+        };
+        if (departmentId.HasValue)
+            content.Add(new StringContent(departmentId.Value.ToString()), "AnalysisDepId");
+
+        var response = await _http.PostAsync("api/Analyses", content, ct);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task CreateLpuAsync(string lpuName, string? email = null, CancellationToken ct = default)
+    {
+        using var content = new MultipartFormDataContent
+        {
+            { new StringContent(lpuName), "LpuName" }
+        };
+        if (!string.IsNullOrWhiteSpace(email))
+            content.Add(new StringContent(email), "LpuEmail");
+
+        var response = await _http.PostAsync("api/Lpus", content, ct);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task CreateContractAsync(string contractName, int money, double remainsMoney, CancellationToken ct = default)
+    {
+        using var content = new MultipartFormDataContent
+        {
+            { new StringContent(contractName), "ContractName" },
+            { new StringContent(money.ToString()), "ContractMoney" },
+            { new StringContent(remainsMoney.ToString()), "ContractRemainsMoney" }
+        };
+
+        var response = await _http.PostAsync("api/Contracts", content, ct);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task CreateLpuContractAsync(long contractId, long lpuId, bool isActive, CancellationToken ct = default)
+    {
+        using var content = new MultipartFormDataContent
+        {
+            { new StringContent(contractId.ToString()), "ContractId" },
+            { new StringContent(lpuId.ToString()), "LpuId" },
+            { new StringContent(isActive.ToString()), "ConLpuIsActive" }
+        };
+
+        var response = await _http.PostAsync("api/LpuContracts", content, ct);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task<List<ContractAnalysisDto>> GetContractAnalysesByContractAsync(long contractId, CancellationToken ct = default) =>
+        await _http.GetFromJsonAsync<List<ContractAnalysisDto>>($"api/ContractAnalyses/by-contract/{contractId}", JsonOptions, ct) ?? [];
+
+    public async Task CreateContractAnalysisAsync(long contractId, long analysisId, double cost, CancellationToken ct = default)
+    {
+        using var content = new MultipartFormDataContent
+        {
+            { new StringContent(contractId.ToString()), "ContractId" },
+            { new StringContent(analysisId.ToString()), "AnalysisId" },
+            { new StringContent(cost.ToString()), "ContrAnalysisCost" }
+        };
+
+        var response = await _http.PostAsync("api/ContractAnalyses", content, ct);
+        response.EnsureSuccessStatusCode();
+    }
+
     public async Task<List<BarcodeMaterialDto>> GetBarcodeMaterialsAsync(CancellationToken ct = default) =>
         await _http.GetFromJsonAsync<List<BarcodeMaterialDto>>("api/BarcodeMaterials", JsonOptions, ct) ?? [];
 

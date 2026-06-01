@@ -1,3 +1,5 @@
+using ReactiveUI;
+
 namespace Desktop.Models;
 
 public class WorkerDto
@@ -5,6 +7,7 @@ public class WorkerDto
     public int WorkerId { get; set; }
     public string WorkerFio { get; set; } = string.Empty;
     public string WorkerLogin { get; set; } = string.Empty;
+    public string WorkerPassword { get; set; } = string.Empty;
 }
 
 public class PatientDto
@@ -69,6 +72,18 @@ public class AnalysiseDto
     public string AnalysisCodeName { get; set; } = string.Empty;
 }
 
+public class RoleDto
+{
+    public int RoleId { get; set; }
+    public string RoleName { get; set; } = string.Empty;
+}
+
+public class MeasurementDto
+{
+    public int MeasurementId { get; set; }
+    public string MeasurementName { get; set; } = string.Empty;
+}
+
 public class BarcodeMaterialDto
 {
     public decimal BarcodeMatId { get; set; }
@@ -129,9 +144,23 @@ public class ContractDto
     public string ContractName { get; set; } = string.Empty;
 }
 
-public class AnalysisSelectionItem
+public class AnalysisSelectionItem : ReactiveUI.ReactiveObject
 {
-    public bool IsSelected { get; set; }
+    private bool _isSelected;
+    private decimal? _barcodeMatId;
+
+    public bool IsSelected
+    {
+        get => _isSelected;
+        set => this.RaiseAndSetIfChanged(ref _isSelected, value);
+    }
+
+    public decimal? BarcodeMatId
+    {
+        get => _barcodeMatId;
+        set => this.RaiseAndSetIfChanged(ref _barcodeMatId, value);
+    }
+
     public long AnalysisId { get; set; }
     public string Code { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;
@@ -224,5 +253,6 @@ public enum NavSection
     Results,
     Reports,
     Workflows,
-    Worksheets
+    Worksheets,
+    Admin
 }

@@ -1,8 +1,15 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:Desktop.ViewModels"
+             xmlns:models="using:Desktop.Models"
+             xmlns:conv="using:Desktop.Converters"
              x:Class="Desktop.Views.CreateOrderView"
-             x:DataType="vm:CreateOrderViewModel">
+             x:DataType="vm:CreateOrderViewModel"
+             x:Name="Root">
+    <UserControl.Resources>
+        <conv:SelectedAnalysisBackgroundConverter x:Key="SelectedAnalysisBackgroundConverter"/>
+        <conv:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+    </UserControl.Resources>
     <ScrollViewer>
         <StackPanel Spacing="16">
             <StackPanel Orientation="Horizontal" Spacing="12">
@@ -19,24 +26,58 @@
                 <Border Classes="liis-card" Margin="8,0,0,0" Grid.Column="1">
                     <StackPanel Spacing="8">
                         <TextBlock Text="Заказ" FontWeight="SemiBold"/>
-                        <AutoCompleteBox Classes="liis-input" ItemsSource="{Binding Lpus}" SelectedItem="{Binding SelectedLpu}">
+                        <AutoCompleteBox Classes="liis-input"
+                                         ItemsSource="{Binding Lpus}"
+                                         SelectedItem="{Binding SelectedLpu, Mode=TwoWay}"
+                                         ValueMemberBinding="{Binding LpuName}">
+                            <AutoCompleteBox.ItemTemplate>
+                                <DataTemplate DataType="models:LpuDto">
+                                    <TextBlock Text="{Binding LpuName}"/>
+                                </DataTemplate>
+                            </AutoCompleteBox.ItemTemplate>
                         </AutoCompleteBox>
-                        <ComboBox ItemsSource="{Binding Doctors}" SelectedItem="{Binding SelectedDoctor}">
+                        <ComboBox ItemsSource="{Binding FilteredDoctors}" SelectedItem="{Binding SelectedDoctor}" IsEnabled="{Binding IsLpuSelected}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate><TextBlock Text="{Binding DocFio}"/></DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
+                        <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                            <TextBlock Text="Дата забора:" VerticalAlignment="Center"/>
+                            <Button Classes="liis-secondary" Content="Вчера" Command="{Binding SetYesterdayCommand}"/>
+                            <Button Classes="liis-secondary" Content="Сегодня" Command="{Binding SetTodayCommand}"/>
+                        </StackPanel>
+                        <DatePicker SelectedDate="{Binding TakenDate}"/>
                         <TextBox Classes="liis-input" Watermark="Отделение" Text="{Binding Department}"/>
                     </StackPanel>
                 </Border>
             </Grid>
-            <Grid ColumnDefinitions="Auto,*">
-            </Grid>
             <Grid ColumnDefinitions="2*,*">
                 <Border Classes="liis-card" Margin="4,0,10,0" Grid.Column="0">
                     <StackPanel>
-                        <Button Classes="liis-primary" Content="Добавить анализы" Command="{Binding AddAnalysisCommand}" Margin="0,0,0,8"/>
-                        <DataGrid ItemsSource="{Binding AnalysisChoices}" AutoGenerateColumns="False" Height="400">
+                        <ListBox ItemsSource="{Binding AnalysisChoices}" SelectionMode="Single">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="models:AnalysisSelectionItem">
+                                    <Button Click="OnAnalysisButtonClick"
+                                            Background="{Binding IsSelected, Converter={StaticResource SelectedAnalysisBackgroundConverter}}"
+                                            HorizontalContentAlignment="Stretch"
+                                            VerticalContentAlignment="Center"
+                                            Classes="liis-card"
+                                            Padding="8"
+                                            Margin="0,2,0,2">
+                                        <StackPanel Orientation="Horizontal" Spacing="12">
+                                            <TextBlock Text="{Binding Code}" Width="120"/>
+                                            <TextBlock Text="{Binding Name}" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                    </Button>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </Border>
+                <Border Classes="liis-card" Grid.Column="1" Padding="0">
+                    <StackPanel>
+                        <TextBlock Text="Выбранные анализы" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                        <DataGrid ItemsSource="{Binding SummaryRows}" AutoGenerateColumns="False" IsReadOnly="True">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Код" Binding="{Binding Code}" Width="120"/>
                                 <DataGridTextColumn Header="Название" Binding="{Binding Name}" Width="*"/>
@@ -44,18 +85,19 @@
                         </DataGrid>
                     </StackPanel>
                 </Border>
-                <Border Classes="liis-card" Grid.Column="1" Padding="0">
+            </Grid>
+            <Border Classes="liis-card" Margin="0,8,0,0">
+                <StackPanel>
+                    <TextBlock Text="Добавленные материалы" FontWeight="SemiBold" Margin="0,0,0,8"/>
                     <DataGrid ItemsSource="{Binding MaterialRows}" AutoGenerateColumns="False" IsReadOnly="True">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Тип материала" Binding="{Binding MaterialType}" Width="*"/>
-                            <DataGridTextColumn Header="IDS" Binding="{Binding Ids}" Width="*"/>
-                            <DataGridTextColumn Header="Дата взятия" Binding="{Binding TakenDate}" Width="*"/>
-                            <DataGridTextColumn Header="Комментарий" Binding="{Binding Comment}" Width="*"/>
+                            <DataGridTextColumn Header="Тип материала" Binding="{Binding MaterialType}" Width="200"/>
+                            <DataGridTextColumn Header="IDS" Binding="{Binding Ids}" Width="120"/>
+                            <DataGridTextColumn Header="Дата взятия" Binding="{Binding TakenDate}" Width="120"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                </Border>
-            </Grid>
-            Б
+                </StackPanel>
+            </Border>
             <StackPanel Orientation="Horizontal" Spacing="12">
                 <Button Classes="liis-primary" Content="Создать" Command="{Binding CreateCommand}"/>
                 <Button Classes="liis-secondary" Content="Отменить" Command="{Binding CancelCommand}"/>
