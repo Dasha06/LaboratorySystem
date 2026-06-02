@@ -19,22 +19,20 @@ public partial class CreatePatientWindow : Window
 
         vm.OkCommand = ReactiveUI.ReactiveCommand.Create(() =>
         {
-            if (vm.FirstName == null || vm.LastName == null || vm.BirthDate == null)
+            ErrorsBlock.Text = string.Empty;
+            if (string.IsNullOrWhiteSpace(vm.FirstName) || string.IsNullOrWhiteSpace(vm.MiddleName) || !vm.BirthDate.HasValue)
             {
                 ErrorsBlock.Text = "Не заполнены необходимые данные";
+                return;
             }
-            else
-            {
 
-                var p = new PatientDto();
-                p.PatientLastName = vm.MiddleName;
-                p.PatientFirstName = vm.FirstName;
-                p.PatientSecondName = vm.LastName;
-                if (DateTime.TryParse(vm.BirthDate, out var bd))
-                    p.PatientBirthday = DateOnly.FromDateTime(bd);
-                p.PatientGender = vm.Gender;
-                Close(p);
-            }
+            var p = new PatientDto();
+            p.PatientSecondName = vm.MiddleName;
+            p.PatientFirstName = vm.FirstName;
+            p.PatientLastName = vm.LastName;
+            p.PatientBirthday = DateOnly.FromDateTime(vm.BirthDate.Value);
+            p.PatientGender = vm.Gender;
+            Close(p);
         });
 
         vm.CancelCommand = ReactiveUI.ReactiveCommand.Create(() => Close(null));

@@ -30,4 +30,7 @@ public partial class Order
     public virtual Patient Patient { get; set; } = null!;
 
     public virtual ICollection<LpuContract> ConLpus { get; set; } = new List<LpuContract>();
+
+    // Вычисляемое свойство для получения даты создания заказа из первого OrderChange
+    public DateTime? CreatedAt => OrderChanges?.MinBy(oc => oc.OrderChangeTime)?.OrderChangeTime;
 }

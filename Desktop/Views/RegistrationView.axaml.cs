@@ -45,7 +45,7 @@ public partial class RegistrationView : UserControl
                 FirstName = p.PatientFirstName ?? string.Empty,
                 LastName = p.PatientSecondName ?? string.Empty,
                 MiddleName = p.PatientLastName ?? string.Empty,
-                BirthDate = p.PatientBirthday?.ToString("dd.MM.yyyy") ?? string.Empty,
+                BirthDate = p.PatientBirthday?.ToDateTime(TimeOnly.MinValue),
                 Gender = p.PatientGender ?? "Ж"
             };
 

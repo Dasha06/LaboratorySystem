@@ -10,19 +10,42 @@
                 <StackPanel Spacing="8">
                     <TextBlock Text="Найти по:" FontWeight="SemiBold"/>
                     <ComboBox ItemsSource="{Binding SearchModes}" SelectedItem="{Binding SelectedSearchMode}"/>
-                    <TextBox Classes="liis-input" Watermark="IDS" Text="{Binding IdsFilter}"/>
+                    
+                    <!-- Поиск по материалу -->
+                    <TextBox Classes="liis-input" 
+                             Watermark="IDS (штрих-код)" 
+                             Text="{Binding IdsFilter}"
+                             IsVisible="{Binding SelectedSearchMode, Converter={StaticResource StringEquals}, ConverterParameter=По материалу}" />
+                    
+                    <!-- Поиск по пациенту -->
+                    <StackPanel Spacing="8" IsVisible="{Binding SelectedSearchMode, Converter={StaticResource StringEquals}, ConverterParameter=По пациенту}">
+                        <TextBlock Text="Фильтр пациента:" FontWeight="SemiBold"/>
+                        <TextBox Classes="liis-input" Watermark="Фамилия" Text="{Binding PatientFirstNameFilter }"/>
+                        <TextBox Classes="liis-input" Watermark="Имя" Text="{Binding PatientSecondNameFilter}"/>
+                        <TextBox Classes="liis-input" Watermark="Отчество" Text="{Binding PatientLastNameFilter}"/>
+                        <CalendarDatePicker SelectedDate="{Binding PatientBirthdayFilter}" Watermark="Дата рождения" MinWidth="120"/>
+                    </StackPanel>
+                    
+                    <!-- Фильтр по датам -->
+                    <TextBlock Text="Период создания:" FontWeight="SemiBold" Margin="0,4,0,0"/>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <CalendarDatePicker SelectedDate="{Binding DateFrom}" Watermark="От" MinWidth="120"/>
+                        <TextBlock VerticalAlignment="Center" Text="-"/>
+                        <CalendarDatePicker SelectedDate="{Binding DateTo}" Watermark="До" MinWidth="120"/>
+                    </StackPanel>
+                    
                     <TextBox Classes="liis-input" Watermark="Комментарий" Text="{Binding Comment}" AcceptsReturn="True" Height="80"/>
                     <Button Classes="liis-primary" Content="Найти" Command="{Binding SearchCommand}"/>
                 </StackPanel>
             </Border>
             <Border Classes="liis-card" Padding="0" Grid.Column="1">
-                <DataGrid ItemsSource="{Binding Results}" SelectedItem="{Binding SelectedRow}" AutoGenerateColumns="False" IsReadOnly="True" Height="220">
+                <DataGrid ItemsSource="{Binding Results}" SelectedItem="{Binding SelectedRow}" AutoGenerateColumns="False" IsReadOnly="True">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Комментарий" Binding="{Binding Comment}" Width="*"/>
                         <DataGridTextColumn Header="IDS" Binding="{Binding Ids}" Width="*"/>
-                        <DataGridTextColumn Header="Ф. И. О." Binding="{Binding FullName}" Width="*"/>
+                        <DataGridTextColumn Header="Ф. И. О." Binding="{Binding FullName}" Width="2*"/>
                         <DataGridTextColumn Header="ЛПУ" Binding="{Binding Lpu}" Width="*"/>
-                        <DataGridTextColumn Header="Вид материала" Binding="{Binding MaterialKind}" Width="*"/>
+                        <DataGridTextColumn Header="Отделение" Binding="{Binding MaterialKind}" Width="*"/>
                         <DataGridTextColumn Header="Тип материала" Binding="{Binding MaterialType}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>

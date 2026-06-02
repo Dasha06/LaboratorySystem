@@ -36,9 +36,6 @@
                                 </DataTemplate>
                             </AutoCompleteBox.ItemTemplate>
                         </AutoCompleteBox>
-                        <TextBlock Text="Статус заказа:" />
-                        <TextBox Classes="liis-input" Text="{Binding OrderStatus}" />
-                        <CheckBox Content="По контракту" IsChecked="{Binding OrderIsCountingInContract}" />
                         <ComboBox ItemsSource="{Binding FilteredDoctors}" SelectedItem="{Binding SelectedDoctor}" IsEnabled="{Binding IsLpuSelected}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate><TextBlock Text="{Binding DocFio}"/></DataTemplate>
@@ -57,18 +54,20 @@
             <Grid ColumnDefinitions="2*,*">
                 <Border Classes="liis-card" Margin="4,0,10,0" Grid.Column="0">
                     <StackPanel>
-                        <ListBox ItemsSource="{Binding AnalysisChoices}" SelectedItem="{Binding SelectedAnalysis}" SelectionMode="Single">
+                        <ListBox ItemsSource="{Binding AnalysisChoices}" SelectedItem="{Binding SelectedAnalysis, Mode=TwoWay}" SelectionMode="Single">
                             <ListBox.ItemTemplate>
                                 <DataTemplate DataType="models:AnalysisSelectionItem">
-                                    <Border Background="{Binding IsSelected, Converter={StaticResource SelectedAnalysisBackgroundConverter}}"
-                                            CornerRadius="6"
-                                            Padding="8"
-                                            Margin="0,2,0,2">
-                                        <StackPanel Orientation="Horizontal" Spacing="12">
-                                            <TextBlock Text="{Binding Code}" Width="120"/>
-                                            <TextBlock Text="{Binding Name}" TextWrapping="Wrap"/>
-                                        </StackPanel>
-                                    </Border>
+                                    <Button Command="{Binding ToggleCommand}" Background="Transparent" BorderBrush="Transparent" Padding="0" HorizontalContentAlignment="Stretch">
+                                        <Border Background="{Binding IsSelected, Converter={StaticResource SelectedAnalysisBackgroundConverter}}"
+                                                CornerRadius="6"
+                                                Padding="8"
+                                                Margin="0,2,0,2">
+                                            <StackPanel Orientation="Horizontal" Spacing="12">
+                                                <TextBlock Text="{Binding Code}" Width="120"/>
+                                                <TextBlock Text="{Binding Name}" TextWrapping="Wrap"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </Button>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
@@ -89,11 +88,11 @@
             <Border Classes="liis-card" Margin="0,8,0,0">
                 <StackPanel>
                     <TextBlock Text="Добавленные материалы" FontWeight="SemiBold" Margin="0,0,0,8"/>
-                    <DataGrid ItemsSource="{Binding MaterialRows}" AutoGenerateColumns="False" IsReadOnly="True">
+                    <DataGrid ItemsSource="{Binding MaterialRows}" AutoGenerateColumns="False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Тип материала" Binding="{Binding MaterialType}" Width="200"/>
-                            <DataGridTextColumn Header="IDS" Binding="{Binding Ids}" Width="120"/>
-                            <DataGridTextColumn Header="Дата взятия" Binding="{Binding TakenDate}" Width="120"/>
+                            <DataGridTextColumn Header="Тип материала" Binding="{Binding MaterialType}" Width="200"  IsReadOnly="True"/>
+                            <DataGridTextColumn Header="IDS" Binding="{Binding Ids}" Width="230"/>
+                            <DataGridTextColumn Header="Дата взятия" Binding="{Binding TakenDate}" Width="120"  IsReadOnly="True"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>

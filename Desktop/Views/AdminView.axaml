@@ -6,6 +6,8 @@
     <ScrollViewer>
         <StackPanel Spacing="16">
             <TextBlock Classes="page-title" Text="Администрирование"/>
+            
+            <TextBlock Text="Требуются изменения!" Classes="page-title"/>
             <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto">
                 <Border Grid.Column="0" Padding="16" Classes="liis-card" Margin="0,0,16,16">
                     <StackPanel Spacing="12">

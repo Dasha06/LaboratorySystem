@@ -5,11 +5,13 @@
       <map>
         <entry key="Desktop/App.axaml" value="Desktop/Desktop.csproj" />
         <entry key="Desktop/Styles/LiisTheme.axaml" value="Desktop/Desktop.csproj" />
+        <entry key="Desktop/Views/AdminView.axaml" value="Desktop/Desktop.csproj" />
         <entry key="Desktop/Views/CreateOrderView.axaml" value="Desktop/Desktop.csproj" />
         <entry key="Desktop/Views/CreatePatientWindow.axaml" value="Desktop/Desktop.csproj" />
         <entry key="Desktop/Views/LoginView.axaml" value="Desktop/Desktop.csproj" />
         <entry key="Desktop/Views/MainWindow.axaml" value="Desktop/Desktop.csproj" />
         <entry key="Desktop/Views/RacksView.axaml" value="Desktop/Desktop.csproj" />
+        <entry key="Desktop/Views/RegistrationView.axaml" value="Desktop/Desktop.csproj" />
         <entry key="Desktop/Views/ResultsView.axaml" value="Desktop/Desktop.csproj" />
         <entry key="Desktop/Views/ShellView.axaml" value="Desktop/Desktop.csproj" />
         <entry key="Desktop/Views/TrackerView.axaml" value="Desktop/Desktop.csproj" />

@@ -8,9 +8,9 @@
             <TextBlock Classes="page-title" Text="Регистрация"/>
             <Grid ColumnDefinitions="*,2*" RowDefinitions="Auto,Auto">
                 <StackPanel Grid.Column="0" Spacing="8" Margin="0,0,16,0">
-                    <TextBox Classes="liis-input" Watermark="Фамилия" Text="{Binding LastName}"/>
-                    <TextBox Classes="liis-input" Watermark="Имя" Text="{Binding FirstName}"/>
-                    <TextBox Classes="liis-input" Watermark="Отчество" Text="{Binding MiddleName}"/>
+                    <TextBox Classes="liis-input" Watermark="Фамилия" Text="{Binding FirstName }"/>
+                    <TextBox Classes="liis-input" Watermark="Имя" Text="{Binding MiddleName}"/>
+                    <TextBox Classes="liis-input" Watermark="Отчество" Text="{Binding LastName}"/>
                     <MaskedTextBox Classes="liis-input" Watermark="Дата рождения" Text="{Binding BirthDate}" Mask="0000-00-00"/>
                 </StackPanel>
                 <UniformGrid Grid.Column="1" Columns="2" Rows="2">
@@ -27,8 +27,8 @@
                 <DataGrid x:Name="PatientsGrid" ItemsSource="{Binding FoundPatients}" SelectedItem="{Binding SelectedPatient}" AutoGenerateColumns="False" IsReadOnly="True" Height="300" DoubleTapped="PatientsGrid_DoubleTapped">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="ПИН" Binding="{Binding PatientId}" Width="100"/>
-                        <DataGridTextColumn Header="Фамилия" Binding="{Binding PatientSecondName}" Width="300"/>
-                        <DataGridTextColumn Header="Имя" Binding="{Binding PatientFirstName}" Width="200"/>
+                        <DataGridTextColumn Header="Фамилия" Binding="{Binding PatientFirstName}" Width="300"/>
+                        <DataGridTextColumn Header="Имя" Binding="{Binding PatientSecondName }" Width="200"/>
                         <DataGridTextColumn Header="Отчество" Binding="{Binding PatientLastName}" Width="300"/>
                         <DataGridTextColumn Header="Дата рождения" Binding="{Binding PatientBirthday}" Width="200"/>
                         <DataGridTextColumn Header="Пол" Binding="{Binding PatientGender}" Width="90"/>
@@ -41,6 +41,7 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="№ заказа" Binding="{Binding OrderId}" Width="*"/>
                         <DataGridTextColumn Header="Статус" Binding="{Binding OrderStatus}" Width="*"/>
+                        <DataGridTextColumn Header="ЛПУ" Binding="{Binding LpuName}" Width="*"/>
                         <DataGridTextColumn Header="Отделение" Binding="{Binding OrderLpuDepartment}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>

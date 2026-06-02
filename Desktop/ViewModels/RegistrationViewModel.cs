@@ -11,6 +11,7 @@ namespace Desktop.ViewModels;
 public class RegistrationViewModel : ViewModelBase
 {
     private readonly ShellViewModel _shell;
+    private readonly List<LpuDto> _lpus = new();
     private string _lastName = string.Empty;
     private string _firstName = string.Empty;
     private string _middleName = string.Empty;
@@ -60,9 +61,27 @@ public class RegistrationViewModel : ViewModelBase
     {
         try
         {
+            if (!HasSearchCriteria())
+            {
+                FoundPatients.Clear();
+                StatusMessage = "Введите хотя бы один критерий для поиска";
+                return;
+            }
+
             var all = await AppServices.Api.GetPatientsAsync();
             FoundPatients.Clear();
-            DateOnly? birthFilter = DateOnly.TryParse(BirthDate, out var d) ? d : null;
+
+            DateOnly? birthFilter = null;
+            if (!string.IsNullOrWhiteSpace(BirthDate))
+            {
+                // BirthDate приходит в формате "YYYY-MM-DD" из MaskedTextBox
+                if (!DateOnly.TryParse(BirthDate, out var parsedDate))
+                {
+                    StatusMessage = "Неверный формат даты рождения";
+                    return;
+                }
+                birthFilter = parsedDate;
+            }
 
             foreach (var p in all.Where(p => MatchesPatient(p, birthFilter)))
                 FoundPatients.Add(p);
@@ -75,13 +94,21 @@ public class RegistrationViewModel : ViewModelBase
         }
     }
 
+    private bool HasSearchCriteria()
+    {
+        return !string.IsNullOrWhiteSpace(LastName)
+            || !string.IsNullOrWhiteSpace(FirstName)
+            || !string.IsNullOrWhiteSpace(MiddleName)
+            || !string.IsNullOrWhiteSpace(BirthDate);
+    }
+
     private bool MatchesPatient(PatientDto p, DateOnly? birthFilter)
     {
         if (!string.IsNullOrWhiteSpace(LastName) &&
             (p.PatientLastName?.Contains(LastName, StringComparison.OrdinalIgnoreCase) != true))
             return false;
         if (!string.IsNullOrWhiteSpace(FirstName) &&
-            !p.PatientFirstName.Contains(FirstName, StringComparison.OrdinalIgnoreCase))
+            (p.PatientFirstName?.Contains(FirstName, StringComparison.OrdinalIgnoreCase) != true))
             return false;
         if (!string.IsNullOrWhiteSpace(MiddleName) &&
             (p.PatientSecondName?.Contains(MiddleName, StringComparison.OrdinalIgnoreCase) != true))
@@ -95,15 +122,28 @@ public class RegistrationViewModel : ViewModelBase
     {
         try
         {
+            await EnsureLpusLoadedAsync();
             var orders = await AppServices.Api.GetOrdersAsync();
             Orders.Clear();
             foreach (var o in orders.Where(x => x.PatientId == patientId))
+            {
+                o.Lpu = _lpus.FirstOrDefault(l => l.LpuId == o.LpuId);
                 Orders.Add(o);
+            }
         }
         catch (Exception ex)
         {
             StatusMessage = ex.Message;
         }
+    }
+
+    private async Task EnsureLpusLoadedAsync()
+    {
+        if (_lpus.Count > 0)
+            return;
+
+        var lpus = await AppServices.Api.GetLpusAsync();
+        _lpus.AddRange(lpus);
     }
 
     private void CreateOrder()
@@ -124,12 +164,16 @@ public class RegistrationViewModel : ViewModelBase
         {
             if (ShowCreatePatientDialog != null)
             {
+                DateTime? birthDate = null;
+                if (!string.IsNullOrWhiteSpace(BirthDate) && DateTime.TryParse(BirthDate, out var parsedDate))
+                    birthDate = parsedDate;
+
                 var vm = new Desktop.ViewModels.CreatePatientViewModel
                 {
                     LastName = LastName,
                     FirstName = FirstName,
                     MiddleName = MiddleName,
-                    BirthDate = BirthDate,
+                    BirthDate = birthDate,
                     Gender = "Ж"
                 };
                 var created = await ShowCreatePatientDialog(vm);
@@ -142,14 +186,29 @@ public class RegistrationViewModel : ViewModelBase
             }
             else
             {
-                var patient = new PatientDto
+                PatientDto? patient = null;
+                if (DateOnly.TryParse(BirthDate, out var birthDate))
                 {
-                    PatientFirstName = string.IsNullOrWhiteSpace(FirstName) ? "Имя" : FirstName,
-                    PatientLastName = LastName,
-                    PatientSecondName = MiddleName,
-                    PatientGender = "Ж",
-                    PatientBirthday = DateOnly.TryParse(BirthDate, out var d) ? d : null
-                };
+                    patient = new PatientDto
+                    {
+                        PatientFirstName = string.IsNullOrWhiteSpace(FirstName) ? "Имя" : FirstName,
+                        PatientLastName = LastName,
+                        PatientSecondName = MiddleName,
+                        PatientGender = "Ж",
+                        PatientBirthday = birthDate
+                    };
+                }
+                else
+                {
+                    patient = new PatientDto
+                    {
+                        PatientFirstName = string.IsNullOrWhiteSpace(FirstName) ? "Имя" : FirstName,
+                        PatientLastName = LastName,
+                        PatientSecondName = MiddleName,
+                        PatientGender = "Ж",
+                        PatientBirthday = null
+                    };
+                }
                 await AppServices.Api.CreatePatientAsync(patient);
                 await SearchAsync();
                 StatusMessage = "Пациент добавлен";

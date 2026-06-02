@@ -137,7 +137,7 @@ public class CreateOrderViewModel : ViewModelBase
             for (var i = 0; i < MaterialRows.Count; i++)
             {
                 var row = MaterialRows[i];
-                row.TakenDate = value.ToString("dd.MM.yyyy");
+                row.TakenDate = value.ToString();
                 MaterialRows[i] = row;
             }
         }
@@ -169,14 +169,7 @@ public class CreateOrderViewModel : ViewModelBase
             {
                 if (_editingOrder != null)
                 {
-                    var desiredLpu = Lpus.FirstOrDefault(l => l.LpuId == _editingOrder.LpuId) ?? Lpus[0];
-                    this.RaiseAndSetIfChanged(ref _selectedLpu, desiredLpu);
-                    UpdateFilteredDoctors();
-                    await LoadAnalysesForSelectedLpuAsync();
-                }
-                else
-                {
-                    SelectedLpu = Lpus[0];
+                    SelectedLpu = Lpus.FirstOrDefault(l => l.LpuId == _editingOrder.LpuId) ?? Lpus[0];
                 }
             }
 
@@ -184,17 +177,15 @@ public class CreateOrderViewModel : ViewModelBase
             {
                 SelectedDoctor = FilteredDoctors.FirstOrDefault(d => d.DocId == _editingOrder.DocId);
             }
-            else if (FilteredDoctors.Count > 0)
-            {
-                SelectedDoctor = FilteredDoctors[0];
-            }
 
             if (Materials.Count > 0) SelectedMaterial = Materials[0];
             if (Departments.Count > 0) SelectedDepartment = Departments[0];
-            NewBarcodeId = DateTime.UtcNow.Ticks.ToString()[..12];
 
             if (_editingOrder != null)
+            {
                 await ApplyEditingOrderAsync();
+                MarkExistingAnalysisSelections();
+            }
         }
         catch (Exception ex)
         {
@@ -261,6 +252,33 @@ public class CreateOrderViewModel : ViewModelBase
                         });
                     }
                 }
+            }
+        }
+    }
+
+    private void MarkExistingAnalysisSelections()
+    {
+        if (_editingOrder?.BarcodeMaterials == null)
+            return;
+
+        var selectedAnalyses = new Dictionary<(long AnalysisId, int AnalysisDepId), decimal>();
+        foreach (var bm in _editingOrder.BarcodeMaterials)
+        {
+            if (bm.BarcodeAnalysises == null)
+                continue;
+
+            foreach (var ba in bm.BarcodeAnalysises)
+            {
+                selectedAnalyses[(ba.AnalysisId, ba.AnalysisDepId)] = bm.BarcodeMatId;
+            }
+        }
+
+        foreach (var item in AnalysisChoices)
+        {
+            if (selectedAnalyses.TryGetValue((item.AnalysisId, item.AnalysisDepId), out var barcodeId))
+            {
+                item.IsSelected = true;
+                item.BarcodeMatId = barcodeId;
             }
         }
     }
@@ -381,37 +399,24 @@ public class CreateOrderViewModel : ViewModelBase
             return;
         }
 
-        if (!decimal.TryParse(NewBarcodeId, out var barcodeId))
-        {
-            StatusMessage = "Некорректный IDS";
-            return;
-        }
-
         item.IsSelected = true;
-        item.BarcodeMatId = barcodeId;
 
         MaterialRows.Add(new OrderMaterialRow
         {
             MaterialType = material.MaterialName,
-            Ids = barcodeId.ToString("0"),
             TakenDate = TakenDate.ToString("dd.MM.yyyy"),
             Comment = string.Empty,
-            BarcodeMatId = barcodeId,
             MaterialId = material.MaterialId,
             AnalysisDepId = item.AnalysisDepId
         });
 
         SummaryRows.Add(new OrderSummaryRow
         {
-            Ids = barcodeId.ToString("0"),
             Code = item.Code,
             Cipher = Cipher,
             Name = item.Name,
             AnalysisId = item.AnalysisId,
-            BarcodeMatId = barcodeId
         });
-
-        NewBarcodeId = (barcodeId + 1).ToString("0");
     }
 
     private void RemoveAnalysisItem(AnalysisSelectionItem item)

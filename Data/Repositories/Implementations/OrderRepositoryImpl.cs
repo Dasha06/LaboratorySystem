@@ -14,12 +14,21 @@ public class OrderRepositoryImpl : IOrderRepository
 
     public List<Order> GetAllOrders()
     {
-        return _context.Orders.ToList();
+        return _context.Orders
+            .Include(o => o.Lpu)
+            .Include(o => o.Patient)
+            .Include(o => o.OrderChanges)
+            .ToList();
     }
 
     public Order GetOrderByOrderId(long orderId)
     {
-        return _context.Orders.First(x => x.OrderId == orderId);
+        return _context.Orders
+            .Include(o => o.Lpu)
+            .Include(o => o.Patient)
+            .Include(o => o.OrderChanges)
+            .Include(o => o.OrderChanges)
+            .First(x => x.OrderId == orderId);
     }
 
     public Order GetOrderWithAnalysesAndBarcodes(long orderId)
@@ -28,6 +37,7 @@ public class OrderRepositoryImpl : IOrderRepository
             .Include(o => o.Patient)
             .Include(o => o.Lpu)
             .Include(o => o.Doc)
+            .Include(o => o.OrderChanges)
             .Include(o => o.BarcodeMaterials)
             .ThenInclude(bm => bm.Material)
             .Include(o => o.BarcodeMaterials)

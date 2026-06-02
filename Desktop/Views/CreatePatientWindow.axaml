@@ -7,13 +7,13 @@
         x:DataType="vm:CreatePatientViewModel">
   <StackPanel Margin="12" Spacing="8">
     <TextBlock Text="Фамилия*"/>
-    <TextBox Text="{Binding LastName}" Classes="liis-input"/>
+    <TextBox Text="{Binding FirstName }" Classes="liis-input"/>
     <TextBlock Text="Имя*"/>
-    <TextBox Text="{Binding FirstName}" Classes="liis-input"/>
-    <TextBlock Text="Отчество"/>
     <TextBox Text="{Binding MiddleName}" Classes="liis-input"/>
+    <TextBlock Text="Отчество"/>
+    <TextBox Text="{Binding LastName}" Classes="liis-input"/>
     <TextBlock Text="Дата рождения*" />
-    <MaskedTextBox Text="{Binding BirthDate}" Classes="liis-input" Mask="00.00.0000"/>
+    <CalendarDatePicker SelectedDate="{Binding BirthDate}" Classes="liis-input"/>
     <TextBlock Text="Пол*"/>
     <ComboBox ItemsSource="{Binding GenderOptions}" SelectedItem="{Binding Gender}"/>
     <TextBlock Name="ErrorsBlock"/>

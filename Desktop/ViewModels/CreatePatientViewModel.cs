@@ -11,7 +11,7 @@ public class CreatePatientViewModel : ViewModelBase
     private string _lastName = string.Empty;
     private string _firstName = string.Empty;
     private string _middleName = string.Empty;
-    private string _birthDate = string.Empty;
+    private DateTime? _birthDate;
     private string _gender = "Ж";
     private ReactiveCommand<Unit, Unit>? _okCommand;
     private ReactiveCommand<Unit, Unit>? _cancelCommand;
@@ -24,7 +24,7 @@ public class CreatePatientViewModel : ViewModelBase
     public string LastName { get => _lastName; set => this.RaiseAndSetIfChanged(ref _lastName, value); }
     public string FirstName { get => _firstName; set => this.RaiseAndSetIfChanged(ref _firstName, value); }
     public string MiddleName { get => _middleName; set => this.RaiseAndSetIfChanged(ref _middleName, value); }
-    public string BirthDate { get => _birthDate; set => this.RaiseAndSetIfChanged(ref _birthDate, value); }
+    public DateTime? BirthDate { get => _birthDate; set => this.RaiseAndSetIfChanged(ref _birthDate, value); }
     public string Gender { get => _gender; set => this.RaiseAndSetIfChanged(ref _gender, value); }
 
     public ObservableCollection<string> GenderOptions { get; }

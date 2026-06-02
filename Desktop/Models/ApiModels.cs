@@ -21,7 +21,7 @@ public class PatientDto
     public string PatientGender { get; set; } = string.Empty;
 
     public string FullName =>
-        string.Join(" ", new[] { PatientSecondName, PatientFirstName, PatientLastName }
+        string.Join(" ", new[] { PatientFirstName, PatientSecondName, PatientLastName }
             .Where(s => !string.IsNullOrWhiteSpace(s)));
 }
 
@@ -34,10 +34,13 @@ public class OrderDto
     public long PatientId { get; set; }
     public long LpuId { get; set; }
     public bool OrderIsCountingInContract { get; set; }
+    public DateTime? CreatedAt { get; set; }
     public List<BarcodeMaterialDto>? BarcodeMaterials { get; set; }
     public PatientDto? Patient { get; set; }
     public LpuDto? Lpu { get; set; }
     public DoctorDto? Doc { get; set; }
+
+    public string LpuName => Lpu?.LpuName ?? string.Empty;
 }
 
 public class LpuDto
