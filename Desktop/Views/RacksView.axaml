@@ -39,11 +39,20 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                    <Border Background="{Binding MaterialType, Converter={x:Static conv:MaterialTypeToBrushConverter.Instance}}"
+                                <Border Background="{Binding MaterialType, Converter={x:Static conv:MaterialTypeToBrushConverter.Instance}}"
                                         CornerRadius="6" Margin="0,0,5,5" Width="120" Height="70"
-                                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                    <TextBlock Text="{Binding Label}" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                               Foreground="White" FontWeight="SemiBold" FontSize="10"/>
+                                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                        PointerPressed="OnCellPointerPressed"
+                                        Cursor="Hand"
+                                        BorderBrush="{Binding IsSelected, Converter={x:Static conv:BoolToSelectionColorConverter.Instance}}"
+                                        BorderThickness="{Binding IsSelected, Converter={x:Static conv:IsSelectedToThicknessConverter.Instance}}">
+                                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Label}" HorizontalAlignment="Center" 
+                                                   VerticalAlignment="Center" FontWeight="SemiBold"/>
+                                        <TextBlock Text="{Binding PatientName}" HorizontalAlignment="Center"
+                                                   FontSize="10" TextWrapping="Wrap"
+                                                   MaxLines="2" IsVisible="{Binding IsOccupied}"/>
+                                    </StackPanel>
                                 </Border>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -51,6 +60,28 @@
                 </ScrollViewer>
             </Border>
             <StackPanel Grid.Row="1" Grid.Column="1" Spacing="12">
+                <Border Classes="liis-card">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="Сканирование пробирки" FontWeight="SemiBold"/>
+                        
+                        <TextBlock Text="Выберите ячейку на штативе, затем отсканируйте или введите штрих-код пробирки"
+                                   TextWrapping="Wrap" FontSize="11"/>
+                        
+                        <TextBox Watermark="Штрих-код пробирки" Text="{Binding ScannedBarcode, Mode=TwoWay}"
+                                 AcceptsReturn="False"/>
+                        
+                        <Button Content="Привязать пробирку" Command="{Binding ScanBarcodeCommand}"
+                                HorizontalAlignment="Stretch" Classes="liis-primary"
+                                IsEnabled="{Binding SelectedCell, Converter={x:Static conv:ReferenceNotNullConverter.Instance}}"/>
+                        
+                        <TextBlock Text="{Binding ScannedPatientInfo}" TextWrapping="Wrap" FontSize="12"
+                                   IsVisible="{Binding ScannedPatientInfo, Converter={x:Static conv:StringNotEmptyConverter.Instance}}"/>
+                        
+                        <TextBlock Text="{Binding StatusMessage}" TextWrapping="Wrap" FontSize="11"
+                                   Foreground="{Binding StatusMessage, Converter={x:Static conv:StatusMessageBrushConverter.Instance}}"/>
+                    </StackPanel>
+                </Border>
+                
                 <Border Classes="liis-card">
                     <StackPanel>
                         <TextBlock Text="Приоритет" FontWeight="SemiBold" Margin="0,0,0,8"/>

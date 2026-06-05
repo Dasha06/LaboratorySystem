@@ -20,16 +20,29 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.LaboratorySistem/.idea/avalonia.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.LaboratorySistem/.idea/avalonia.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.LaboratorySistem/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.LaboratorySistem/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data/Models/Order.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Models/Order.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/OrderRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/OrderRepositoryImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/App.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/App.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Models/Patient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Models/Patient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Models/SystemdatabaseContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Models/SystemdatabaseContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/BarcodeMaterialRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/BarcodeMaterialRepositoryImpl.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/MaterialRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/MaterialRepositoryImpl.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/RoleRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/RoleRepositoryImpl.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/IBarcodeMaterialRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/IBarcodeMaterialRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/IMaterialRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/IMaterialRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/IRoleRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/IRoleRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/Converters/MaterialTypeToBrushConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Converters/MaterialTypeToBrushConverter.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Desktop/Models/ApiModels.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Models/ApiModels.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/Services/LaboratoryApiClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Services/LaboratoryApiClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/Styles/LiisTheme.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Styles/LiisTheme.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/ViewModels/AdminViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/ViewModels/AdminViewModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Desktop/ViewModels/CreateOrderViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/ViewModels/CreateOrderViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/ViewModels/RegistrationViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/ViewModels/RegistrationViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/ViewModels/TrackerViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/ViewModels/TrackerViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/ViewModels/RacksViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/ViewModels/RacksViewModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Desktop/Views/AdminView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Views/AdminView.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/Views/CreatePatientWindow.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Views/CreatePatientWindow.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/Views/RegistrationView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Views/RegistrationView.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/Views/TrackerView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Views/TrackerView.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/Views/RacksView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Views/RacksView.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/Views/RacksView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Views/RacksView.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApi/Controllers/BarcodeMaterialsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/Controllers/BarcodeMaterialsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApi/Controllers/MaterialsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/Controllers/MaterialsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApi/Controllers/RolesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/Controllers/RolesController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApi/Mapping/FormEntityMapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/Mapping/FormEntityMapper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApi/Models/Forms/EntityForms.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/Models/Forms/EntityForms.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,10 +70,11 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0ceaca09f3944680b668dee8e1e0370b100a00/78/fd2f2e13/UserControl.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0ceaca09f3944680b668dee8e1e0370b100a00/ff/984000d8/AppBuilder.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Desktop/ViewModels/CreateOrderViewModel.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="Toolset" />
+    <option name="selectedTabId" value="SWEA" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
@@ -233,6 +247,16 @@
       <workItem from="1779965651733" duration="1401000" />
       <workItem from="1780300848733" duration="1234000" />
       <workItem from="1780369296373" duration="4000" />
+      <workItem from="1780383934455" duration="2035000" />
+      <workItem from="1780386583834" duration="110000" />
+      <workItem from="1780386820618" duration="326000" />
+      <workItem from="1780387277358" duration="2046000" />
+      <workItem from="1780394203674" duration="60000" />
+      <workItem from="1780394278557" duration="488000" />
+      <workItem from="1780438855207" duration="4683000" />
+      <workItem from="1780444150489" duration="5369000" />
+      <workItem from="1780650450796" duration="1518000" />
+      <workItem from="1780687631106" duration="559000" />
     </task>
     <task id="LOCAL-00001" summary="init worker">
       <option name="closed" value="true" />
@@ -314,6 +338,19 @@
           <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
           <option name="timeStamp" value="3" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Desktop/ViewModels/RacksViewModel.cs</url>
+          <line>442</line>
+          <properties documentPath="$PROJECT_DIR$/Desktop/ViewModels/RacksViewModel.cs" containingFunctionPresentation="Method 'ScanBarcodeAsync'">
+            <startOffsets>
+              <option value="14629" />
+            </startOffsets>
+            <endOffsets>
+              <option value="14666" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

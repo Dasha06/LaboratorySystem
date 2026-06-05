@@ -131,6 +131,7 @@ public class LaboratoryApiClient
     public async Task<List<WorkerDto>> GetWorkersAsync(CancellationToken ct = default) =>
         await _http.GetFromJsonAsync<List<WorkerDto>>("api/Workers", JsonOptions, ct) ?? [];
 
+    // --- ROLE ---
     public async Task CreateRoleAsync(string roleName, CancellationToken ct = default)
     {
         using var content = new MultipartFormDataContent
@@ -141,6 +142,23 @@ public class LaboratoryApiClient
         response.EnsureSuccessStatusCode();
     }
 
+    public async Task UpdateRoleAsync(int roleId, string roleName, CancellationToken ct = default)
+    {
+        using var content = new MultipartFormDataContent
+        {
+            { new StringContent(roleName), "RoleName" }
+        };
+        var response = await _http.PutAsync($"api/Roles/{roleId}", content, ct);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task DeleteRoleAsync(int roleId, CancellationToken ct = default)
+    {
+        var response = await _http.DeleteAsync($"api/Roles/{roleId}", ct);
+        response.EnsureSuccessStatusCode();
+    }
+
+    // --- WORKER ---
     public async Task CreateWorkerAsync(WorkerDto worker, CancellationToken ct = default)
     {
         using var content = new MultipartFormDataContent
@@ -155,13 +173,21 @@ public class LaboratoryApiClient
         response.EnsureSuccessStatusCode();
     }
 
-    public async Task CreateMaterialAsync(string materialName, CancellationToken ct = default)
+    public async Task UpdateWorkerAsync(int workerId, WorkerDto worker, CancellationToken ct = default)
     {
         using var content = new MultipartFormDataContent
         {
-            { new StringContent(materialName), "MaterialName" }
+            { new StringContent(worker.WorkerFio), "WorkerFio" },
+            { new StringContent(worker.WorkerLogin), "WorkerLogin" },
+            { new StringContent(worker.WorkerPassword ?? string.Empty), "WorkerPassword" }
         };
-        var response = await _http.PostAsync("api/Materials", content, ct);
+        var response = await _http.PutAsync($"api/Workers/{workerId}", content, ct);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task DeleteWorkerAsync(int workerId, CancellationToken ct = default)
+    {
+        var response = await _http.DeleteAsync($"api/Workers/{workerId}", ct);
         response.EnsureSuccessStatusCode();
     }
 
@@ -175,6 +201,34 @@ public class LaboratoryApiClient
         response.EnsureSuccessStatusCode();
     }
 
+    // --- MATERIAL ---
+    public async Task CreateMaterialAsync(string materialName, CancellationToken ct = default)
+    {
+        using var content = new MultipartFormDataContent
+        {
+            { new StringContent(materialName), "MaterialName" }
+        };
+        var response = await _http.PostAsync("api/Materials", content, ct);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task UpdateMaterialAsync(int materialId, string materialName, CancellationToken ct = default)
+    {
+        using var content = new MultipartFormDataContent
+        {
+            { new StringContent(materialName), "MaterialName" }
+        };
+        var response = await _http.PutAsync($"api/Materials/{materialId}", content, ct);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task DeleteMaterialAsync(int materialId, CancellationToken ct = default)
+    {
+        var response = await _http.DeleteAsync($"api/Materials/{materialId}", ct);
+        response.EnsureSuccessStatusCode();
+    }
+
+    // --- MEASUREMENT ---
     public async Task<List<MeasurementDto>> GetMeasurementsAsync(CancellationToken ct = default) =>
         await _http.GetFromJsonAsync<List<MeasurementDto>>("api/Measurements", JsonOptions, ct) ?? [];
 
@@ -188,6 +242,23 @@ public class LaboratoryApiClient
         response.EnsureSuccessStatusCode();
     }
 
+    public async Task UpdateMeasurementAsync(int measurementId, string measurementName, CancellationToken ct = default)
+    {
+        using var content = new MultipartFormDataContent
+        {
+            { new StringContent(measurementName), "MeasurementName" }
+        };
+        var response = await _http.PutAsync($"api/Measurements/{measurementId}", content, ct);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task DeleteMeasurementAsync(int measurementId, CancellationToken ct = default)
+    {
+        var response = await _http.DeleteAsync($"api/Measurements/{measurementId}", ct);
+        response.EnsureSuccessStatusCode();
+    }
+
+    // --- ANALYSIS DEPARTMENT ---
     public async Task CreateAnalysisDepartmentAsync(string name, CancellationToken ct = default)
     {
         using var content = new MultipartFormDataContent
@@ -198,6 +269,23 @@ public class LaboratoryApiClient
         response.EnsureSuccessStatusCode();
     }
 
+    public async Task UpdateAnalysisDepartmentAsync(int depId, string name, CancellationToken ct = default)
+    {
+        using var content = new MultipartFormDataContent
+        {
+            { new StringContent(name), "AnalysisDepName" }
+        };
+        var response = await _http.PutAsync($"api/AnalysisDepartments/{depId}", content, ct);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task DeleteAnalysisDepartmentAsync(int depId, CancellationToken ct = default)
+    {
+        var response = await _http.DeleteAsync($"api/AnalysisDepartments/{depId}", ct);
+        response.EnsureSuccessStatusCode();
+    }
+
+    // --- ANALYSIS ---
     public async Task CreateAnalysisAsync(string name, int? departmentId, string codeName, CancellationToken ct = default)
     {
         using var content = new MultipartFormDataContent
@@ -212,6 +300,27 @@ public class LaboratoryApiClient
         response.EnsureSuccessStatusCode();
     }
 
+    public async Task UpdateAnalysisAsync(long analysisId, string name, int? departmentId, string codeName, CancellationToken ct = default)
+    {
+        using var content = new MultipartFormDataContent
+        {
+            { new StringContent(name), "AnalysisName" },
+            { new StringContent(codeName), "AnalysisCodeName" }
+        };
+        if (departmentId.HasValue)
+            content.Add(new StringContent(departmentId.Value.ToString()), "AnalysisDepId");
+
+        var response = await _http.PutAsync($"api/Analyses/{analysisId}", content, ct);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task DeleteAnalysisAsync(long analysisId, CancellationToken ct = default)
+    {
+        var response = await _http.DeleteAsync($"api/Analyses/{analysisId}", ct);
+        response.EnsureSuccessStatusCode();
+    }
+
+    // --- LPU ---
     public async Task CreateLpuAsync(string lpuName, string? email = null, CancellationToken ct = default)
     {
         using var content = new MultipartFormDataContent
@@ -225,6 +334,26 @@ public class LaboratoryApiClient
         response.EnsureSuccessStatusCode();
     }
 
+    public async Task UpdateLpuAsync(long lpuId, string lpuName, string? email, CancellationToken ct = default)
+    {
+        using var content = new MultipartFormDataContent
+        {
+            { new StringContent(lpuName), "LpuName" }
+        };
+        if (!string.IsNullOrWhiteSpace(email))
+            content.Add(new StringContent(email), "LpuEmail");
+
+        var response = await _http.PutAsync($"api/Lpus/{lpuId}", content, ct);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task DeleteLpuAsync(long lpuId, CancellationToken ct = default)
+    {
+        var response = await _http.DeleteAsync($"api/Lpus/{lpuId}", ct);
+        response.EnsureSuccessStatusCode();
+    }
+
+    // --- CONTRACT ---
     public async Task CreateContractAsync(string contractName, int money, double remainsMoney, CancellationToken ct = default)
     {
         using var content = new MultipartFormDataContent
@@ -238,6 +367,26 @@ public class LaboratoryApiClient
         response.EnsureSuccessStatusCode();
     }
 
+    public async Task UpdateContractAsync(long contractId, string contractName, int money, double remainsMoney, CancellationToken ct = default)
+    {
+        using var content = new MultipartFormDataContent
+        {
+            { new StringContent(contractName), "ContractName" },
+            { new StringContent(money.ToString()), "ContractMoney" },
+            { new StringContent(remainsMoney.ToString()), "ContractRemainsMoney" }
+        };
+
+        var response = await _http.PutAsync($"api/Contracts/{contractId}", content, ct);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task DeleteContractAsync(long contractId, CancellationToken ct = default)
+    {
+        var response = await _http.DeleteAsync($"api/Contracts/{contractId}", ct);
+        response.EnsureSuccessStatusCode();
+    }
+
+    // --- LPU CONTRACT ---
     public async Task CreateLpuContractAsync(long contractId, long lpuId, bool isActive, CancellationToken ct = default)
     {
         using var content = new MultipartFormDataContent
@@ -251,6 +400,13 @@ public class LaboratoryApiClient
         response.EnsureSuccessStatusCode();
     }
 
+    public async Task DeleteLpuContractAsync(long conLpuId, CancellationToken ct = default)
+    {
+        var response = await _http.DeleteAsync($"api/LpuContracts/{conLpuId}", ct);
+        response.EnsureSuccessStatusCode();
+    }
+
+    // --- CONTRACT ANALYSIS ---
     public async Task<List<ContractAnalysisDto>> GetContractAnalysesByContractAsync(long contractId, CancellationToken ct = default) =>
         await _http.GetFromJsonAsync<List<ContractAnalysisDto>>($"api/ContractAnalyses/by-contract/{contractId}", JsonOptions, ct) ?? [];
 
@@ -265,6 +421,37 @@ public class LaboratoryApiClient
 
         var response = await _http.PostAsync("api/ContractAnalyses", content, ct);
         response.EnsureSuccessStatusCode();
+    }
+
+    public async Task UpdateContractAnalysisAsync(long contractId, long analysisId, double cost, CancellationToken ct = default)
+    {
+        using var content = new MultipartFormDataContent
+        {
+            { new StringContent(contractId.ToString()), "ContractId" },
+            { new StringContent(analysisId.ToString()), "AnalysisId" },
+            { new StringContent(cost.ToString()), "ContrAnalysisCost" }
+        };
+
+        var response = await _http.PutAsync($"api/ContractAnalyses/{contractId}/{analysisId}", content, ct);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task DeleteContractAnalysisAsync(long contractId, long analysisId, CancellationToken ct = default)
+    {
+        var response = await _http.DeleteAsync($"api/ContractAnalyses/{contractId}/{analysisId}", ct);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task<BarcodeMaterialDto?> GetBarcodeMaterialByBarcodeAsync(decimal barcodeMatId, CancellationToken ct = default)
+    {
+        try
+        {
+            return await _http.GetFromJsonAsync<BarcodeMaterialDto>($"api/BarcodeMaterials/{barcodeMatId}", JsonOptions, ct);
+        }
+        catch (HttpRequestException)
+        {
+            return null;
+        }
     }
 
     public async Task<List<BarcodeMaterialDto>> GetBarcodeMaterialsAsync(CancellationToken ct = default) =>
@@ -344,6 +531,12 @@ public class LaboratoryApiClient
     public async Task<List<WorksheetRowDto>> GetWorksheetsAsync(long tripodId, CancellationToken ct = default) =>
         await _http.GetFromJsonAsync<List<WorksheetRowDto>>($"api/Tripods/{tripodId}/worksheets", JsonOptions, ct) ?? [];
 
+    public async Task DeleteTripodBarcodeMaterialAsync(long tripodId, decimal barcodeMatId, CancellationToken ct = default)
+    {
+        var response = await _http.DeleteAsync($"api/TripodBarcodeMaterials/{tripodId}/{barcodeMatId}", ct);
+        response.EnsureSuccessStatusCode();
+    }
+
     public async Task CreateTripodBarcodeMaterialAsync(long tripodId, decimal barcodeMatId, int analysisDepId, CancellationToken ct = default)
     {
         using var content = new MultipartFormDataContent
@@ -358,4 +551,7 @@ public class LaboratoryApiClient
 
     public async Task<List<ContractDto>> GetContractsAsync(CancellationToken ct = default) =>
         await _http.GetFromJsonAsync<List<ContractDto>>("api/Contracts", JsonOptions, ct) ?? [];
+
+    public async Task<List<LpuContractDto>> GetLpuContractsAsync(CancellationToken ct = default) =>
+        await _http.GetFromJsonAsync<List<LpuContractDto>>("api/LpuContracts", JsonOptions, ct) ?? [];
 }

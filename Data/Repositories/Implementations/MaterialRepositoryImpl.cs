@@ -28,6 +28,14 @@ public class MaterialRepositoryImpl : IMaterialRepository
         return true;
     }
 
+    public bool UpdateMaterial(Material material)
+    {
+        var existing = _context.Materials.First(x => x.MaterialId == material.MaterialId);
+        existing.MaterialName = material.MaterialName;
+        _context.SaveChanges();
+        return true;
+    }
+
     public bool DeleteMaterial(int materialId)
     {
         var material = _context.Materials.First(x => x.MaterialId == materialId);

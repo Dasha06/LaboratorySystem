@@ -85,11 +85,9 @@ public partial class SystemdatabaseContext : DbContext
                     "AnalysesTemp",
                     r => r.HasOne<Analysise>().WithMany()
                         .HasForeignKey("AnalysisId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
                         .HasConstraintName("analyses_temps_analysises_fk"),
                     l => l.HasOne<AnalysesTemplate>().WithMany()
                         .HasForeignKey("AnalysisTempId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
                         .HasConstraintName("analyses_temps_analyses_templates_fk"),
                     j =>
                     {
@@ -195,7 +193,7 @@ public partial class SystemdatabaseContext : DbContext
             entity.ToTable("barcode_analysises", "Lab");
 
             entity.Property(e => e.BarcodeId)
-                .HasPrecision(11)
+                .HasPrecision(15)
                 .HasColumnName("barcode_id");
             entity.Property(e => e.AnalysisId).HasColumnName("analysis_id");
             entity.Property(e => e.AnalysisDepId).HasColumnName("analysis_dep_id");
@@ -220,7 +218,7 @@ public partial class SystemdatabaseContext : DbContext
             entity.ToTable("barcode_complexes", "Lab");
 
             entity.Property(e => e.BarcodeMatId)
-                .HasPrecision(11)
+                .HasPrecision(15)
                 .HasColumnName("barcode_mat_id");
             entity.Property(e => e.ComplexId).HasColumnName("complex_id");
             entity.Property(e => e.AnalysisDepId).HasColumnName("analysis_dep_id");
@@ -242,7 +240,7 @@ public partial class SystemdatabaseContext : DbContext
             entity.ToTable("barcode_materials", "Lab");
 
             entity.Property(e => e.BarcodeMatId)
-                .HasPrecision(11)
+                .HasPrecision(15)
                 .HasColumnName("barcode_mat_id");
             entity.Property(e => e.AnalysisDepId).HasColumnName("analysis_dep_id");
             entity.Property(e => e.MaterialId).HasColumnName("material_id");
@@ -411,6 +409,7 @@ public partial class SystemdatabaseContext : DbContext
             entity.Property(e => e.OrderIsCountingInContract).HasColumnName("order_is_counting_in_contract");
             entity.Property(e => e.OrderLpuDepartment).HasColumnName("order_lpu_department");
             entity.Property(e => e.OrderStatus).HasColumnName("order_status");
+            entity.Property(e => e.OrderTakenDate).HasColumnName("order_taken_date");
             entity.Property(e => e.PatientId).HasColumnName("patient_id");
 
             entity.HasOne(d => d.Doc).WithMany(p => p.Orders)
@@ -649,7 +648,7 @@ public partial class SystemdatabaseContext : DbContext
 
             entity.Property(e => e.TripodId).HasColumnName("tripod_id");
             entity.Property(e => e.BarcodeMatId)
-                .HasPrecision(11)
+                .HasPrecision(15)
                 .HasColumnName("barcode_mat_id");
             entity.Property(e => e.AnalysisDepId).HasColumnName("analysis_dep_id");
 

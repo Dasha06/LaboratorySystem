@@ -23,7 +23,16 @@ public class RoleRepositoryImpl : IRoleRepository
 
     public bool CreateRole(Role role)
     {
+        role.RoleId = _context.Roles.Count() + 1;
         _context.Roles.Add(role);
+        _context.SaveChanges();
+        return true;
+    }
+
+    public bool UpdateRole(Role role)
+    {
+        var existing = _context.Roles.First(x => x.RoleId == role.RoleId);
+        existing.RoleName = role.RoleName;
         _context.SaveChanges();
         return true;
     }

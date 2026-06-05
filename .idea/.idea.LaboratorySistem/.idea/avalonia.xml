@@ -12,9 +12,12 @@
         <entry key="Desktop/Views/MainWindow.axaml" value="Desktop/Desktop.csproj" />
         <entry key="Desktop/Views/RacksView.axaml" value="Desktop/Desktop.csproj" />
         <entry key="Desktop/Views/RegistrationView.axaml" value="Desktop/Desktop.csproj" />
+        <entry key="Desktop/Views/ReportsView.axaml" value="Desktop/Desktop.csproj" />
         <entry key="Desktop/Views/ResultsView.axaml" value="Desktop/Desktop.csproj" />
         <entry key="Desktop/Views/ShellView.axaml" value="Desktop/Desktop.csproj" />
         <entry key="Desktop/Views/TrackerView.axaml" value="Desktop/Desktop.csproj" />
+        <entry key="Desktop/Views/WorkflowsView.axaml" value="Desktop/Desktop.csproj" />
+        <entry key="Desktop/Views/WorksheetsView.axaml" value="Desktop/Desktop.csproj" />
       </map>
     </option>
   </component>

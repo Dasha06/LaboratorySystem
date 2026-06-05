@@ -1,5 +1,6 @@
 using Data.Models;
 using Data.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repositories.Implementations;
 
@@ -19,6 +20,15 @@ public class BarcodeMaterialRepositoryImpl : IBarcodeMaterialRepository
     public BarcodeMaterial GetBarcodeMaterialByBarcodeMatIdAndAnalysisDepId(decimal barcodeMatId, int analysisDepId)
     {
         return _context.BarcodeMaterials.First(x => x.BarcodeMatId == barcodeMatId && x.AnalysisDepId == analysisDepId);
+    }
+
+    public BarcodeMaterial? GetBarcodeMaterialByBarcodeMatId(decimal barcodeMatId)
+    {
+        return _context.BarcodeMaterials
+            .Include(x => x.Material)
+            .Include(x => x.Order)
+            .ThenInclude(o => o!.Patient)
+            .FirstOrDefault(x => x.BarcodeMatId == barcodeMatId);
     }
 
     public List<BarcodeMaterial> GetBarcodeMaterialsByOrderId(long orderId)

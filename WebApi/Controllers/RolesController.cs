@@ -24,6 +24,15 @@ public class RolesController : ApiControllerBase
     public IActionResult Create([FromForm] RoleForm form) =>
         Execute(() => _repository.CreateRole(FormEntityMapper.ToRole(form)));
 
+    [HttpPut("{roleId:int}")]
+    [FormInput]
+    public IActionResult Update(int roleId, [FromForm] RoleForm form)
+    {
+        var entity = FormEntityMapper.ToRole(form);
+        entity.RoleId = roleId;
+        return Execute(() => _repository.UpdateRole(entity));
+    }
+
     [HttpDelete("{roleId:int}")]
     public IActionResult Delete(int roleId) => Execute(() => _repository.DeleteRole(roleId));
 }

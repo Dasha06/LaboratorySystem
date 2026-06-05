@@ -25,6 +25,15 @@ public class MaterialsController : ApiControllerBase
     public IActionResult Create([FromForm] MaterialForm form) =>
         Execute(() => _repository.CreateMaterial(FormEntityMapper.ToMaterial(form)));
 
+    [HttpPut("{materialId:int}")]
+    [FormInput]
+    public IActionResult Update(int materialId, [FromForm] MaterialForm form)
+    {
+        var entity = FormEntityMapper.ToMaterial(form);
+        entity.MaterialId = materialId;
+        return Execute(() => _repository.UpdateMaterial(entity));
+    }
+
     [HttpDelete("{materialId:int}")]
     public IActionResult Delete(int materialId) => Execute(() => _repository.DeleteMaterial(materialId));
 }

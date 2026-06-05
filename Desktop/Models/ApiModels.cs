@@ -47,6 +47,7 @@ public class LpuDto
 {
     public long LpuId { get; set; }
     public string LpuName { get; set; } = string.Empty;
+    public string? LpuEmail { get; set; }
 }
 
 public class DoctorDto
@@ -240,12 +241,73 @@ public class ReportServiceRow
     public string Price { get; set; } = string.Empty;
 }
 
-public class RackCellState
+public class RackCellState : ReactiveUI.ReactiveObject
 {
-    public int Index { get; set; }
-    public bool IsOccupied { get; set; }
-    public string Label { get; set; } = string.Empty;
-    public string MaterialType { get; set; } = string.Empty;
+    private int _index;
+    private bool _isOccupied;
+    private string _label = string.Empty;
+    private string _materialType = string.Empty;
+    private bool _isSelected;
+    private string _barcode = string.Empty;
+    private string _patientName = string.Empty;
+    private decimal _barcodeMatId;
+    private int _analysisDepId;
+
+    public int Index
+    {
+        get => _index;
+        set => this.RaiseAndSetIfChanged(ref _index, value);
+    }
+
+    public bool IsOccupied
+    {
+        get => _isOccupied;
+        set => this.RaiseAndSetIfChanged(ref _isOccupied, value);
+    }
+
+    public string Label
+    {
+        get => _label;
+        set => this.RaiseAndSetIfChanged(ref _label, value);
+    }
+
+    public string MaterialType
+    {
+        get => _materialType;
+        set => this.RaiseAndSetIfChanged(ref _materialType, value);
+    }
+
+    public bool IsSelected
+    {
+        get => _isSelected;
+        set => this.RaiseAndSetIfChanged(ref _isSelected, value);
+    }
+
+    public string Barcode
+    {
+        get => _barcode;
+        set => this.RaiseAndSetIfChanged(ref _barcode, value);
+    }
+
+    public string PatientName
+    {
+        get => _patientName;
+        set => this.RaiseAndSetIfChanged(ref _patientName, value);
+    }
+
+    public decimal BarcodeMatId
+    {
+        get => _barcodeMatId;
+        set => this.RaiseAndSetIfChanged(ref _barcodeMatId, value);
+    }
+
+    public int AnalysisDepId
+    {
+        get => _analysisDepId;
+        set => this.RaiseAndSetIfChanged(ref _analysisDepId, value);
+    }
+
+    public ReactiveCommand<RackCellState, Unit>? SelectCommand { get; set; }
 }
 
 public class WorksheetExpandedRow

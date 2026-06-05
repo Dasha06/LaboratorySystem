@@ -17,6 +17,9 @@ public class RacksViewModel : ViewModelBase
     private int _columns = 10;
     private string _newTripodName = string.Empty;
     private string? _statusMessage;
+    private string? _scannedBarcode;
+    private RackCellState? _selectedCell;
+    private string _scannedPatientInfo = string.Empty;
 
     public RacksViewModel(ShellViewModel shell)
     {
@@ -32,6 +35,9 @@ public class RacksViewModel : ViewModelBase
         CreateTripodCommand = ReactiveCommand.CreateFromTask(CreateTripodAsync,
             this.WhenAnyValue(x => x.NewTripodName, x => x.SelectedDepartment,
                 (name, dep) => !string.IsNullOrWhiteSpace(name) && dep != null));
+        ScanBarcodeCommand = ReactiveCommand.CreateFromTask(ScanBarcodeAsync,
+            this.WhenAnyValue(x => x.ScannedBarcode, x => x.SelectedCell,
+                (string? bc, RackCellState? cell) => !string.IsNullOrWhiteSpace(bc) && cell != null));
         _ = LoadAsync();
     }
 
@@ -98,7 +104,6 @@ public class RacksViewModel : ViewModelBase
                 {
                     Rows = r;
                     Columns = c;
-                    // persist new size to backend for selected tripod
                     _ = ApplySelectedGridSizeAsync();
                 }
             }
@@ -114,9 +119,28 @@ public class RacksViewModel : ViewModelBase
 
     public string? StatusMessage { get => _statusMessage; set => this.RaiseAndSetIfChanged(ref _statusMessage, value); }
 
+    public string? ScannedBarcode
+    {
+        get => _scannedBarcode;
+        set => this.RaiseAndSetIfChanged(ref _scannedBarcode, value);
+    }
+
+    public RackCellState? SelectedCell
+    {
+        get => _selectedCell;
+        set => this.RaiseAndSetIfChanged(ref _selectedCell, value);
+    }
+
+    public string ScannedPatientInfo
+    {
+        get => _scannedPatientInfo;
+        set => this.RaiseAndSetIfChanged(ref _scannedPatientInfo, value);
+    }
+
     public ReactiveCommand<Unit, Unit> LoadCommand { get; }
     public ReactiveCommand<Unit, Unit> OpenWorksheetsCommand { get; }
     public ReactiveCommand<Unit, Unit> CreateTripodCommand { get; }
+    public ReactiveCommand<Unit, Unit> ScanBarcodeCommand { get; }
 
     private bool _isApplyingGridSize = false;
 
@@ -187,7 +211,7 @@ public class RacksViewModel : ViewModelBase
             var tripod = SelectedTripod;
             var maxCell = tripod?.TripodMaxCell ?? 100;
 
-            // Choose sensible default rows/columns for common sizes, allow user to change via options
+            // Choose sensible default rows/columns for common sizes
             if (maxCell == 100)
             {
                 Rows = 10; Columns = 10; SelectedGridSizeOption = "10x10";
@@ -205,35 +229,51 @@ public class RacksViewModel : ViewModelBase
                 Rows = 2; Columns = 5; SelectedGridSizeOption = "2x5";
             }
 
+            // Clear selection state
+            SelectedCell = null;
+            ScannedBarcode = null;
+            ScannedPatientInfo = string.Empty;
+
             RackCells.Clear();
             for (var i = 0; i < maxCell; i++)
             {
-                var cell = new RackCellState { Index = i, IsOccupied = i < items.Count };
+                var cell = new RackCellState
+                {
+                    Index = i,
+                    IsOccupied = i < items.Count,
+                    SelectCommand = ReactiveCommand.Create<RackCellState>(SelectCell)
+                };
+
                 if (cell.IsOccupied)
                 {
-                    var material = items[i].BarcodeMaterial?.Material;
+                    var tbm = items[i];
+                    var material = tbm.BarcodeMaterial?.Material;
                     var typeName = material?.MaterialName ?? string.Empty;
                     cell.MaterialType = typeName;
+                    cell.BarcodeMatId = tbm.BarcodeMatId;
+                    cell.AnalysisDepId = tbm.AnalysisDepId;
+                    cell.Barcode = tbm.BarcodeMatId.ToString("0");
 
                     try
                     {
-                        var mat = items[i].BarcodeMaterial?.BarcodeMatId;
+                        var mat = tbm.BarcodeMaterial?.BarcodeMatId;
                         var s = mat?.ToString() ?? string.Empty;
                         s = new string(s.Where(char.IsDigit).ToArray());
-                        if (s.Length >= 4)
-                            cell.Label = s.Substring(s.Length - 4);
-                        else
-                            cell.Label = s;
+                        cell.Label = s.Length >= 4 ? s.Substring(s.Length - 4) : s;
                     }
                     catch
                     {
                         cell.Label = string.Empty;
                     }
+
+                    cell.PatientName = string.Empty;
                 }
                 else
                 {
                     cell.MaterialType = string.Empty;
                     cell.Label = string.Empty;
+                    cell.Barcode = string.Empty;
+                    cell.PatientName = string.Empty;
                 }
 
                 RackCells.Add(cell);
@@ -286,6 +326,181 @@ public class RacksViewModel : ViewModelBase
         catch (Exception ex)
         {
             StatusMessage = ex.Message;
+        }
+    }
+
+    public void SelectCell(RackCellState cell)
+    {
+        // Deselect previous
+        if (SelectedCell != null && SelectedCell != cell)
+        {
+            SelectedCell.IsSelected = false;
+        }
+
+        // Toggle selection
+        cell.IsSelected = !cell.IsSelected;
+
+        if (cell.IsSelected)
+        {
+            SelectedCell = cell;
+            ScannedBarcode = null;
+            ScannedPatientInfo = string.Empty;
+            StatusMessage = $"Выбрана ячейка {cell.Index + 1}. Отсканируйте штрих-код пробирки.";
+
+            // If cell is already occupied, show its info without filling the barcode textbox
+            if (cell.IsOccupied)
+            {
+                ScannedPatientInfo = !string.IsNullOrEmpty(cell.PatientName)
+                    ? $"{cell.Barcode} — {cell.PatientName}"
+                    : cell.Barcode;
+                StatusMessage = $"Ячейка {cell.Index + 1}: {ScannedPatientInfo}";
+            }
+        }
+        else
+        {
+            SelectedCell = null;
+            ScannedBarcode = null;
+            ScannedPatientInfo = string.Empty;
+        }
+    }
+
+    /// <summary>
+    /// Finds the first empty cell (by index) in the rack, or returns null if all cells are occupied.
+    /// </summary>
+    private RackCellState? FindFirstEmptyCell()
+    {
+        foreach (var cell in RackCells.OrderBy(c => c.Index))
+        {
+            if (!cell.IsOccupied)
+                return cell;
+        }
+        return null;
+    }
+
+    private async Task ScanBarcodeAsync()
+    {
+        // Auto-select first empty cell if none selected
+        if (SelectedCell == null)
+        {
+            var emptyCell = FindFirstEmptyCell();
+            if (emptyCell == null)
+            {
+                StatusMessage = "Ошибка: все ячейки штатива заняты.";
+                ScannedBarcode = null;
+                return;
+            }
+
+            emptyCell.IsSelected = true;
+            SelectedCell = emptyCell;
+            StatusMessage = $"Автоматически выбрана ячейка {emptyCell.Index + 1}.";
+        }
+
+        var barcodeText = ScannedBarcode?.Trim();
+        if (string.IsNullOrWhiteSpace(barcodeText))
+        {
+            StatusMessage = "Штрих-код не может быть пустым.";
+            return;
+        }
+
+        // Parse barcode as decimal
+        if (!decimal.TryParse(barcodeText, out var barcodeMatId))
+        {
+            StatusMessage = "Некорректный формат штрих-кода.";
+            return;
+        }
+
+        try
+        {
+            StatusMessage = "Поиск пробирки в базе данных...";
+
+            // Look up barcode in DB
+            var barcodeMaterial = await AppServices.Api.GetBarcodeMaterialByBarcodeAsync(barcodeMatId);
+
+            if (barcodeMaterial == null)
+            {
+                StatusMessage = "Ошибка: данного биоматериала нет в базе.";
+                return;
+            }
+
+            // Verify the barcode matches the department of the selected tripod
+            if (SelectedTripod != null && barcodeMaterial.AnalysisDepId != SelectedTripod.AnalysisDepartmentId)
+            {
+                StatusMessage = "Ошибка: отделение пробирки не соответствует отделению штатива.";
+                return;
+            }
+
+            // Check if this barcode is already assigned to this tripod
+            var alreadyInTripod = RackCells.Any(c =>
+                c.IsOccupied && c.BarcodeMatId == barcodeMatId && c != SelectedCell);
+            if (alreadyInTripod)
+            {
+                StatusMessage = "Ошибка: данная пробирка уже привязана к другому слоту этого штатива.";
+                return;
+            }
+
+            // Get patient info
+            var patientName = string.Empty;
+            if (barcodeMaterial.OrderId.HasValue)
+            {
+                try
+                {
+                    var orderDetails = await AppServices.Api.GetOrderDetailsAsync(barcodeMaterial.OrderId.Value);
+                    patientName = orderDetails.Patient?.FullName ?? string.Empty;
+                }
+                catch
+                {
+                    // ignore
+                }
+            }
+
+            var materialName = barcodeMaterial.Material?.MaterialName ?? string.Empty;
+            ScannedPatientInfo = $"{barcodeMatId:0} — {patientName} ({materialName})".TrimEnd(' ', '(', ')');
+
+            // If cell was already occupied with a different barcode, remove old link
+            if (SelectedCell!.IsOccupied && SelectedCell.BarcodeMatId != barcodeMatId)
+            {
+                try
+                {
+                    await AppServices.Api.DeleteTripodBarcodeMaterialAsync(
+                        SelectedTripod!.TripodId, SelectedCell.BarcodeMatId);
+                }
+                catch
+                {
+                    // ignore
+                }
+            }
+
+            // Add link to tripod
+            await AppServices.Api.CreateTripodBarcodeMaterialAsync(
+                SelectedTripod!.TripodId, barcodeMatId, barcodeMaterial.AnalysisDepId);
+
+            // Update cell state
+            SelectedCell.IsOccupied = true;
+            SelectedCell.BarcodeMatId = barcodeMatId;
+            SelectedCell.AnalysisDepId = barcodeMaterial.AnalysisDepId;
+            SelectedCell.Barcode = barcodeMatId.ToString("0");
+            SelectedCell.PatientName = patientName;
+            SelectedCell.MaterialType = materialName;
+
+            // Update label (last 4 digits)
+            var s = barcodeMatId.ToString("0");
+            s = new string(s.Where(char.IsDigit).ToArray());
+            SelectedCell.Label = s.Length >= 4 ? s.Substring(s.Length - 4) : s;
+
+            // Reload the rack to get consistent state
+            await LoadRackAsync(SelectedTripod.TripodId);
+
+            StatusMessage = $"Пробирка {barcodeMatId:0} привязана к ячейке {SelectedCell.Index + 1}. " +
+                            (string.IsNullOrEmpty(patientName) ? "" : $"Пациент: {patientName}");
+
+            // Clear the scanned barcode for next scan
+            ScannedBarcode = null;
+            SelectedCell = null;
+            ScannedPatientInfo = string.Empty;
+        }
+        catch (Exception ex)
+        {
+            StatusMessage = $"Ошибка: {ex.Message}";
         }
     }
 }

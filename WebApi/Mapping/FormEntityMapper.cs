@@ -68,6 +68,7 @@ public static class FormEntityMapper
         DocId = form.DocId,
         OrderLpuDepartment = form.OrderLpuDepartment,
         OrderStatus = form.OrderStatus,
+        OrderTakenDate = form.OrderTakenDate,
         PatientId = form.PatientId,
         LpuId = form.LpuId,
         OrderIsCountingInContract = form.OrderIsCountingInContract

@@ -20,6 +20,10 @@ public class BarcodeMaterialsController : ApiControllerBase
     public ActionResult<List<BarcodeMaterial>> GetByOrder(long orderId) =>
         Execute(() => _repository.GetBarcodeMaterialsByOrderId(orderId));
 
+    [HttpGet("{barcodeMatId:decimal}")]
+    public ActionResult<BarcodeMaterial?> GetByBarcode(decimal barcodeMatId) =>
+        Execute(() => _repository.GetBarcodeMaterialByBarcodeMatId(barcodeMatId));
+
     [HttpGet("{barcodeMatId:decimal}/{analysisDepId:int}")]
     public ActionResult<BarcodeMaterial> GetByKeys(decimal barcodeMatId, int analysisDepId) =>
         Execute(() => _repository.GetBarcodeMaterialByBarcodeMatIdAndAnalysisDepId(barcodeMatId, analysisDepId));

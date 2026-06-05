@@ -75,6 +75,8 @@ public class OrderForm
     public string? OrderLpuDepartment { get; set; }
     public string OrderStatus { get; set; } = string.Empty;
     public long PatientId { get; set; }
+    
+    public DateOnly OrderTakenDate { get; set; }
     public long LpuId { get; set; }
     public bool OrderIsCountingInContract { get; set; }
 }

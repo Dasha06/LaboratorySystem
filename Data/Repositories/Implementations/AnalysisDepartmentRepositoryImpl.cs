@@ -23,6 +23,7 @@ public class AnalysisDepartmentRepositoryImpl : IAnalysisDepartmentRepository
 
     public bool CreateAnalysisDepartment(AnalysisDepartment analysisDepartment)
     {
+        analysisDepartment.AnalysisDepId = _context.AnalysisDepartments.Count() + 1;
         _context.AnalysisDepartments.Add(analysisDepartment);
         _context.SaveChanges();
         return true;

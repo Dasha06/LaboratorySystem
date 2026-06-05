@@ -19,6 +19,8 @@ public partial class Order
 
     public bool OrderIsCountingInContract { get; set; }
 
+    public DateOnly? OrderTakenDate { get; set; }
+
     public virtual ICollection<BarcodeMaterial> BarcodeMaterials { get; set; } = new List<BarcodeMaterial>();
 
     public virtual Doctor? Doc { get; set; }
@@ -30,7 +32,4 @@ public partial class Order
     public virtual Patient Patient { get; set; } = null!;
 
     public virtual ICollection<LpuContract> ConLpus { get; set; } = new List<LpuContract>();
-
-    // Вычисляемое свойство для получения даты создания заказа из первого OrderChange
-    public DateTime? CreatedAt => OrderChanges?.MinBy(oc => oc.OrderChangeTime)?.OrderChangeTime;
 }

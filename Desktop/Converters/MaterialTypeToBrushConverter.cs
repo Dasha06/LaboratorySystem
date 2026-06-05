@@ -14,11 +14,11 @@ public class MaterialTypeToBrushConverter : IValueConverter
         var materialType = (value as string)?.ToLowerInvariant() ?? string.Empty;
 
         if (materialType.Contains("сыворот") || materialType.Contains("сывор"))
-            return new SolidColorBrush(Color.Parse("#E74C3C"));
+            return new SolidColorBrush(Color.Parse("#C81B1E"));
         if (materialType.Contains("веноз") || materialType.Contains("венозн"))
-            return new SolidColorBrush(Color.Parse("#8E44AD"));
+            return new SolidColorBrush(Color.Parse("#944DD6"));
         if (materialType.Contains("плазм") || materialType.Contains("плазма"))
-            return new SolidColorBrush(Color.Parse("#5DADE2"));
+            return new SolidColorBrush(Color.Parse("#1AA4CD"));
 
         return new SolidColorBrush(Color.Parse("#D0D0D0"));
     }

@@ -25,6 +25,7 @@ public class CreateOrderViewModel : ViewModelBase
     private long? _orderId;
     private AnalysisSelectionItem? _selectedAnalysis;
     private List<ContractAnalysisDto> _selectedLpuContractAnalyses = new List<ContractAnalysisDto>();
+    private long _nextTempId = -1;
 
     public CreateOrderViewModel(ShellViewModel shell, PatientDto patient, OrderDto? editingOrder = null)
     {
@@ -400,22 +401,27 @@ public class CreateOrderViewModel : ViewModelBase
         }
 
         item.IsSelected = true;
+        var tempId = _nextTempId--;
+        item.BarcodeMatId = tempId;
 
         MaterialRows.Add(new OrderMaterialRow
         {
             MaterialType = material.MaterialName,
             TakenDate = TakenDate.ToString("dd.MM.yyyy"),
             Comment = string.Empty,
+            BarcodeMatId = tempId,
             MaterialId = material.MaterialId,
             AnalysisDepId = item.AnalysisDepId
         });
 
         SummaryRows.Add(new OrderSummaryRow
         {
+            Ids = tempId.ToString("0"),
             Code = item.Code,
             Cipher = Cipher,
             Name = item.Name,
             AnalysisId = item.AnalysisId,
+            BarcodeMatId = tempId
         });
     }
 
@@ -501,9 +507,10 @@ public class CreateOrderViewModel : ViewModelBase
 
             foreach (var m in MaterialRows)
             {
+                var barcodeId = decimal.TryParse(m.Ids, out var parsed) ? parsed : m.BarcodeMatId;
                 await AppServices.Api.CreateBarcodeMaterialAsync(new BarcodeMaterialDto
                 {
-                    BarcodeMatId = m.BarcodeMatId,
+                    BarcodeMatId = barcodeId,
                     OrderId = _orderId,
                     MaterialId = m.MaterialId,
                     AnalysisDepId = m.AnalysisDepId
@@ -512,11 +519,16 @@ public class CreateOrderViewModel : ViewModelBase
 
             foreach (var s in SummaryRows)
             {
+                var materialRow = MaterialRows.FirstOrDefault(m => m.BarcodeMatId == s.BarcodeMatId);
+                if (materialRow == null)
+                    continue;
+
+                var barcodeId = decimal.TryParse(materialRow.Ids, out var parsed) ? parsed : materialRow.BarcodeMatId;
                 await AppServices.Api.CreateBarcodeAnalysisAsync(new BarcodeAnalysiseDto
                 {
-                    BarcodeId = s.BarcodeMatId,
+                    BarcodeId = barcodeId,
                     AnalysisId = s.AnalysisId,
-                    AnalysisDepId = MaterialRows.First(m => m.BarcodeMatId == s.BarcodeMatId).AnalysisDepId
+                    AnalysisDepId = materialRow.AnalysisDepId
                 });
             }
 
