@@ -715,10 +715,10 @@ public class AdminViewModel : ViewModelBase
     {
         try
         {
-            await AppServices.Api.CreateContractAsync(NewContractName, NewContractMoney, NewContractRemainsMoney);
+            await AppServices.Api.CreateContractAsync(NewContractName, NewContractMoney);
             NewContractName = string.Empty;
             NewContractMoney = 0;
-            NewContractRemainsMoney = 0;
+            NewContractRemainsMoney = NewContractMoney;
             await LoadDataAsync();
             StatusMessage = "Контракт создан";
         }

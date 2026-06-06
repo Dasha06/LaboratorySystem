@@ -1,38 +1,161 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:Desktop.ViewModels"
+             xmlns:models="using:Desktop.Models"
              x:Class="Desktop.Views.ReportsView"
              x:DataType="vm:ReportsViewModel">
     <DockPanel>
         <TextBlock DockPanel.Dock="Top" Classes="page-title" Text="Отчёты"/>
-        <Grid ColumnDefinitions="220,*">
-            <Border Classes="liis-card" Margin="0,0,12,0">
+        <Grid ColumnDefinitions="300,*">
+            <!-- Left panel: report type selection -->
+            <Border  VerticalAlignment="Top" Classes="liis-card" Margin="0,0,12,0" Padding="12">
                 <DockPanel>
-                    <TextBlock DockPanel.Dock="Top" Text="Список отчётов" FontWeight="SemiBold" Margin="0,0,0,8"/>
-                    <ListBox ItemsSource="{Binding ReportFiles}" SelectedItem="{Binding SelectedReportFile, Mode=TwoWay}">
+                    <TextBlock DockPanel.Dock="Top" Text="Тип отчёта" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                    <ListBox DockPanel.Dock="Top" ItemsSource="{Binding ReportTypes}" SelectedItem="{Binding SelectedReportType, Mode=TwoWay}"
+                             
+                             VerticalAlignment="Stretch" Margin="0,0,0,12">
                         <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}" Padding="8,6"/>
+                            <DataTemplate x:DataType="models:ReportTypeItem">
+                                <TextBlock  TextWrapping="WrapWithOverflow" Text="{Binding Name}" Padding="8,6"/>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </DockPanel>
             </Border>
+
+            <!-- Right panel: filters + table results -->
             <DockPanel Grid.Column="1">
-                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="12" Margin="0,0,0,12">
-                    <Button Classes="liis-primary" Content="Выбрать"/>
-                    <Button Classes="liis-primary" Content="Построить отчёт"/>
-                </StackPanel>
+                <!-- Filter bar above the table -->
+                <Border DockPanel.Dock="Top" Classes="liis-card" Padding="12" Margin="0,0,0,12">
+                    <StackPanel>
+                        <!-- Date range + LPU row -->
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <!-- Date range filters (reports 1-3) -->
+                            <StackPanel Orientation="Horizontal" Spacing="8"
+                                        IsVisible="{Binding IsReport1}">
+                                <TextBlock Text="Период:" VerticalAlignment="Center"/>
+                                <CalendarDatePicker SelectedDate="{Binding DateFrom}" Watermark="Дата от" MinWidth="120"/>
+                                <CalendarDatePicker SelectedDate="{Binding DateTo}" Watermark="Дата до" MinWidth="120"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Spacing="8"
+                                        IsVisible="{Binding IsReport2}">
+                                <TextBlock Text="Период:" VerticalAlignment="Center"/>
+                                <CalendarDatePicker SelectedDate="{Binding DateFrom}" Watermark="Дата от" MinWidth="120"/>
+                                <CalendarDatePicker SelectedDate="{Binding DateTo}" Watermark="Дата до" MinWidth="120"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Spacing="8"
+                                        IsVisible="{Binding IsReport3}">
+                                <TextBlock Text="Период:" VerticalAlignment="Center"/>
+                                <CalendarDatePicker SelectedDate="{Binding DateFrom}" Watermark="Дата от" MinWidth="120"/>
+                                <CalendarDatePicker SelectedDate="{Binding DateTo}" Watermark="Дата до" MinWidth="120"/>
+                            </StackPanel>
+
+                            <!-- LPU selection (reports 3,4) -->
+                            <StackPanel Orientation="Horizontal" Spacing="8"
+                                        IsVisible="{Binding IsReport3}">
+                                <TextBlock Text="ЛПУ:" VerticalAlignment="Center"/>
+                                <ComboBox ItemsSource="{Binding Lpus}" 
+                                          SelectedItem="{Binding SelectedLpu, Mode=TwoWay}"
+                                          VerticalAlignment="Center"
+                                          MinWidth="180">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate x:DataType="models:LpuDto">
+                                            <TextBlock Text="{Binding LpuName}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Spacing="8"
+                                        IsVisible="{Binding IsReport4}">
+                                <TextBlock Text="ЛПУ:" VerticalAlignment="Center"/>
+                                <ComboBox ItemsSource="{Binding Lpus}" SelectedItem="{Binding SelectedLpu, Mode=TwoWay}"
+                                          VerticalAlignment="Center"
+                                          MinWidth="180">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate x:DataType="models:LpuDto">
+                                            <TextBlock Text="{Binding LpuName}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </StackPanel>
+                            <Button Classes="liis-primary"
+                                    VerticalAlignment="Center"
+                                    Content="Построить отчёт"
+                                    Command="{Binding BuildReportCommand}"
+                                    IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBoolean}}"
+                                    Margin="0,8,0,0"/>
+                        </StackPanel>
+                        <TextBlock Text="Загрузка..."
+                                   IsVisible="{Binding IsLoading}"
+                                   Margin="0,8,0,0"
+                                   Foreground="{StaticResource SystemAccentColor}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Results table -->
                 <Border Classes="liis-card" Padding="0">
-                    <DataGrid ItemsSource="{Binding ServiceRows}" AutoGenerateColumns="False" IsReadOnly="True">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Шифр" Binding="{Binding Cipher}" Width="*"/>
-                            <DataGridTextColumn Header="Код услуги" Binding="{Binding ServiceCode}" Width="*"/>
-                            <DataGridTextColumn Header="Услуга" Binding="{Binding Service}" Width="*"/>
-                            <DataGridTextColumn Header="Количество" Binding="{Binding Quantity}" Width="*"/>
-                            <DataGridTextColumn Header="Цена" Binding="{Binding Price}" Width="*"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                    <Grid>
+                        <!-- Report 1: Workers table -->
+                        <DataGrid ItemsSource="{Binding WorkerRows}" AutoGenerateColumns="False" IsReadOnly="True"
+                                  IsVisible="{Binding IsReport1}"
+                                  Margin="8">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ФИО работника" Binding="{Binding WorkerFio}" Width="*"/>
+                                <DataGridTextColumn Header="Количество заказов" Binding="{Binding OrdersCount}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <!-- Report 2: Ordered analyses table -->
+                        <DataGrid ItemsSource="{Binding OrderedAnalysisRows}" AutoGenerateColumns="False" IsReadOnly="True"
+                                  IsVisible="{Binding IsReport2}"
+                                  Margin="8">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="№ заказа" Binding="{Binding OrderId}" Width="*"/>
+                                <DataGridTextColumn Header="Название анализа" Binding="{Binding AnalysisName}" Width="*"/>
+                                <DataGridTextColumn Header="Код анализа" Binding="{Binding AnalysisCodeName}" Width="*"/>
+                                <DataGridTextColumn Header="Номенклатурный код" Binding="{Binding AnalysisNomenclatureCode}" Width="*"/>
+                                <DataGridTextColumn Header="ЛПУ" Binding="{Binding LpuName}" Width="*"/>
+                                <DataGridTextColumn Header="Пациент" Binding="{Binding PatientName}" Width="*"/>
+                                <DataGridTextColumn Header="Дата заказа" Binding="{Binding OrderDate}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <!-- Report 3: Ordered analyses by LPU table -->
+                        <DataGrid ItemsSource="{Binding OrderedAnalysisRows}" AutoGenerateColumns="False" IsReadOnly="True"
+                                  IsVisible="{Binding IsReport3}"
+                                  Margin="8">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="№ заказа" Binding="{Binding OrderId}" Width="*"/>
+                                <DataGridTextColumn Header="Название анализа" Binding="{Binding AnalysisName}" Width="*"/>
+                                <DataGridTextColumn Header="Код анализа" Binding="{Binding AnalysisCodeName}" Width="*"/>
+                                <DataGridTextColumn Header="Номенклатурный код" Binding="{Binding AnalysisNomenclatureCode}" Width="*"/>
+                                <DataGridTextColumn Header="ЛПУ" Binding="{Binding LpuName}" Width="*"/>
+                                <DataGridTextColumn Header="Пациент" Binding="{Binding PatientName}" Width="*"/>
+                                <DataGridTextColumn Header="Дата заказа" Binding="{Binding OrderDate}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <!-- Report 4: Available analyses by LPU table -->
+                        <DataGrid ItemsSource="{Binding AvailableAnalysisRows}" AutoGenerateColumns="False" IsReadOnly="True"
+                                  IsVisible="{Binding IsReport4}"
+                                  Margin="8">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Код анализа" Binding="{Binding AnalysisCodeName}" Width="*"/>
+                                <DataGridTextColumn Header="Название анализа" Binding="{Binding AnalysisName}" Width="*"/>
+                                <DataGridTextColumn Header="Номенклатурный код" Binding="{Binding AnalysisNomenclatureCode}" Width="*"/>
+                                <DataGridTextColumn Header="Договор" Binding="{Binding ContractName}" Width="*"/>
+                                <DataGridTextColumn Header="Стоимость" Binding="{Binding Cost}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <!-- No data placeholder -->
+                        <TextBlock Text="Нет данных для отображения"
+                                   IsVisible="{Binding HasNoData}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Foreground="{StaticResource SystemAccentColor}"
+                                   FontSize="16"/>
+                    </Grid>
                 </Border>
             </DockPanel>
         </Grid>

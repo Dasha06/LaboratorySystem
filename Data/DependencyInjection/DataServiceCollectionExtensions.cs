@@ -37,6 +37,7 @@ public static class DataServiceCollectionExtensions
         services.AddScoped<IQualityParameterRepository, QualityParameterRepositoryImpl>();
         services.AddScoped<IQuantitativeStandartRepository, QuantitativeStandartRepositoryImpl>();
         services.AddScoped<IReferentialGroupRepository, ReferentialGroupRepositoryImpl>();
+        services.AddScoped<IReportRepository, ReportRepositoryImpl>();
         services.AddScoped<IRoleRepository, RoleRepositoryImpl>();
         services.AddScoped<ITripodRepository, TripodRepositoryImpl>();
         services.AddScoped<ITripodBarcodeMaterialRepository, TripodBarcodeMaterialRepositoryImpl>();

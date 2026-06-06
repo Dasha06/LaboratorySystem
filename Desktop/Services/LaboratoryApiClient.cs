@@ -372,13 +372,13 @@ public class LaboratoryApiClient
     }
 
     // --- CONTRACT ---
-    public async Task CreateContractAsync(string contractName, int money, double remainsMoney, CancellationToken ct = default)
+    public async Task CreateContractAsync(string contractName, int money, CancellationToken ct = default)
     {
         using var content = new MultipartFormDataContent
         {
             { new StringContent(contractName), "ContractName" },
             { new StringContent(money.ToString()), "ContractMoney" },
-            { new StringContent(remainsMoney.ToString()), "ContractRemainsMoney" }
+            { new StringContent(money.ToString()), "ContractRemainsMoney" }
         };
 
         var response = await _http.PostAsync("api/Contracts", content, ct);
@@ -572,4 +572,21 @@ public class LaboratoryApiClient
 
     public async Task<List<LpuContractDto>> GetLpuContractsAsync(CancellationToken ct = default) =>
         await _http.GetFromJsonAsync<List<LpuContractDto>>("api/LpuContracts", JsonOptions, ct) ?? [];
+
+    // --- REPORTS ---
+
+    public async Task<List<KeyValuePair<string, int>>> GetOrdersCountByWorkerAsync(DateTime from, DateTime to, CancellationToken ct = default) =>
+        await _http.GetFromJsonAsync<List<KeyValuePair<string, int>>>($"api/Reports/orders-by-worker?from={from:O}&to={to:O}", JsonOptions, ct) ?? [];
+
+    public async Task<List<OrderedAnalysisReportRow>> GetOrderedAnalysesBetweenAsync(DateTime from, DateTime to, CancellationToken ct = default) =>
+        await _http.GetFromJsonAsync<List<OrderedAnalysisReportRow>>($"api/Reports/ordered-analyses?from={from:O}&to={to:O}", JsonOptions, ct) ?? [];
+
+    public async Task<List<OrderedAnalysisReportRow>> GetOrderedAnalysesByLpuAsync(DateTime from, DateTime to, long lpuId, CancellationToken ct = default) =>
+        await _http.GetFromJsonAsync<List<OrderedAnalysisReportRow>>($"api/Reports/ordered-analyses-by-lpu?from={from:O}&to={to:O}&lpuId={lpuId}", JsonOptions, ct) ?? [];
+
+    public async Task<List<AvailableAnalysisReportRow>> GetAvailableAnalysesByLpuAsync(long lpuId, CancellationToken ct = default) =>
+        await _http.GetFromJsonAsync<List<AvailableAnalysisReportRow>>($"api/Reports/available-analyses-by-lpu?lpuId={lpuId}", JsonOptions, ct) ?? [];
+
+    public async Task<List<LpuDto>> GetAllLpusAsync(CancellationToken ct = default) =>
+        await _http.GetFromJsonAsync<List<LpuDto>>("api/Reports/lpus", JsonOptions, ct) ?? [];
 }

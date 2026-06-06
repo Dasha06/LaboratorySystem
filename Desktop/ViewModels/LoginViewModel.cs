@@ -53,7 +53,6 @@ public class LoginViewModel : ViewModelBase
             var worker = await AppServices.Api.LoginAsync(Login, Password);
             AppServices.Session.CurrentWorker = worker;
             _main.OnLoggedIn();
-            Console.WriteLine($"Logged in as {worker.WorkerFio}");
         }
         catch (Exception ex)
         {
@@ -61,13 +60,11 @@ public class LoginViewModel : ViewModelBase
                 ? "Неверный логин или пароль"
                 : $"Ошибка входа: {ex.Message}";
             
-            Console.WriteLine($"Error: {ErrorMessage}");
         }
         finally
         {
             IsBusy = false;
             
-            Console.WriteLine($"IsBusy: {IsBusy}");
         }
     }
 }
