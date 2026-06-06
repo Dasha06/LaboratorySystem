@@ -39,6 +39,10 @@ public class LaboratoryApiClient
             content.Add(new StringContent(patient.PatientLastName), "PatientLastName");
         if (patient.PatientBirthday.HasValue)
             content.Add(new StringContent(patient.PatientBirthday.Value.ToString("O")), "PatientBirthday");
+        if (!string.IsNullOrEmpty(patient.PatientEmail))
+            content.Add(new StringContent(patient.PatientEmail), "PatientEmail");
+        if (AppServices.Session.CurrentWorker != null)
+            content.Add(new StringContent(AppServices.Session.CurrentWorker.WorkerId.ToString()), "WorkerId");
 
         var response = await _http.PostAsync("api/Patients", content, ct);
         response.EnsureSuccessStatusCode();
@@ -58,6 +62,10 @@ public class LaboratoryApiClient
             content.Add(new StringContent(patient.PatientLastName), "PatientLastName");
         if (patient.PatientBirthday.HasValue)
             content.Add(new StringContent(patient.PatientBirthday.Value.ToString("O")), "PatientBirthday");
+        if (!string.IsNullOrEmpty(patient.PatientEmail))
+            content.Add(new StringContent(patient.PatientEmail), "PatientEmail");
+        if (AppServices.Session.CurrentWorker != null)
+            content.Add(new StringContent(AppServices.Session.CurrentWorker.WorkerId.ToString()), "WorkerId");
 
         var response = await _http.PutAsync($"api/Patients/{patientId}", content, ct);
         response.EnsureSuccessStatusCode();
@@ -83,6 +91,10 @@ public class LaboratoryApiClient
             content.Add(new StringContent(order.DocId.Value.ToString()), "DocId");
         if (!string.IsNullOrEmpty(order.OrderLpuDepartment))
             content.Add(new StringContent(order.OrderLpuDepartment), "OrderLpuDepartment");
+        if (order.OrderTakenDate.HasValue)
+            content.Add(new StringContent(order.OrderTakenDate.Value.ToString("O")), "OrderTakenDate");
+        if (AppServices.Session.CurrentWorker != null)
+            content.Add(new StringContent(AppServices.Session.CurrentWorker.WorkerId.ToString()), "WorkerId");
 
         var response = await _http.PostAsync("api/Orders", content, ct);
         response.EnsureSuccessStatusCode();
@@ -102,6 +114,10 @@ public class LaboratoryApiClient
             content.Add(new StringContent(order.DocId.Value.ToString()), "DocId");
         if (!string.IsNullOrEmpty(order.OrderLpuDepartment))
             content.Add(new StringContent(order.OrderLpuDepartment), "OrderLpuDepartment");
+        if (order.OrderTakenDate.HasValue)
+            content.Add(new StringContent(order.OrderTakenDate.Value.ToString("O")), "OrderTakenDate");
+        if (AppServices.Session.CurrentWorker != null)
+            content.Add(new StringContent(AppServices.Session.CurrentWorker.WorkerId.ToString()), "WorkerId");
 
         var response = await _http.PutAsync($"api/Orders/{orderId}", content, ct);
         response.EnsureSuccessStatusCode();
@@ -286,12 +302,13 @@ public class LaboratoryApiClient
     }
 
     // --- ANALYSIS ---
-    public async Task CreateAnalysisAsync(string name, int? departmentId, string codeName, CancellationToken ct = default)
+    public async Task CreateAnalysisAsync(string name, int? departmentId, string codeName, string nomenclatureCode, CancellationToken ct = default)
     {
         using var content = new MultipartFormDataContent
         {
             { new StringContent(name), "AnalysisName" },
-            { new StringContent(codeName), "AnalysisCodeName" }
+            { new StringContent(codeName), "AnalysisCodeName" },
+            { new StringContent(nomenclatureCode), "AnalysisNomenclatureCode" }
         };
         if (departmentId.HasValue)
             content.Add(new StringContent(departmentId.Value.ToString()), "AnalysisDepId");
@@ -300,12 +317,13 @@ public class LaboratoryApiClient
         response.EnsureSuccessStatusCode();
     }
 
-    public async Task UpdateAnalysisAsync(long analysisId, string name, int? departmentId, string codeName, CancellationToken ct = default)
+    public async Task UpdateAnalysisAsync(long analysisId, string name, int? departmentId, string codeName, string nomenclatureCode, CancellationToken ct = default)
     {
         using var content = new MultipartFormDataContent
         {
             { new StringContent(name), "AnalysisName" },
-            { new StringContent(codeName), "AnalysisCodeName" }
+            { new StringContent(codeName), "AnalysisCodeName" },
+            { new StringContent(nomenclatureCode), "AnalysisNomenclatureCode" }
         };
         if (departmentId.HasValue)
             content.Add(new StringContent(departmentId.Value.ToString()), "AnalysisDepId");

@@ -39,8 +39,10 @@ public class AdminViewModel : ViewModelBase
 
     private string _newAnalysisName = string.Empty;
     private string _newAnalysisCode = string.Empty;
+    private string _newAnalysisNomenclatureCode = string.Empty;
     private string _editAnalysisName = string.Empty;
     private string _editAnalysisCode = string.Empty;
+    private string _editAnalysisNomenclatureCode = string.Empty;
     private AnalysiseDto? _selectedAnalysisForEdit;
     private AnalysiseDto? _selectedAnalysisForDelete;
     private AnalysisDepartmentDto? _selectedAnalysisDepartmentForAnalysis;
@@ -177,6 +179,7 @@ public class AdminViewModel : ViewModelBase
     public string NewDepartmentName { get => _newDepartmentName; set => this.RaiseAndSetIfChanged(ref _newDepartmentName, value); }
     public string NewAnalysisName { get => _newAnalysisName; set => this.RaiseAndSetIfChanged(ref _newAnalysisName, value); }
     public string NewAnalysisCode { get => _newAnalysisCode; set => this.RaiseAndSetIfChanged(ref _newAnalysisCode, value); }
+    public string NewAnalysisNomenclatureCode { get => _newAnalysisNomenclatureCode; set => this.RaiseAndSetIfChanged(ref _newAnalysisNomenclatureCode, value); }
     public string NewMeasurementName { get => _newMeasurementName; set => this.RaiseAndSetIfChanged(ref _newMeasurementName, value); }
     public string NewLpuName { get => _newLpuName; set => this.RaiseAndSetIfChanged(ref _newLpuName, value); }
     public string NewLpuEmail { get => _newLpuEmail; set => this.RaiseAndSetIfChanged(ref _newLpuEmail, value); }
@@ -195,6 +198,7 @@ public class AdminViewModel : ViewModelBase
     public string EditDepartmentName { get => _editDepartmentName; set => this.RaiseAndSetIfChanged(ref _editDepartmentName, value); }
     public string EditAnalysisName { get => _editAnalysisName; set => this.RaiseAndSetIfChanged(ref _editAnalysisName, value); }
     public string EditAnalysisCode { get => _editAnalysisCode; set => this.RaiseAndSetIfChanged(ref _editAnalysisCode, value); }
+    public string EditAnalysisNomenclatureCode { get => _editAnalysisNomenclatureCode; set => this.RaiseAndSetIfChanged(ref _editAnalysisNomenclatureCode, value); }
     public string EditMeasurementName { get => _editMeasurementName; set => this.RaiseAndSetIfChanged(ref _editMeasurementName, value); }
     public string EditLpuName { get => _editLpuName; set => this.RaiseAndSetIfChanged(ref _editLpuName, value); }
     public string EditLpuEmail { get => _editLpuEmail; set => this.RaiseAndSetIfChanged(ref _editLpuEmail, value); }
@@ -212,7 +216,7 @@ public class AdminViewModel : ViewModelBase
     public MaterialDto? SelectedMaterialForDelete { get => _selectedMaterialForDelete; set => this.RaiseAndSetIfChanged(ref _selectedMaterialForDelete, value); }
     public AnalysisDepartmentDto? SelectedDepartmentForEdit { get => _selectedDepartmentForEdit; set { this.RaiseAndSetIfChanged(ref _selectedDepartmentForEdit, value); if (value != null) EditDepartmentName = value.AnalysisDepName; } }
     public AnalysisDepartmentDto? SelectedDepartmentForDelete { get => _selectedDepartmentForDelete; set => this.RaiseAndSetIfChanged(ref _selectedDepartmentForDelete, value); }
-    public AnalysiseDto? SelectedAnalysisForEdit { get => _selectedAnalysisForEdit; set { this.RaiseAndSetIfChanged(ref _selectedAnalysisForEdit, value); if (value != null) { EditAnalysisName = value.AnalysisName; EditAnalysisCode = value.AnalysisCodeName; SelectedAnalysisDepartmentForEdit = Departments.FirstOrDefault(d => d.AnalysisDepId == value.AnalysisDepId); } } }
+    public AnalysiseDto? SelectedAnalysisForEdit { get => _selectedAnalysisForEdit; set { this.RaiseAndSetIfChanged(ref _selectedAnalysisForEdit, value); if (value != null) { EditAnalysisName = value.AnalysisName; EditAnalysisCode = value.AnalysisCodeName; EditAnalysisNomenclatureCode = value.AnalysisNomenclatureCode; SelectedAnalysisDepartmentForEdit = Departments.FirstOrDefault(d => d.AnalysisDepId == value.AnalysisDepId); } } }
     public AnalysiseDto? SelectedAnalysisForDelete { get => _selectedAnalysisForDelete; set => this.RaiseAndSetIfChanged(ref _selectedAnalysisForDelete, value); }
     public MeasurementDto? SelectedMeasurementForEdit { get => _selectedMeasurementForEdit; set { this.RaiseAndSetIfChanged(ref _selectedMeasurementForEdit, value); if (value != null) EditMeasurementName = value.MeasurementName; } }
     public MeasurementDto? SelectedMeasurementForDelete { get => _selectedMeasurementForDelete; set => this.RaiseAndSetIfChanged(ref _selectedMeasurementForDelete, value); }
@@ -556,9 +560,10 @@ public class AdminViewModel : ViewModelBase
     {
         try
         {
-            await AppServices.Api.CreateAnalysisAsync(NewAnalysisName, SelectedAnalysisDepartmentForAnalysis?.AnalysisDepId, NewAnalysisCode);
+            await AppServices.Api.CreateAnalysisAsync(NewAnalysisName, SelectedAnalysisDepartmentForAnalysis?.AnalysisDepId, NewAnalysisCode, NewAnalysisNomenclatureCode);
             NewAnalysisName = string.Empty;
             NewAnalysisCode = string.Empty;
+            NewAnalysisNomenclatureCode = string.Empty;
             SelectedAnalysisDepartmentForAnalysis = null;
             await LoadDataAsync();
             StatusMessage = "Анализ создан";
@@ -574,10 +579,11 @@ public class AdminViewModel : ViewModelBase
         if (SelectedAnalysisForEdit == null) return;
         try
         {
-            await AppServices.Api.UpdateAnalysisAsync(SelectedAnalysisForEdit.AnalysisId, EditAnalysisName, SelectedAnalysisDepartmentForEdit?.AnalysisDepId, EditAnalysisCode);
+            await AppServices.Api.UpdateAnalysisAsync(SelectedAnalysisForEdit.AnalysisId, EditAnalysisName, SelectedAnalysisDepartmentForEdit?.AnalysisDepId, EditAnalysisCode, EditAnalysisNomenclatureCode);
             SelectedAnalysisForEdit = null;
             EditAnalysisName = string.Empty;
             EditAnalysisCode = string.Empty;
+            EditAnalysisNomenclatureCode = string.Empty;
             SelectedAnalysisDepartmentForEdit = null;
             await LoadDataAsync();
             StatusMessage = "Анализ обновлён";

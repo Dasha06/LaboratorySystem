@@ -13,6 +13,7 @@ public class CreatePatientViewModel : ViewModelBase
     private string _middleName = string.Empty;
     private DateTime? _birthDate;
     private string _gender = "Ж";
+    private bool _isEditing;
     private ReactiveCommand<Unit, Unit>? _okCommand;
     private ReactiveCommand<Unit, Unit>? _cancelCommand;
 
@@ -26,6 +27,18 @@ public class CreatePatientViewModel : ViewModelBase
     public string MiddleName { get => _middleName; set => this.RaiseAndSetIfChanged(ref _middleName, value); }
     public DateTime? BirthDate { get => _birthDate; set => this.RaiseAndSetIfChanged(ref _birthDate, value); }
     public string Gender { get => _gender; set => this.RaiseAndSetIfChanged(ref _gender, value); }
+
+    public bool IsEditing
+    {
+        get => _isEditing;
+        set
+        {
+            this.RaiseAndSetIfChanged(ref _isEditing, value);
+            this.RaisePropertyChanged(nameof(OkButtonText));
+        }
+    }
+
+    public string OkButtonText => IsEditing ? "Сохранить" : "Создать";
 
     public ObservableCollection<string> GenderOptions { get; }
 

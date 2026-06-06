@@ -69,6 +69,14 @@ public class OrderRepositoryImpl : IOrderRepository
         existing.PatientId = order.PatientId;
         existing.LpuId = order.LpuId;
         existing.OrderIsCountingInContract = order.OrderIsCountingInContract;
+        existing.OrderTakenDate = order.OrderTakenDate;
+        _context.SaveChanges();
+        return true;
+    }
+
+    public bool CreateOrderChange(OrderChange orderChange)
+    {
+        _context.OrderChanges.Add(orderChange);
         _context.SaveChanges();
         return true;
     }

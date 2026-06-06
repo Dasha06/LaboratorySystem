@@ -40,6 +40,7 @@ public class AnalysiseRepositoryImpl : IAnalysiseRepository
         oldAnalysis.AnalysisDepId = analysis.AnalysisDepId;
         oldAnalysis.AnalysisName = analysis.AnalysisName;
         oldAnalysis.AnalysisCodeName = analysis.AnalysisCodeName;
+        oldAnalysis.AnalysisNomenclatureCode = analysis.AnalysisNomenclatureCode;
         _context.SaveChanges();
         return true;
     }

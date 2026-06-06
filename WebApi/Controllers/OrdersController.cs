@@ -25,8 +25,22 @@ public class OrdersController : ApiControllerBase
 
     [HttpPost]
     [FormInput]
-    public IActionResult Create([FromForm] OrderForm form) =>
-        Execute(() => _repository.CreateOrder(FormEntityMapper.ToOrder(form)));
+    public IActionResult Create([FromForm] OrderForm form)
+    {
+        var order = FormEntityMapper.ToOrder(form);
+        var result = _repository.CreateOrder(order);
+        if (result && form.WorkerId.HasValue)
+        {
+            _repository.CreateOrderChange(new OrderChange
+            {
+                OrderId = order.OrderId,
+                WorkerId = form.WorkerId.Value,
+                OrderChangeTime = DateTime.Now,
+                TypeId = 1 // 1 = создание
+            });
+        }
+        return Execute(() => result);
+    }
 
     [HttpPut("{orderId:long}")]
     [FormInput]
@@ -34,7 +48,18 @@ public class OrdersController : ApiControllerBase
     {
         var entity = FormEntityMapper.ToOrder(form);
         entity.OrderId = orderId;
-        return Execute(() => _repository.UpdateOrder(entity));
+        var result = _repository.UpdateOrder(entity);
+        if (result && form.WorkerId.HasValue)
+        {
+            _repository.CreateOrderChange(new OrderChange
+            {
+                OrderId = orderId,
+                WorkerId = form.WorkerId.Value,
+                OrderChangeTime = DateTime.Now,
+                TypeId = 2 // 2 = изменение
+            });
+        }
+        return Execute(() => result);
     }
 
     [HttpPost("{orderId:long}/apply-contract-cost")]

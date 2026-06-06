@@ -9,6 +9,7 @@ public interface IOrderRepository
     Order GetOrderWithAnalysesAndBarcodes(long orderId);
     bool CreateOrder(Order order);
     bool UpdateOrder(Order order);
+    bool CreateOrderChange(OrderChange orderChange);
     /// <summary>
     /// Списать стоимость анализов и комплексов по прайсу контракта с остатка <see cref="Contract.ContractRemainsMoney"/>,
     /// если у заказа <see cref="Order.OrderIsCountingInContract"/> и привязаны связи ЛПУ–контракт.

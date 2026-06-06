@@ -109,6 +109,7 @@ public partial class SystemdatabaseContext : DbContext
             entity.Property(e => e.ComplexCodeName).HasColumnName("complex_code_name");
             entity.Property(e => e.ComplexDescription).HasColumnName("complex_description");
             entity.Property(e => e.ComplexName).HasColumnName("complex_name");
+            entity.Property(e => e.ComplexNomenclatureCode).HasColumnName("complex_nomenclature_code");
 
             entity.HasOne(d => d.AnalysisDep).WithMany(p => p.AnalysisComplexes)
                 .HasForeignKey(d => d.AnalysisDepId)
@@ -179,6 +180,7 @@ public partial class SystemdatabaseContext : DbContext
             entity.Property(e => e.AnalysisCodeName).HasColumnName("analysis_code_name");
             entity.Property(e => e.AnalysisDepId).HasColumnName("analysis_dep_id");
             entity.Property(e => e.AnalysisName).HasColumnName("analysis_name");
+            entity.Property(e => e.AnalysisNomenclatureCode).HasColumnName("analysis_nomenclature_code");
 
             entity.HasOne(d => d.AnalysisDep).WithMany(p => p.Analysises)
                 .HasForeignKey(d => d.AnalysisDepId)

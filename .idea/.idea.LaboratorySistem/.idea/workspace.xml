@@ -17,30 +17,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f8863308-d313-4b1c-bf9f-2527ba4c7f42" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.LaboratorySistem/.idea/avalonia.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.LaboratorySistem/.idea/avalonia.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.LaboratorySistem/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.LaboratorySistem/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Models/Order.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Models/Order.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Models/Patient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Models/Patient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Models/AnalysisComplex.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Models/AnalysisComplex.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Models/Analysise.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Models/Analysise.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data/Models/SystemdatabaseContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Models/SystemdatabaseContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/BarcodeMaterialRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/BarcodeMaterialRepositoryImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/MaterialRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/MaterialRepositoryImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/RoleRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/RoleRepositoryImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/IBarcodeMaterialRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/IBarcodeMaterialRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/IMaterialRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/IMaterialRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/IRoleRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/IRoleRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/Converters/MaterialTypeToBrushConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Converters/MaterialTypeToBrushConverter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysisComplexRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysisComplexRepositoryImpl.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysiseRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysiseRepositoryImpl.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/OrderRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/OrderRepositoryImpl.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/PatientRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/PatientRepositoryImpl.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/IOrderRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/IOrderRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/IPatientRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/IPatientRepository.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Desktop/Models/ApiModels.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Models/ApiModels.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Desktop/Services/LaboratoryApiClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Services/LaboratoryApiClient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/Styles/LiisTheme.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Styles/LiisTheme.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Desktop/ViewModels/AdminViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/ViewModels/AdminViewModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Desktop/ViewModels/CreateOrderViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/ViewModels/CreateOrderViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/ViewModels/RacksViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/ViewModels/RacksViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/ViewModels/CreatePatientViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/ViewModels/CreatePatientViewModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Desktop/Views/AdminView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Views/AdminView.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/Views/RacksView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Views/RacksView.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/Views/RacksView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Views/RacksView.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApi/Controllers/BarcodeMaterialsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/Controllers/BarcodeMaterialsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApi/Controllers/MaterialsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/Controllers/MaterialsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApi/Controllers/RolesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/Controllers/RolesController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/Views/CreatePatientWindow.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Views/CreatePatientWindow.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/Views/RegistrationView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Views/RegistrationView.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApi/Controllers/OrdersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/Controllers/OrdersController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApi/Controllers/PatientsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/Controllers/PatientsController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebApi/Mapping/FormEntityMapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/Mapping/FormEntityMapper.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebApi/Models/Forms/EntityForms.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/Models/Forms/EntityForms.cs" afterDir="false" />
     </list>
@@ -256,7 +252,7 @@
       <workItem from="1780438855207" duration="4683000" />
       <workItem from="1780444150489" duration="5369000" />
       <workItem from="1780650450796" duration="1518000" />
-      <workItem from="1780687631106" duration="559000" />
+      <workItem from="1780687631106" duration="7424000" />
     </task>
     <task id="LOCAL-00001" summary="init worker">
       <option name="closed" value="true" />
@@ -306,7 +302,15 @@
       <option name="project" value="LOCAL" />
       <updated>1779296897384</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="admin window changes after some tests">
+      <option name="closed" value="true" />
+      <created>1780688505822</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1780688505822</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -321,7 +325,8 @@
     <MESSAGE value="little adding in functions" />
     <MESSAGE value="change in db" />
     <MESSAGE value="data done?" />
-    <option name="LAST_COMMIT_MESSAGE" value="data done?" />
+    <MESSAGE value="admin window changes after some tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="admin window changes after some tests" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

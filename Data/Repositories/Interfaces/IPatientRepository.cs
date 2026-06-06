@@ -8,5 +8,6 @@ public interface IPatientRepository
     Patient GetPatientByPatientId(long patientId);
     bool CreatePatient(Patient patient);
     bool UpdatePatient(Patient patient);
+    bool CreatePatientChange(PatientChange patientChange);
     bool DeletePatient(long patientId);
 }

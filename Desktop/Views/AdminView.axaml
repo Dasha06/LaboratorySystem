@@ -38,22 +38,6 @@
                                     </StackPanel>
                                 </StackPanel>
                             </Border>
-                            <!-- Удаление -->
-                            <Border Padding="16" Classes="liis-card">
-                                <StackPanel Spacing="12">
-                                    <TextBlock FontSize="16" FontWeight="SemiBold" Text="Удаление роли"/>
-                                    <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <ComboBox Width="240" ItemsSource="{Binding Roles}" SelectedItem="{Binding SelectedRoleForDelete}">
-                                            <ComboBox.ItemTemplate>
-                                                <DataTemplate>
-                                                    <TextBlock Text="{Binding RoleName}"/>
-                                                </DataTemplate>
-                                            </ComboBox.ItemTemplate>
-                                        </ComboBox>
-                                        <Button Classes="liis-danger" Content="Удалить роль" Command="{Binding DeleteRoleCommand}"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </Border>
                             <!-- Список -->
                             <Border Padding="16" Classes="liis-card">
                                 <StackPanel Spacing="12">
@@ -79,9 +63,9 @@
                                 <StackPanel Spacing="12">
                                     <TextBlock FontSize="16" FontWeight="SemiBold" Text="Добавление работника"/>
                                     <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <TextBox Classes="liis-input" Watermark="ФИО" Text="{Binding NewWorkerName}"/>
-                                        <TextBox Classes="liis-input" Watermark="Логин" Text="{Binding NewWorkerLogin}"/>
-                                        <TextBox Classes="liis-input" Watermark="Пароль" Text="{Binding NewWorkerPassword}"/>
+                                        <TextBox Classes="liis-input" Watermark="ФИО" Text="{Binding NewWorkerName}" Width="150"/>
+                                        <TextBox Classes="liis-input" Watermark="Логин" Text="{Binding NewWorkerLogin}" Width="150"/>
+                                        <TextBox Classes="liis-input" Watermark="Пароль" Text="{Binding NewWorkerPassword}" Width="150"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Spacing="8">
                                         <ComboBox Width="200" ItemsSource="{Binding Roles}" SelectedItem="{Binding SelectedRoleForWorker}">
@@ -107,9 +91,9 @@
                                         </ComboBox.ItemTemplate>
                                     </ComboBox>
                                     <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <TextBox Classes="liis-input" Watermark="ФИО" Text="{Binding EditWorkerName}"/>
-                                        <TextBox Classes="liis-input" Watermark="Логин" Text="{Binding EditWorkerLogin}"/>
-                                        <TextBox Classes="liis-input" Watermark="Пароль" Text="{Binding EditWorkerPassword}"/>
+                                        <TextBox Classes="liis-input" Watermark="ФИО" Text="{Binding EditWorkerName}" Width="150"/>
+                                        <TextBox Classes="liis-input" Watermark="Логин" Text="{Binding EditWorkerLogin}" Width="150"/>
+                                        <TextBox Classes="liis-input" Watermark="Пароль" Text="{Binding EditWorkerPassword}" Width="150"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Spacing="8">
                                         <ComboBox Width="200" ItemsSource="{Binding Roles}" SelectedItem="{Binding SelectedRoleForEditWorker}">
@@ -120,22 +104,6 @@
                                             </ComboBox.ItemTemplate>
                                         </ComboBox>
                                         <Button Classes="liis-primary" Content="Обновить работника" Command="{Binding UpdateWorkerCommand}"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </Border>
-                            <!-- Удаление -->
-                            <Border Padding="16" Classes="liis-card">
-                                <StackPanel Spacing="12">
-                                    <TextBlock FontSize="16" FontWeight="SemiBold" Text="Удаление работника"/>
-                                    <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <ComboBox Width="240" ItemsSource="{Binding Workers}" SelectedItem="{Binding SelectedWorkerForDelete}">
-                                            <ComboBox.ItemTemplate>
-                                                <DataTemplate>
-                                                    <TextBlock Text="{Binding WorkerFio}"/>
-                                                </DataTemplate>
-                                            </ComboBox.ItemTemplate>
-                                        </ComboBox>
-                                        <Button Classes="liis-danger" Content="Удалить работника" Command="{Binding DeleteWorkerCommand}"/>
                                     </StackPanel>
                                 </StackPanel>
                             </Border>
@@ -234,22 +202,6 @@
                                     </StackPanel>
                                 </StackPanel>
                             </Border>
-                            <!-- Удаление -->
-                            <Border Padding="16" Classes="liis-card">
-                                <StackPanel Spacing="12">
-                                    <TextBlock FontSize="16" FontWeight="SemiBold" Text="Удаление отделения"/>
-                                    <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <ComboBox Width="240" ItemsSource="{Binding Departments}" SelectedItem="{Binding SelectedDepartmentForDelete}">
-                                            <ComboBox.ItemTemplate>
-                                                <DataTemplate>
-                                                    <TextBlock Text="{Binding AnalysisDepName}"/>
-                                                </DataTemplate>
-                                            </ComboBox.ItemTemplate>
-                                        </ComboBox>
-                                        <Button Classes="liis-danger" Content="Удалить отделение" Command="{Binding DeleteDepartmentCommand}"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </Border>
                             <!-- Список -->
                             <Border Padding="16" Classes="liis-card">
                                 <StackPanel Spacing="12">
@@ -274,10 +226,11 @@
                             <Border Padding="16" Classes="liis-card">
                                 <StackPanel Spacing="12">
                                     <TextBlock FontSize="16" FontWeight="SemiBold" Text="Добавление анализа"/>
-                                    <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <TextBox Classes="liis-input" Watermark="Название анализа" Text="{Binding NewAnalysisName}"/>
-                                        <TextBox Classes="liis-input" Watermark="Код анализа" Text="{Binding NewAnalysisCode}"/>
-                                    </StackPanel>
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <TextBox Classes="liis-input" Watermark="Название анализа" Text="{Binding NewAnalysisName}"/>
+                                <TextBox Classes="liis-input" Watermark="Код анализа" Text="{Binding NewAnalysisCode}"/>
+                                <TextBox Classes="liis-input" Watermark="Код номенклатуры" Text="{Binding NewAnalysisNomenclatureCode}"/>
+                            </StackPanel>
                                     <StackPanel Orientation="Horizontal" Spacing="8">
                                         <ComboBox Width="200" ItemsSource="{Binding Departments}" SelectedItem="{Binding SelectedAnalysisDepartmentForAnalysis}">
                                             <ComboBox.ItemTemplate>
@@ -301,10 +254,11 @@
                                             </DataTemplate>
                                         </ComboBox.ItemTemplate>
                                     </ComboBox>
-                                    <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <TextBox Classes="liis-input" Watermark="Название" Text="{Binding EditAnalysisName}"/>
-                                        <TextBox Classes="liis-input" Watermark="Код" Text="{Binding EditAnalysisCode}"/>
-                                    </StackPanel>
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <TextBox Classes="liis-input" Watermark="Название" Text="{Binding EditAnalysisName}"/>
+                                <TextBox Classes="liis-input" Watermark="Код" Text="{Binding EditAnalysisCode}"/>
+                                <TextBox Classes="liis-input" Watermark="Код номенклатуры" Text="{Binding EditAnalysisNomenclatureCode}"/>
+                            </StackPanel>
                                     <StackPanel Orientation="Horizontal" Spacing="8">
                                         <ComboBox Width="200" ItemsSource="{Binding Departments}" SelectedItem="{Binding SelectedAnalysisDepartmentForEdit}">
                                             <ComboBox.ItemTemplate>
@@ -317,31 +271,16 @@
                                     </StackPanel>
                                 </StackPanel>
                             </Border>
-                            <!-- Удаление -->
-                            <Border Padding="16" Classes="liis-card">
-                                <StackPanel Spacing="12">
-                                    <TextBlock FontSize="16" FontWeight="SemiBold" Text="Удаление анализа"/>
-                                    <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <ComboBox Width="240" ItemsSource="{Binding Analyses}" SelectedItem="{Binding SelectedAnalysisForDelete}">
-                                            <ComboBox.ItemTemplate>
-                                                <DataTemplate>
-                                                    <TextBlock Text="{Binding AnalysisName}"/>
-                                                </DataTemplate>
-                                            </ComboBox.ItemTemplate>
-                                        </ComboBox>
-                                        <Button Classes="liis-danger" Content="Удалить анализ" Command="{Binding DeleteAnalysisCommand}"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </Border>
                             <!-- Список -->
                             <Border Padding="16" Classes="liis-card">
                                 <StackPanel Spacing="12">
                                     <TextBlock FontSize="16" FontWeight="SemiBold" Text="Все анализы"/>
                                     <DataGrid ItemsSource="{Binding Analyses}" AutoGenerateColumns="False" IsReadOnly="True" Height="200">
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="ID" Binding="{Binding AnalysisId}" Width="80"/>
-                                            <DataGridTextColumn Header="Название" Binding="{Binding AnalysisName}" Width="*"/>
-                                            <DataGridTextColumn Header="Код" Binding="{Binding AnalysisCodeName}" Width="*"/>
+                                        <DataGridTextColumn Header="ID" Binding="{Binding AnalysisId}" Width="80"/>
+                                        <DataGridTextColumn Header="Название" Binding="{Binding AnalysisName}" Width="*"/>
+                                        <DataGridTextColumn Header="Код" Binding="{Binding AnalysisCodeName}" Width="100"/>
+                                        <DataGridTextColumn Header="Код номенклатуры" Binding="{Binding AnalysisNomenclatureCode}" Width="*"/>
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </StackPanel>
@@ -378,22 +317,6 @@
                                     <StackPanel Orientation="Horizontal" Spacing="8">
                                         <TextBox Width="240" Classes="liis-input" Watermark="Новое название" Text="{Binding EditMeasurementName}"/>
                                         <Button Classes="liis-primary" Content="Обновить единицу" Command="{Binding UpdateMeasurementCommand}"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </Border>
-                            <!-- Удаление -->
-                            <Border Padding="16" Classes="liis-card">
-                                <StackPanel Spacing="12">
-                                    <TextBlock FontSize="16" FontWeight="SemiBold" Text="Удаление единицы измерения"/>
-                                    <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <ComboBox Width="240" ItemsSource="{Binding Measurements}" SelectedItem="{Binding SelectedMeasurementForDelete}">
-                                            <ComboBox.ItemTemplate>
-                                                <DataTemplate>
-                                                    <TextBlock Text="{Binding MeasurementName}"/>
-                                                </DataTemplate>
-                                            </ComboBox.ItemTemplate>
-                                        </ComboBox>
-                                        <Button Classes="liis-danger" Content="Удалить единицу" Command="{Binding DeleteMeasurementCommand}"/>
                                     </StackPanel>
                                 </StackPanel>
                             </Border>
@@ -443,22 +366,6 @@
                                         <TextBox Classes="liis-input" Watermark="Название" Text="{Binding EditLpuName}"/>
                                         <TextBox Classes="liis-input" Watermark="Email" Text="{Binding EditLpuEmail}"/>
                                         <Button Classes="liis-primary" Content="Обновить ЛПУ" Command="{Binding UpdateLpuCommand}"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </Border>
-                            <!-- Удаление -->
-                            <Border Padding="16" Classes="liis-card">
-                                <StackPanel Spacing="12">
-                                    <TextBlock FontSize="16" FontWeight="SemiBold" Text="Удаление ЛПУ"/>
-                                    <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <ComboBox Width="240" ItemsSource="{Binding Lpus}" SelectedItem="{Binding SelectedLpuForDelete}">
-                                            <ComboBox.ItemTemplate>
-                                                <DataTemplate>
-                                                    <TextBlock Text="{Binding LpuName}"/>
-                                                </DataTemplate>
-                                            </ComboBox.ItemTemplate>
-                                        </ComboBox>
-                                        <Button Classes="liis-danger" Content="Удалить ЛПУ" Command="{Binding DeleteLpuCommand}"/>
                                     </StackPanel>
                                 </StackPanel>
                             </Border>
@@ -514,22 +421,6 @@
                                     </StackPanel>
                                 </StackPanel>
                             </Border>
-                            <!-- Удаление -->
-                            <Border Padding="16" Classes="liis-card">
-                                <StackPanel Spacing="12">
-                                    <TextBlock FontSize="16" FontWeight="SemiBold" Text="Удаление контракта"/>
-                                    <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <ComboBox Width="240" ItemsSource="{Binding Contracts}" SelectedItem="{Binding SelectedContractForDelete}">
-                                            <ComboBox.ItemTemplate>
-                                                <DataTemplate>
-                                                    <TextBlock Text="{Binding ContractName}"/>
-                                                </DataTemplate>
-                                            </ComboBox.ItemTemplate>
-                                        </ComboBox>
-                                        <Button Classes="liis-danger" Content="Удалить контракт" Command="{Binding DeleteContractCommand}"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </Border>
                             <!-- Список -->
                             <Border Padding="16" Classes="liis-card">
                                 <StackPanel Spacing="12">
@@ -571,29 +462,6 @@
                                         </ComboBox>
                                         <CheckBox Content="Активно" IsChecked="{Binding NewLpuContractIsActive}" VerticalAlignment="Center"/>
                                         <Button Classes="liis-primary" Content="Связать" Command="{Binding CreateLpuContractCommand}"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </Border>
-                            <!-- Удаление -->
-                            <Border Padding="16" Classes="liis-card">
-                                <StackPanel Spacing="12">
-                                    <TextBlock FontSize="16" FontWeight="SemiBold" Text="Удаление связи"/>
-                                    <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <ComboBox Width="300" ItemsSource="{Binding LpuContracts}" SelectedItem="{Binding SelectedLpuContractForDelete}">
-                                            <ComboBox.ItemTemplate>
-                                                <DataTemplate>
-                                                    <TextBlock>
-                                                        <TextBlock.Text>
-                                                            <MultiBinding StringFormat="{}{0} - {1}">
-                                                                <Binding Path="Contract.ContractName"/>
-                                                                <Binding Path="LpuId"/>
-                                                            </MultiBinding>
-                                                        </TextBlock.Text>
-                                                    </TextBlock>
-                                                </DataTemplate>
-                                            </ComboBox.ItemTemplate>
-                                        </ComboBox>
-                                        <Button Classes="liis-danger" Content="Удалить связь" Command="{Binding DeleteLpuContractCommand}"/>
                                     </StackPanel>
                                 </StackPanel>
                             </Border>
@@ -664,22 +532,6 @@
                                     <StackPanel Orientation="Horizontal" Spacing="8">
                                         <TextBox Classes="liis-input" Watermark="Новая стоимость" Text="{Binding EditContractAnalysisCost}"/>
                                         <Button Classes="liis-primary" Content="Обновить стоимость" Command="{Binding UpdateContractAnalysisCommand}"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </Border>
-                            <!-- Удаление -->
-                            <Border Padding="16" Classes="liis-card">
-                                <StackPanel Spacing="12">
-                                    <TextBlock FontSize="16" FontWeight="SemiBold" Text="Удаление анализа из контракта"/>
-                                    <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <ComboBox Width="300" ItemsSource="{Binding ContractAnalysisRows}" SelectedItem="{Binding SelectedContractAnalysisForDelete}">
-                                            <ComboBox.ItemTemplate>
-                                                <DataTemplate>
-                                                    <TextBlock Text="{Binding Analysis.AnalysisName}"/>
-                                                </DataTemplate>
-                                            </ComboBox.ItemTemplate>
-                                        </ComboBox>
-                                        <Button Classes="liis-danger" Content="Удалить связь" Command="{Binding DeleteContractAnalysisCommand}"/>
                                     </StackPanel>
                                 </StackPanel>
                             </Border>

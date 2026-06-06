@@ -245,7 +245,7 @@ public class CreateOrderViewModel : ViewModelBase
                         SummaryRows.Add(new OrderSummaryRow
                         {
                             Ids = bm.BarcodeMatId.ToString("0"),
-                            Code = ba.Analysis?.AnalysisCodeName ?? string.Empty,
+                            Code = ba.Analysis?.AnalysisNomenclatureCode ?? string.Empty,
                             Cipher = Cipher,
                             Name = ba.Analysis?.AnalysisName ?? string.Empty,
                             AnalysisId = ba.AnalysisId,
@@ -325,7 +325,7 @@ public class CreateOrderViewModel : ViewModelBase
             {
                 AnalysisChoices.Add(new AnalysisSelectionItem
                 {
-                    Code = contractAnalysis.Analysis?.AnalysisCodeName ?? string.Empty,
+                    Code = contractAnalysis.Analysis?.AnalysisNomenclatureCode ?? string.Empty,
                     Name = contractAnalysis.Analysis?.AnalysisName ?? string.Empty,
                     AnalysisId = contractAnalysis.AnalysisId,
                     AnalysisDepId = contractAnalysis.Analysis?.AnalysisDepId ?? 0,
@@ -353,7 +353,8 @@ public class CreateOrderViewModel : ViewModelBase
         foreach (var a in depAnalyses.Take(8))
             DepartmentCategories.Add(new AnalysisSelectionItem
             {
-                Code = a.Analysis?.AnalysisCodeName ?? string.Empty,
+                Code = a.Analysis?.
+                    AnalysisNomenclatureCode?? string.Empty,
                 Name = a.Analysis?.AnalysisName ?? string.Empty,
                 AnalysisId = a.AnalysisId,
                 AnalysisDepId = SelectedDepartment.AnalysisDepId,
@@ -363,7 +364,8 @@ public class CreateOrderViewModel : ViewModelBase
         foreach (var a in depAnalyses)
             AnalysisChoices.Add(new AnalysisSelectionItem
             {
-                Code = a.Analysis?.AnalysisCodeName ?? string.Empty,
+                Code = a.Analysis?.
+                    AnalysisNomenclatureCode?? string.Empty,
                 Name = a.Analysis?.AnalysisName ?? string.Empty,
                 AnalysisId = a.AnalysisId,
                 AnalysisDepId = SelectedDepartment.AnalysisDepId,
@@ -493,7 +495,8 @@ public class CreateOrderViewModel : ViewModelBase
                 DocId = SelectedDoctor?.DocId,
                 OrderStatus = OrderStatus,
                 OrderLpuDepartment = Department,
-                OrderIsCountingInContract = OrderIsCountingInContract
+                OrderIsCountingInContract = OrderIsCountingInContract,
+                OrderTakenDate = DateOnly.FromDateTime(TakenDate.Date)
             };
             await AppServices.Api.CreateOrderAsync(order);
             var orders = await AppServices.Api.GetOrdersAsync();
@@ -561,7 +564,8 @@ public class CreateOrderViewModel : ViewModelBase
                 DocId = SelectedDoctor?.DocId,
                 OrderStatus = OrderStatus,
                 OrderLpuDepartment = Department,
-                OrderIsCountingInContract = OrderIsCountingInContract
+                OrderIsCountingInContract = OrderIsCountingInContract,
+                OrderTakenDate = DateOnly.FromDateTime(TakenDate.Date)
             };
 
             await AppServices.Api.UpdateOrderAsync(_editingOrder.OrderId, order);

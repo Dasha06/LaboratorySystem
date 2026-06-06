@@ -18,6 +18,7 @@ public class PatientDto
     public string? PatientSecondName { get; set; }
     public string? PatientLastName { get; set; }
     public DateOnly? PatientBirthday { get; set; }
+    public string? PatientEmail { get; set; }
     public string PatientGender { get; set; } = string.Empty;
 
     public string FullName =>
@@ -31,6 +32,7 @@ public class OrderDto
     public long? DocId { get; set; }
     public string? OrderLpuDepartment { get; set; }
     public string OrderStatus { get; set; } = string.Empty;
+    public DateOnly? OrderTakenDate { get; set; }
     public long PatientId { get; set; }
     public long LpuId { get; set; }
     public bool OrderIsCountingInContract { get; set; }
@@ -75,6 +77,7 @@ public class AnalysiseDto
     public string AnalysisName { get; set; } = string.Empty;
     public int? AnalysisDepId { get; set; }
     public string AnalysisCodeName { get; set; } = string.Empty;
+    public string AnalysisNomenclatureCode { get; set; } = string.Empty;
 }
 
 public class RoleDto

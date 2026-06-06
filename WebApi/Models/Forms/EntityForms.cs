@@ -67,6 +67,7 @@ public class PatientForm
     public DateOnly? PatientBirthday { get; set; }
     public string? PatientEmail { get; set; }
     public string PatientGender { get; set; } = string.Empty;
+    public int? WorkerId { get; set; }
 }
 
 public class OrderForm
@@ -79,6 +80,7 @@ public class OrderForm
     public DateOnly OrderTakenDate { get; set; }
     public long LpuId { get; set; }
     public bool OrderIsCountingInContract { get; set; }
+    public int? WorkerId { get; set; }
 }
 
 public class AnalysiseForm
@@ -86,6 +88,7 @@ public class AnalysiseForm
     public string AnalysisName { get; set; } = string.Empty;
     public int? AnalysisDepId { get; set; }
     public string AnalysisCodeName { get; set; } = string.Empty;
+    public string AnalysisNomenclatureCode { get; set; } = string.Empty;
 }
 
 public class UpdateAnalysisDepartmentForm
@@ -103,6 +106,7 @@ public class AnalysisComplexForm
 {
     public string ComplexName { get; set; } = string.Empty;
     public string ComplexCodeName { get; set; } = string.Empty;
+    public string ComplexNomenclatureCode { get; set; } = string.Empty;
     public int AnalysisDepId { get; set; }
     public string? ComplexDescription { get; set; }
 }

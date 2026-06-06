@@ -15,6 +15,8 @@ public partial class AnalysisComplex
 
     public string? ComplexDescription { get; set; }
 
+    public string ComplexNomenclatureCode { get; set; } = null!;
+
     public virtual AnalysisDepartment AnalysisDep { get; set; } = null!;
 
     public virtual ICollection<BarcodeComplex> BarcodeComplexes { get; set; } = new List<BarcodeComplex>();

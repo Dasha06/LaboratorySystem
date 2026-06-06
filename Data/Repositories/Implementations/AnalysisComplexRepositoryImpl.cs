@@ -41,6 +41,7 @@ public class AnalysisComplexRepositoryImpl : IAnalysisComplexRepository
         var existing = _context.AnalysisComplexes.First(c => c.ComplexId == analysisComplex.ComplexId);
         existing.ComplexName = analysisComplex.ComplexName;
         existing.ComplexCodeName = analysisComplex.ComplexCodeName;
+        existing.ComplexNomenclatureCode = analysisComplex.ComplexNomenclatureCode;
         existing.ComplexDescription = analysisComplex.ComplexDescription;
         existing.AnalysisDepId = analysisComplex.AnalysisDepId;
         _context.SaveChanges();

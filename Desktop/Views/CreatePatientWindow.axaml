@@ -19,7 +19,7 @@
     <TextBlock Name="ErrorsBlock"/>
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
       <Button Classes="liis-primary" Content="Отмена" Command="{Binding CancelCommand}"/>
-      <Button Classes="liis-primary" Content="Создать" Command="{Binding OkCommand}"/>
+      <Button Classes="liis-primary" Content="{Binding OkButtonText}" Command="{Binding OkCommand}"/>
     </StackPanel>
   </StackPanel>
 </Window>

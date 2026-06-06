@@ -39,14 +39,16 @@ public partial class RegistrationView : UserControl
     {
         if (DataContext is RegistrationViewModel vm && vm.SelectedPatient != null)
         {
+            
             var p = vm.SelectedPatient;
             var createVm = new CreatePatientViewModel
             {
                 FirstName = p.PatientFirstName ?? string.Empty,
-                LastName = p.PatientSecondName ?? string.Empty,
-                MiddleName = p.PatientLastName ?? string.Empty,
+                LastName = p.PatientLastName ?? string.Empty,
+                MiddleName = p.PatientSecondName ?? string.Empty,
                 BirthDate = p.PatientBirthday?.ToDateTime(TimeOnly.MinValue),
-                Gender = p.PatientGender ?? "Ж"
+                Gender = p.PatientGender ?? "Ж",
+                IsEditing = true
             };
 
             if (vm.ShowCreatePatientDialog != null)

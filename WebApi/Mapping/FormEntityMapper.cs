@@ -78,7 +78,8 @@ public static class FormEntityMapper
     {
         AnalysisName = form.AnalysisName,
         AnalysisDepId = form.AnalysisDepId,
-        AnalysisCodeName = form.AnalysisCodeName
+        AnalysisCodeName = form.AnalysisCodeName,
+        AnalysisNomenclatureCode = form.AnalysisNomenclatureCode
     };
 
     public static AnalysisDepartment ToAnalysisDepartment(AnalysisDepartmentForm form) => new()
@@ -91,6 +92,7 @@ public static class FormEntityMapper
     {
         ComplexName = form.ComplexName,
         ComplexCodeName = form.ComplexCodeName,
+        ComplexNomenclatureCode = form.ComplexNomenclatureCode,
         AnalysisDepId = form.AnalysisDepId,
         ComplexDescription = form.ComplexDescription
     };

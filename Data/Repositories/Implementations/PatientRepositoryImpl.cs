@@ -21,8 +21,6 @@ public class PatientRepositoryImpl : IPatientRepository
         return _context.Patients.First(x => x.PatientId == patientId);
     }
 
-    
-
     public bool CreatePatient(Patient patient)
     {
         _context.Patients.Add(patient);
@@ -39,6 +37,13 @@ public class PatientRepositoryImpl : IPatientRepository
         existing.PatientBirthday = patient.PatientBirthday;
         existing.PatientGender = patient.PatientGender;
         existing.PatientEmail = patient.PatientEmail;
+        _context.SaveChanges();
+        return true;
+    }
+
+    public bool CreatePatientChange(PatientChange patientChange)
+    {
+        _context.PatientChanges.Add(patientChange);
         _context.SaveChanges();
         return true;
     }

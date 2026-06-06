@@ -22,8 +22,22 @@ public class PatientsController : ApiControllerBase
 
     [HttpPost]
     [FormInput]
-    public IActionResult Create([FromForm] PatientForm form) =>
-        Execute(() => _repository.CreatePatient(FormEntityMapper.ToPatient(form)));
+    public IActionResult Create([FromForm] PatientForm form)
+    {
+        var patient = FormEntityMapper.ToPatient(form);
+        var result = _repository.CreatePatient(patient);
+        if (result && form.WorkerId.HasValue)
+        {
+            _repository.CreatePatientChange(new PatientChange
+            {
+                PatientId = patient.PatientId,
+                WorkerId = form.WorkerId.Value,
+                PatientChangeTime = DateTime.Now,
+                TypeId = 1 // 1 = создание
+            });
+        }
+        return Execute(() => result);
+    }
 
     [HttpPut("{patientId:long}")]
     [FormInput]
@@ -31,7 +45,18 @@ public class PatientsController : ApiControllerBase
     {
         var entity = FormEntityMapper.ToPatient(form);
         entity.PatientId = patientId;
-        return Execute(() => _repository.UpdatePatient(entity));
+        var result = _repository.UpdatePatient(entity);
+        if (result && form.WorkerId.HasValue)
+        {
+            _repository.CreatePatientChange(new PatientChange
+            {
+                PatientId = patientId,
+                WorkerId = form.WorkerId.Value,
+                PatientChangeTime = DateTime.Now,
+                TypeId = 2 // 2 = изменение
+            });
+        }
+        return Execute(() => result);
     }
 
     [HttpDelete("{patientId:long}")]

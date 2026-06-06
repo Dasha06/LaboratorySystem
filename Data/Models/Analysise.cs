@@ -13,6 +13,8 @@ public partial class Analysise
 
     public string AnalysisCodeName { get; set; } = null!;
 
+    public string AnalysisNomenclatureCode { get; set; } = null!;
+
     public virtual AnalysisDepartment? AnalysisDep { get; set; }
 
     public virtual ICollection<AnalysisWork> AnalysisWorks { get; set; } = new List<AnalysisWork>();
