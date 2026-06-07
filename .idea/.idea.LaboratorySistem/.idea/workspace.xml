@@ -17,7 +17,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f8863308-d313-4b1c-bf9f-2527ba4c7f42" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysiseRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysiseRepositoryImpl.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.LaboratorySistem/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.LaboratorySistem/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/Services/AppServices.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Services/AppServices.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/ViewModels/LoginViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/ViewModels/LoginViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/Views/LoginView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Views/LoginView.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/bin/Debug/net9.0/Desktop.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/bin/Debug/net9.0/Desktop.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/bin/Debug/net9.0/Desktop.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/bin/Debug/net9.0/Desktop.pdb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -239,7 +244,7 @@
       <workItem from="1780650450796" duration="1518000" />
       <workItem from="1780687631106" duration="9033000" />
       <workItem from="1780762495928" duration="23610000" />
-      <workItem from="1780823867422" duration="178000" />
+      <workItem from="1780823867422" duration="2591000" />
     </task>
     <task id="LOCAL-00001" summary="init worker">
       <option name="closed" value="true" />
@@ -321,7 +326,23 @@
       <option name="project" value="LOCAL" />
       <updated>1780823994087</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="poij">
+      <option name="closed" value="true" />
+      <created>1780824052198</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1780824052198</updated>
+    </task>
+    <task id="LOCAL-00012" summary="added exe">
+      <option name="closed" value="true" />
+      <created>1780824796812</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1780824796812</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -351,7 +372,9 @@
     <MESSAGE value="updated the analyses" />
     <MESSAGE value="done reports" />
     <MESSAGE value="liiitle change" />
-    <option name="LAST_COMMIT_MESSAGE" value="liiitle change" />
+    <MESSAGE value="poij" />
+    <MESSAGE value="added exe" />
+    <option name="LAST_COMMIT_MESSAGE" value="added exe" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

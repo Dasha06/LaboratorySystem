@@ -7,15 +7,30 @@ namespace Desktop.ViewModels;
 public class LoginViewModel : ViewModelBase
 {
     private readonly MainWindowViewModel _main;
+    private string _host = AppServices.BaseUrl;
     private string _login = string.Empty;
     private string _password = string.Empty;
     private string? _errorMessage;
     private bool _isBusy;
+    private bool _isHostVisible;
 
     public LoginViewModel(MainWindowViewModel main)
     {
         _main = main;
         LoginCommand = ReactiveCommand.CreateFromTask(LoginAsync);
+        ToggleHostCommand = ReactiveCommand.Create(() => { IsHostVisible = !IsHostVisible; });
+    }
+
+    public bool IsHostVisible
+    {
+        get => _isHostVisible;
+        set => this.RaiseAndSetIfChanged(ref _isHostVisible, value);
+    }
+
+    public string Host
+    {
+        get => _host;
+        set => this.RaiseAndSetIfChanged(ref _host, value);
     }
 
     public string Login
@@ -43,6 +58,7 @@ public class LoginViewModel : ViewModelBase
     }
 
     public ReactiveCommand<Unit, Unit> LoginCommand { get; }
+    public ReactiveCommand<Unit, Unit> ToggleHostCommand { get; }
 
     private async Task LoginAsync()
     {
@@ -50,6 +66,8 @@ public class LoginViewModel : ViewModelBase
         {
             IsBusy = true;
             ErrorMessage = null;
+            if (!string.IsNullOrWhiteSpace(Host) && Host != AppServices.BaseUrl)
+                AppServices.ReinitializeApi(Host);
             var worker = await AppServices.Api.LoginAsync(Login, Password);
             AppServices.Session.CurrentWorker = worker;
             _main.OnLoggedIn();

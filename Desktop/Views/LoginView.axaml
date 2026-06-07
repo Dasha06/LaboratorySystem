@@ -3,7 +3,7 @@
              xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
              xmlns:vm="using:Desktop.ViewModels"
              x:Class="Desktop.Views.LoginView"
-             Width="400" Height="370"
+              Width="500" Height="500"
              x:DataType="vm:LoginViewModel">
     <DockPanel Background="{StaticResource LiisBackgroundBrush}">
         <Border Classes="liis-card" Width="325" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="32">
@@ -12,7 +12,12 @@
                 <TextBox Classes="liis-input" Watermark="Логин" Text="{Binding Login}"/>
                 <TextBox Classes="liis-input" Watermark="Пароль" PasswordChar="*" Text="{Binding Password}"/>
                 <TextBlock Text="{Binding ErrorMessage}" Foreground="Red"/>
+                
                 <Button Classes="liis-primary" Content="Войти" Command="{Binding LoginCommand}" HorizontalAlignment="Stretch"/>
+                <Button Content="⚙ Настроить хост" Command="{Binding ToggleHostCommand}" HorizontalAlignment="Center"
+                        FontSize="12" Background="Transparent" BorderThickness="0" Foreground="Gray"
+                        Cursor="Hand"/>
+                <TextBox Classes="liis-input" Watermark="Хост (API)" Text="{Binding Host}" IsVisible="{Binding IsHostVisible}"/>
             </StackPanel>
         </Border>
     </DockPanel>
