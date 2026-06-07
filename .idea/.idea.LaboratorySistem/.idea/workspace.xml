@@ -18,16 +18,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f8863308-d313-4b1c-bf9f-2527ba4c7f42" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.LaboratorySistem/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.LaboratorySistem/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/Services/LaboratoryApiClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Services/LaboratoryApiClient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/ViewModels/CreateOrderViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/ViewModels/CreateOrderViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/ViewModels/RacksViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/ViewModels/RacksViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/ViewModels/RegistrationViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/ViewModels/RegistrationViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/ViewModels/ShellViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/ViewModels/ShellViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/ViewModels/WorksheetsViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/ViewModels/WorksheetsViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/Views/RacksView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Views/RacksView.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/Views/ShellView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Views/ShellView.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/Views/WorksheetsView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Views/WorksheetsView.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/Views/WorksheetsView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Views/WorksheetsView.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Models/Patient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Models/Patient.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebApi/Mapping/WorksheetMapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/Mapping/WorksheetMapper.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -40,6 +31,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -65,7 +57,7 @@
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="SWEA" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
@@ -75,31 +67,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.WebApi: http.executor": "Run",
-    ".NET Launch Settings Profile.WebApi: https.executor": "Run",
-    ".NET Project.Desktop.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "cidr.known.project.marker": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "/home/gara/RiderProjects/123123",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.WebApi: http.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Launch Settings Profile.WebApi: https.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Project.Desktop.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/gara/RiderProjects/123123&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Project.Desktop">
     <configuration name="Data" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
@@ -249,6 +241,7 @@
       <workItem from="1780650450796" duration="1518000" />
       <workItem from="1780687631106" duration="9033000" />
       <workItem from="1780762495928" duration="23610000" />
+      <workItem from="1780823867422" duration="113000" />
     </task>
     <task id="LOCAL-00001" summary="init worker">
       <option name="closed" value="true" />

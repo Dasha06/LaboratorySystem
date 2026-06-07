@@ -9,7 +9,7 @@ public partial class Patient
 
     public string PatientFirstName { get; set; } = null!;
 
-    public string PatientSecondName { get; set; } = null!;
+    public string? PatientSecondName { get; set; } = null!;
 
     public string? PatientLastName { get; set; }
 

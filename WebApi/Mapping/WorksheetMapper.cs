@@ -14,8 +14,7 @@ public static class WorksheetMapper
     {
         var bm = item.BarcodeMaterial;
         var kind = bm.Material?.MaterialName
-                   ?? bm.AnalysisDep?.AnalysisDepName
-                   ?? "—";
+                   ?? bm.AnalysisDep.AnalysisDepName;
 
         var analyses = bm.BarcodeAnalysises.Count > 0
             ? string.Join("; ", bm.BarcodeAnalysises.Select(ba => ba.Analysis.AnalysisName))
