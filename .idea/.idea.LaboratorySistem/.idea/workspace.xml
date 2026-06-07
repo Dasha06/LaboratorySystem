@@ -17,9 +17,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f8863308-d313-4b1c-bf9f-2527ba4c7f42" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.LaboratorySistem/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.LaboratorySistem/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Models/Patient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Models/Patient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApi/Mapping/WorksheetMapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/Mapping/WorksheetMapper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysiseRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysiseRepositoryImpl.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -241,7 +239,7 @@
       <workItem from="1780650450796" duration="1518000" />
       <workItem from="1780687631106" duration="9033000" />
       <workItem from="1780762495928" duration="23610000" />
-      <workItem from="1780823867422" duration="113000" />
+      <workItem from="1780823867422" duration="178000" />
     </task>
     <task id="LOCAL-00001" summary="init worker">
       <option name="closed" value="true" />
@@ -315,7 +313,15 @@
       <option name="project" value="LOCAL" />
       <updated>1780779046995</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="liiitle change">
+      <option name="closed" value="true" />
+      <created>1780823994087</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1780823994087</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -344,7 +350,8 @@
     <MESSAGE value="admin window changes after some tests" />
     <MESSAGE value="updated the analyses" />
     <MESSAGE value="done reports" />
-    <option name="LAST_COMMIT_MESSAGE" value="done reports" />
+    <MESSAGE value="liiitle change" />
+    <option name="LAST_COMMIT_MESSAGE" value="liiitle change" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

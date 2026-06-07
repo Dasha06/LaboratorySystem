@@ -18,7 +18,7 @@ public class AnalysiseRepositoryImpl : IAnalysiseRepository
 
     public Array GetAnalysesByDepartments()
     {
-        var analysises = _context.Analysises.GroupBy(x => x.AnalysisDep.AnalysisDepName).ToArray();
+        var analysises = _context.Analysises.GroupBy(x => x.AnalysisDep!.AnalysisDepName).ToArray();
         return analysises;
     }
     
