@@ -25,7 +25,7 @@ public class CreateOrderViewModel : ViewModelBase
     private long? _orderId;
     private AnalysisSelectionItem? _selectedAnalysis;
     private List<ContractAnalysisDto> _selectedLpuContractAnalyses = new List<ContractAnalysisDto>();
-    private long _nextTempId = -1;
+    private long _nextTempId;
 
     public CreateOrderViewModel(ShellViewModel shell, PatientDto patient, OrderDto? editingOrder = null)
     {
@@ -488,6 +488,16 @@ public class CreateOrderViewModel : ViewModelBase
                 return;
             }
 
+            // Проверка, что все штрих-коды биоматериалов введены
+            foreach (var m in MaterialRows)
+            {
+                if (!decimal.TryParse(m.Ids, out _) || string.IsNullOrWhiteSpace(m.Ids))
+                {
+                    StatusMessage = $"Введите штрих-код биоматериала для строки \"{m.MaterialType}\"";
+                    return;
+                }
+            }
+
             var order = new OrderDto
             {
                 PatientId = _patient.PatientId,
@@ -569,6 +579,36 @@ public class CreateOrderViewModel : ViewModelBase
             };
 
             await AppServices.Api.UpdateOrderAsync(_editingOrder.OrderId, order);
+
+            // Обновление штрих-кодов биоматериалов, если они были изменены
+            if (_editingOrder.BarcodeMaterials != null)
+            {
+                foreach (var oldBm in _editingOrder.BarcodeMaterials)
+                {
+                    var updatedRow = MaterialRows.FirstOrDefault(m => m.BarcodeMatId == oldBm.BarcodeMatId);
+                    if (updatedRow == null)
+                        continue;
+
+                    // Проверяем, изменился ли штрих-код
+                    if (!decimal.TryParse(updatedRow.Ids, out var newBarcodeId))
+                        continue;
+
+                    if (newBarcodeId != oldBm.BarcodeMatId)
+                    {
+                        await AppServices.Api.UpdateBarcodeMaterialAsync(
+                            oldBm.BarcodeMatId,
+                            oldBm.AnalysisDepId,
+                            new BarcodeMaterialDto
+                            {
+                                BarcodeMatId = newBarcodeId,
+                                OrderId = _editingOrder.OrderId,
+                                MaterialId = updatedRow.MaterialId,
+                                AnalysisDepId = updatedRow.AnalysisDepId
+                            });
+                    }
+                }
+            }
+
             StatusMessage = "Заказ обновлён";
             _shell.Navigate(NavSection.Registration);
         }

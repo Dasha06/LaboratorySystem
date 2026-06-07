@@ -137,6 +137,16 @@ public class RegistrationViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Refreshes the orders for the currently selected patient without resetting search results.
+    /// Called when returning from CreateOrder to show newly created orders.
+    /// </summary>
+    public async Task RefreshOrdersAsync()
+    {
+        if (SelectedPatient != null)
+            await LoadOrdersForPatientAsync(SelectedPatient.PatientId);
+    }
+
     private async Task EnsureLpusLoadedAsync()
     {
         if (_lpus.Count > 0)

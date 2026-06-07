@@ -23,8 +23,8 @@
                     <!-- <Button Content="Результаты" Command="{Binding NavigateCommand}" CommandParameter="Results" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="12,10" CornerRadius="10" Background="Transparent" IsVisible="{Binding !IsResultsActive}"/> -->
                     <Button Content="Отчёты" Command="{Binding NavigateCommand}" CommandParameter="Reports" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="12,10" CornerRadius="10" Background="{StaticResource LiisSidebarActiveBrush}" IsVisible="{Binding IsReportsActive}"/>
                     <Button Content="Отчёты" Command="{Binding NavigateCommand}" CommandParameter="Reports" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="12,10" CornerRadius="10" Background="Transparent" IsVisible="{Binding !IsReportsActive}"/>
-                    <Button Content="Администрирование" Command="{Binding NavigateCommand}" CommandParameter="Admin" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="12,10" CornerRadius="10" Background="{StaticResource LiisSidebarActiveBrush}" IsVisible="{Binding IsAdminActive}"/>
-                    <Button Content="Администрирование" Command="{Binding NavigateCommand}" CommandParameter="Admin" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="12,10" CornerRadius="10" Background="Transparent" IsVisible="{Binding !IsAdminActive}"/>
+                    <!-- <Button Content="Администрирование" Command="{Binding NavigateCommand}" CommandParameter="Admin" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="12,10" CornerRadius="10" Background="{StaticResource LiisSidebarActiveBrush}" IsVisible="{Binding IsAdminActive}"/> -->
+                    <!-- <Button Content="Администрирование" Command="{Binding NavigateCommand}" CommandParameter="Admin" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="12,10" CornerRadius="10" Background="Transparent" IsVisible="{Binding !IsAdminActive}"/> -->
                 </StackPanel>
             </DockPanel>
         </Border>

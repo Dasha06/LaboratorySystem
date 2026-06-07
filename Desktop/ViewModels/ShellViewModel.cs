@@ -11,10 +11,15 @@ public class ShellViewModel : ViewModelBase
     private ViewModelBase _currentPage;
     private NavSection _activeSection = NavSection.Registration;
 
+    // Cached page instances to preserve state
+    private RacksViewModel? _racksVm;
+    private RegistrationViewModel? _registrationVm;
+
     public ShellViewModel(MainWindowViewModel main)
     {
         _main = main;
-        _currentPage = new RegistrationViewModel(this);
+        _registrationVm = new RegistrationViewModel(this);
+        _currentPage = _registrationVm;
         NavigateCommand = ReactiveCommand.Create<string>(s => Navigate(Enum.Parse<NavSection>(s)));
         LogoutCommand = ReactiveCommand.Create(() => _main.OnLoggedOut());
         OpenWorksheetsCommand = ReactiveCommand.Create(OpenWorksheets);
@@ -58,15 +63,15 @@ public class ShellViewModel : ViewModelBase
         this.RaisePropertyChanged(nameof(IsWorkflowsActive));
         CurrentPage = section switch
         {
-            NavSection.Registration => new RegistrationViewModel(this),
+            NavSection.Registration => _registrationVm ??= new RegistrationViewModel(this),
             NavSection.Tracker => new TrackerViewModel(this),
-            NavSection.Racks => new RacksViewModel(this),
+            NavSection.Racks => _racksVm ??= new RacksViewModel(this),
             NavSection.Results => new ResultsViewModel(this),
             NavSection.Reports => new ReportsViewModel(this),
             NavSection.Workflows => new WorkflowsViewModel(this),
             NavSection.Worksheets => new WorksheetsViewModel(this),
             NavSection.Admin => new AdminViewModel(this),
-            _ => new RegistrationViewModel(this)
+            _ => _registrationVm ??= new RegistrationViewModel(this)
         };
     }
 
@@ -94,7 +99,6 @@ public class ShellViewModel : ViewModelBase
             PatientFirstName = order.Patient?.PatientFirstName ?? string.Empty,
             PatientSecondName = order.Patient?.PatientSecondName,
             PatientLastName = order.Patient?.PatientLastName,
-            PatientBirthday = order.Patient?.PatientBirthday,
             PatientGender = order.Patient?.PatientGender ?? "Ж"
         };
 
@@ -105,6 +109,7 @@ public class ShellViewModel : ViewModelBase
     public void BackFromCreateOrder()
     {
         Navigate(NavSection.Registration);
+        _ = _registrationVm?.RefreshOrdersAsync();
     }
 
     public void BackFromWorksheets()

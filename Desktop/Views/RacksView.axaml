@@ -7,13 +7,40 @@
              x:DataType="vm:RacksViewModel">
     <DockPanel>
         <TextBlock DockPanel.Dock="Top" Classes="page-title" Text="Штативы"/>
-        <Grid ColumnDefinitions="*,280" RowDefinitions="Auto,*">
-            <Grid Grid.Row="0" Grid.ColumnSpan="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <TabControl Grid.Column="0" ItemsSource="{Binding Tripods}" SelectedItem="{Binding SelectedTripod}" Margin="0,0,12,12">
+        <Grid ColumnDefinitions="220,*,300">
+            <!-- Left panel: departments list -->
+            <Border Grid.Column="0" Classes="liis-card" Margin="0,0,8,0">
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top" Text="Отделения исследований" FontWeight="SemiBold" Margin="8,8,8,4"/>
+                    <ScrollViewer>
+                        <ListBox ItemsSource="{Binding Departments}"
+                                 SelectedItem="{Binding SelectedDepartmentItem}"
+                                 Background="Transparent"
+                                 BorderThickness="0">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="vm:DepartmentListItem">
+                                    <TextBlock Text="{Binding DisplayText}" Margin="8,6" Padding="12,6"
+                                               TextWrapping="Wrap"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </ScrollViewer>
+                </DockPanel>
+            </Border>
+
+            <!-- Center: tripod tabs + rack grid -->
+            <Grid Grid.Column="1" Margin="8,0" RowDefinitions="Auto,Auto,*">
+                <!-- New tripod bar at top -->
+                <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="8" Margin="0,0,0,8">
+                    <TextBox Width="180" Watermark="Название штатива" Text="{Binding NewTripodName}"/>
+                    <Button Classes="liis-primary" Content="Добавить" Command="{Binding CreateTripodCommand}"/>
+                </StackPanel>
+
+                <!-- Tripod tabs (only shown when there are tripods) -->
+                <TabControl Grid.Row="1" ItemsSource="{Binding Tripods}"
+                            SelectedItem="{Binding SelectedTripod}"
+                            IsVisible="{Binding HasTripods}"
+                            Margin="0,0,0,8">
                     <TabControl.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding TripodName}"/>
@@ -23,65 +50,65 @@
                         <DataTemplate/>
                     </TabControl.ContentTemplate>
                 </TabControl>
-                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center" Margin="0,0,0,12">
-                    <TextBox Width="180" Watermark="Название штатива" Text="{Binding NewTripodName}"/>
-                    <Button Classes="liis-primary" Content="Добавить" Command="{Binding CreateTripodCommand}"/>
-                </StackPanel>
+
+                <!-- Rack cells grid -->
+                <Border Grid.Row="2" Classes="liis-card" Padding="6">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding RackCells}" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                      Background="Transparent">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <prims:UniformGrid Rows="{Binding Rows}" Columns="{Binding Columns}" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="{Binding MaterialType, Converter={x:Static conv:MaterialTypeToBrushConverter.Instance}}"
+                                            CornerRadius="6" Margin="0,0,5,5" Width="120" Height="70"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                            PointerPressed="OnCellPointerPressed"
+                                            Cursor="Hand"
+                                            BorderBrush="{Binding IsSelected, Converter={x:Static conv:BoolToSelectionColorConverter.Instance}}"
+                                            BorderThickness="{Binding IsSelected, Converter={x:Static conv:IsSelectedToThicknessConverter.Instance}}">
+                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding Label}" HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center" FontWeight="SemiBold"/>
+                                            <TextBlock Text="{Binding PatientName}" HorizontalAlignment="Center"
+                                                       FontSize="10" TextWrapping="Wrap"
+                                                       MaxLines="2" IsVisible="{Binding IsOccupied}"/>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Border>
             </Grid>
-            <Border Grid.Row="1" Grid.Column="0" Classes="liis-card" Margin="0,0,16,0" Padding="6">
-                <ScrollViewer HorizontalScrollBarVisibility="Auto">
-                    <ItemsControl ItemsSource="{Binding RackCells}" HorizontalAlignment="Left" VerticalAlignment="Top"
-                                  Background="Transparent">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <prims:UniformGrid Rows="{Binding Rows}" Columns="{Binding Columns}" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Border Background="{Binding MaterialType, Converter={x:Static conv:MaterialTypeToBrushConverter.Instance}}"
-                                        CornerRadius="6" Margin="0,0,5,5" Width="120" Height="70"
-                                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                        PointerPressed="OnCellPointerPressed"
-                                        Cursor="Hand"
-                                        BorderBrush="{Binding IsSelected, Converter={x:Static conv:BoolToSelectionColorConverter.Instance}}"
-                                        BorderThickness="{Binding IsSelected, Converter={x:Static conv:IsSelectedToThicknessConverter.Instance}}">
-                                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                        <TextBlock Text="{Binding Label}" HorizontalAlignment="Center" 
-                                                   VerticalAlignment="Center" FontWeight="SemiBold"/>
-                                        <TextBlock Text="{Binding PatientName}" HorizontalAlignment="Center"
-                                                   FontSize="10" TextWrapping="Wrap"
-                                                   MaxLines="2" IsVisible="{Binding IsOccupied}"/>
-                                    </StackPanel>
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer>
-            </Border>
-            <StackPanel Grid.Row="1" Grid.Column="1" Spacing="12">
+
+            <!-- Right panel: scanning, priorities, actions -->
+            <StackPanel Grid.Column="2" Spacing="12" Margin="8,0,0,0">
                 <Border Classes="liis-card">
                     <StackPanel Spacing="8">
                         <TextBlock Text="Сканирование пробирки" FontWeight="SemiBold"/>
-                        
+
                         <TextBlock Text="Выберите ячейку на штативе, затем отсканируйте или введите штрих-код пробирки"
                                    TextWrapping="Wrap" FontSize="11"/>
-                        
+
                         <TextBox Watermark="Штрих-код пробирки" Text="{Binding ScannedBarcode, Mode=TwoWay}"
                                  AcceptsReturn="False"/>
-                        
+
                         <Button Content="Привязать пробирку" Command="{Binding ScanBarcodeCommand}"
                                 HorizontalAlignment="Stretch" Classes="liis-primary"
                                 IsEnabled="{Binding SelectedCell, Converter={x:Static conv:ReferenceNotNullConverter.Instance}}"/>
-                        
+
                         <TextBlock Text="{Binding ScannedPatientInfo}" TextWrapping="Wrap" FontSize="12"
                                    IsVisible="{Binding ScannedPatientInfo, Converter={x:Static conv:StringNotEmptyConverter.Instance}}"/>
-                        
+
                         <TextBlock Text="{Binding StatusMessage}" TextWrapping="Wrap" FontSize="11"
                                    Foreground="{Binding StatusMessage, Converter={x:Static conv:StatusMessageBrushConverter.Instance}}"/>
                     </StackPanel>
                 </Border>
-                
+
                 <Border Classes="liis-card">
                     <StackPanel>
                         <TextBlock Text="Приоритет" FontWeight="SemiBold" Margin="0,0,0,8"/>
@@ -94,12 +121,12 @@
                         </ItemsControl>
                     </StackPanel>
                 </Border>
-                
+
                 <Button Classes="liis-primary" Content="Рабочие листы" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                Command="{Binding OpenWorksheetsCommand}" HorizontalAlignment="Stretch" Height="115"/>
-                <ComboBox ItemsSource="{Binding GridSizeOptions}" 
-                SelectedItem="{Binding SelectedGridSizeOption}" 
-                PlaceholderText="Размер штатива" HorizontalAlignment="Stretch"/>
+                        Command="{Binding OpenWorksheetsCommand}" HorizontalAlignment="Stretch" Height="115"/>
+                <ComboBox ItemsSource="{Binding GridSizeOptions}"
+                          SelectedItem="{Binding SelectedGridSizeOption}"
+                          PlaceholderText="Размер штатива" HorizontalAlignment="Stretch"/>
             </StackPanel>
         </Grid>
     </DockPanel>

@@ -506,6 +506,22 @@ public class LaboratoryApiClient
         response.EnsureSuccessStatusCode();
     }
 
+    public async Task UpdateBarcodeMaterialAsync(decimal barcodeMatId, int analysisDepId, BarcodeMaterialDto bm, CancellationToken ct = default)
+    {
+        using var content = new MultipartFormDataContent
+        {
+            { new StringContent(bm.BarcodeMatId.ToString()), "BarcodeMatId" },
+            { new StringContent(bm.AnalysisDepId.ToString()), "AnalysisDepId" }
+        };
+        if (bm.OrderId.HasValue)
+            content.Add(new StringContent(bm.OrderId.Value.ToString()), "OrderId");
+        if (bm.MaterialId.HasValue)
+            content.Add(new StringContent(bm.MaterialId.Value.ToString()), "MaterialId");
+
+        var response = await _http.PutAsync($"api/BarcodeMaterials/{barcodeMatId}/{analysisDepId}", content, ct);
+        response.EnsureSuccessStatusCode();
+    }
+
     public async Task<List<BarcodeAnalysiseDto>> GetBarcodeAnalysesAsync(CancellationToken ct = default) =>
         await _http.GetFromJsonAsync<List<BarcodeAnalysiseDto>>("api/BarcodeAnalyses", JsonOptions, ct) ?? [];
 

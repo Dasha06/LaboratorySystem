@@ -18,19 +18,17 @@
   <component name="ChangeListManager">
     <list default="true" id="f8863308-d313-4b1c-bf9f-2527ba4c7f42" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.LaboratorySistem/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.LaboratorySistem/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/DependencyInjection/DataServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/DependencyInjection/DataServiceCollectionExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysiseRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysiseRepositoryImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/WorkerRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/WorkerRepositoryImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Repositories/Interfaces/IAnalysiseRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Interfaces/IAnalysiseRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/App.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/App.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/Models/ApiModels.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Models/ApiModels.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Desktop/Services/LaboratoryApiClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Services/LaboratoryApiClient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/ViewModels/AdminViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/ViewModels/AdminViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/ViewModels/LoginViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/ViewModels/LoginViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/ViewModels/ReportsViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/ViewModels/ReportsViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/Views/ReportsView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Views/ReportsView.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/ViewModels/CreateOrderViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/ViewModels/CreateOrderViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/ViewModels/RacksViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/ViewModels/RacksViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/ViewModels/RegistrationViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/ViewModels/RegistrationViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/ViewModels/ShellViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/ViewModels/ShellViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/ViewModels/WorksheetsViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/ViewModels/WorksheetsViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/Views/RacksView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Views/RacksView.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Desktop/Views/ShellView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Views/ShellView.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApi/Controllers/AnalysesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/Controllers/AnalysesController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/Views/WorksheetsView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Views/WorksheetsView.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/Views/WorksheetsView.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Views/WorksheetsView.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApi/Mapping/WorksheetMapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/Mapping/WorksheetMapper.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +58,10 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0ceaca09f3944680b668dee8e1e0370b100a00/ff/984000d8/AppBuilder.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d19ebbe8bb7948bb9212133cdda13207e26400/2c/88da76dc/DefaultInterpolatedStringHandler.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d19ebbe8bb7948bb9212133cdda13207e26400/52/4b4cdbf8/ContinuationTaskFromTask.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///home/gara/RiderProjects/LaboratorySistem/Desktop/ViewModels/AdminViewModel.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Desktop/ViewModels/CreateOrderViewModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///home/gara/RiderProjects/LaboratorySistem/Desktop/ViewModels/RacksViewModel.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///home/gara/RiderProjects/LaboratorySistem/Desktop/ViewModels/RacksViewModel.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
@@ -247,7 +248,7 @@
       <workItem from="1780444150489" duration="5369000" />
       <workItem from="1780650450796" duration="1518000" />
       <workItem from="1780687631106" duration="9033000" />
-      <workItem from="1780762495928" duration="12614000" />
+      <workItem from="1780762495928" duration="23610000" />
     </task>
     <task id="LOCAL-00001" summary="init worker">
       <option name="closed" value="true" />
@@ -313,7 +314,15 @@
       <option name="project" value="LOCAL" />
       <updated>1780750763068</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="done reports">
+      <option name="closed" value="true" />
+      <created>1780779046995</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1780779046995</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -321,6 +330,17 @@
   </component>
   <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="init worker" />
@@ -330,7 +350,8 @@
     <MESSAGE value="data done?" />
     <MESSAGE value="admin window changes after some tests" />
     <MESSAGE value="updated the analyses" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated the analyses" />
+    <MESSAGE value="done reports" />
+    <option name="LAST_COMMIT_MESSAGE" value="done reports" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -347,19 +368,6 @@
           <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
           <option name="timeStamp" value="3" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Desktop/ViewModels/RacksViewModel.cs</url>
-          <line>442</line>
-          <properties documentPath="$PROJECT_DIR$/Desktop/ViewModels/RacksViewModel.cs" containingFunctionPresentation="Method 'ScanBarcodeAsync'">
-            <startOffsets>
-              <option value="14629" />
-            </startOffsets>
-            <endOffsets>
-              <option value="14666" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Desktop/ViewModels/ReportsViewModel.cs</url>
           <line>197</line>

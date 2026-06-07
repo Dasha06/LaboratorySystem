@@ -7,12 +7,26 @@ using ReactiveUI;
 
 namespace Desktop.ViewModels;
 
+public class DepartmentListItem : ReactiveObject
+{
+    private int _tripodCount;
+
+    public AnalysisDepartmentDto Department { get; set; } = null!;
+    public int TripodCount
+    {
+        get => _tripodCount;
+        set => this.RaiseAndSetIfChanged(ref _tripodCount, value);
+    }
+
+    public string DisplayText => $"{Department.AnalysisDepName} ({TripodCount})";
+    public int AnalysisDepId => Department.AnalysisDepId;
+}
+
 public class RacksViewModel : ViewModelBase
 {
     private readonly ShellViewModel _shell;
-    private AnalysisDepartmentDto? _selectedDepartment;
+    private DepartmentListItem? _selectedDepartmentItem;
     private TripodDto? _selectedTripod;
-    private int _gridSize = 10;
     private int _rows = 10;
     private int _columns = 10;
     private string _newTripodName = string.Empty;
@@ -24,7 +38,7 @@ public class RacksViewModel : ViewModelBase
     public RacksViewModel(ShellViewModel shell)
     {
         _shell = shell;
-        Departments = new ObservableCollection<AnalysisDepartmentDto>();
+        Departments = new ObservableCollection<DepartmentListItem>();
         Tripods = new ObservableCollection<TripodDto>();
         RackCells = new ObservableCollection<RackCellState>();
         Priorities = new ObservableCollection<PriorityItem>();
@@ -33,7 +47,7 @@ public class RacksViewModel : ViewModelBase
         OpenWorksheetsCommand = ReactiveCommand.Create(_shell.OpenWorksheets,
             this.WhenAnyValue(x => x.SelectedTripod).Select((TripodDto? t) => t != null));
         CreateTripodCommand = ReactiveCommand.CreateFromTask(CreateTripodAsync,
-            this.WhenAnyValue(x => x.NewTripodName, x => x.SelectedDepartment,
+            this.WhenAnyValue(x => x.NewTripodName, x => x.SelectedDepartmentItem,
                 (name, dep) => !string.IsNullOrWhiteSpace(name) && dep != null));
         ScanBarcodeCommand = ReactiveCommand.CreateFromTask(ScanBarcodeAsync,
             this.WhenAnyValue(x => x.ScannedBarcode, x => x.SelectedCell,
@@ -41,17 +55,17 @@ public class RacksViewModel : ViewModelBase
         _ = LoadAsync();
     }
 
-    public ObservableCollection<AnalysisDepartmentDto> Departments { get; }
+    public ObservableCollection<DepartmentListItem> Departments { get; }
     public ObservableCollection<TripodDto> Tripods { get; }
     public ObservableCollection<RackCellState> RackCells { get; }
     public ObservableCollection<PriorityItem> Priorities { get; }
 
-    public AnalysisDepartmentDto? SelectedDepartment
+    public DepartmentListItem? SelectedDepartmentItem
     {
-        get => _selectedDepartment;
+        get => _selectedDepartmentItem;
         set
         {
-            this.RaiseAndSetIfChanged(ref _selectedDepartment, value);
+            this.RaiseAndSetIfChanged(ref _selectedDepartmentItem, value);
             _ = FilterTripodsAsync();
         }
     }
@@ -70,11 +84,7 @@ public class RacksViewModel : ViewModelBase
         }
     }
 
-    public int GridSize
-    {
-        get => _gridSize;
-        set => this.RaiseAndSetIfChanged(ref _gridSize, value);
-    }
+    public bool HasTripods => Tripods.Count > 0;
 
     public int Rows
     {
@@ -110,7 +120,6 @@ public class RacksViewModel : ViewModelBase
         }
     }
 
-    public string RackSizeLabel => $"Размер штатива: {Rows}x{Columns}";
     public string NewTripodName
     {
         get => _newTripodName;
@@ -176,15 +185,29 @@ public class RacksViewModel : ViewModelBase
     {
         try
         {
+            var prevDepId = SelectedDepartmentItem?.AnalysisDepId;
             var deps = await AppServices.Api.GetAnalysisDepartmentsAsync();
+            _allTripods = await AppServices.Api.GetTripodsAsync();
+
             Departments.Clear();
             foreach (var d in deps)
-                Departments.Add(d);
-            if (Departments.Count > 0)
-                SelectedDepartment = Departments[0];
+            {
+                var count = _allTripods.Count(t => t.AnalysisDepartmentId == d.AnalysisDepId);
+                Departments.Add(new DepartmentListItem
+                {
+                    Department = d,
+                    TripodCount = count
+                });
+            }
 
-            _allTripods = await AppServices.Api.GetTripodsAsync();
-            await FilterTripodsAsync();
+            if (Departments.Count > 0)
+            {
+                // Restore previously selected department or default to first
+                var toSelect = prevDepId.HasValue
+                    ? Departments.FirstOrDefault(d => d.AnalysisDepId == prevDepId.Value)
+                    : null;
+                SelectedDepartmentItem = toSelect ?? Departments[0];
+            }
         }
         catch (Exception ex)
         {
@@ -195,10 +218,12 @@ public class RacksViewModel : ViewModelBase
     private async Task FilterTripodsAsync()
     {
         Tripods.Clear();
-        if (SelectedDepartment == null)
+        if (SelectedDepartmentItem == null)
             return;
-        foreach (var t in _allTripods.Where(x => x.AnalysisDepartmentId == SelectedDepartment.AnalysisDepId))
+        var depId = SelectedDepartmentItem.AnalysisDepId;
+        foreach (var t in _allTripods.Where(x => x.AnalysisDepartmentId == depId))
             Tripods.Add(t);
+        this.RaisePropertyChanged(nameof(HasTripods));
         SelectedTripod = Tripods.FirstOrDefault();
         await Task.CompletedTask;
     }
@@ -211,7 +236,6 @@ public class RacksViewModel : ViewModelBase
             var tripod = SelectedTripod;
             var maxCell = tripod?.TripodMaxCell ?? 100;
 
-            // Choose sensible default rows/columns for common sizes
             if (maxCell == 100)
             {
                 Rows = 10; Columns = 10; SelectedGridSizeOption = "10x10";
@@ -229,7 +253,6 @@ public class RacksViewModel : ViewModelBase
                 Rows = 2; Columns = 5; SelectedGridSizeOption = "2x5";
             }
 
-            // Clear selection state
             SelectedCell = null;
             ScannedBarcode = null;
             ScannedPatientInfo = string.Empty;
@@ -301,9 +324,9 @@ public class RacksViewModel : ViewModelBase
 
     private async Task CreateTripodAsync()
     {
-        if (SelectedDepartment == null)
+        if (SelectedDepartmentItem == null)
         {
-            StatusMessage = "Выберите отдел для нового штатива";
+            StatusMessage = "Выберите отделение из списка слева";
             return;
         }
 
@@ -317,7 +340,8 @@ public class RacksViewModel : ViewModelBase
         try
         {
             var maxCell = Rows * Columns;
-            await AppServices.Api.CreateTripodAsync(name, maxCell, SelectedDepartment.AnalysisDepId);
+            var currentDepId = SelectedDepartmentItem.AnalysisDepId;
+            await AppServices.Api.CreateTripodAsync(name, maxCell, currentDepId);
             StatusMessage = "Штатив создан";
             NewTripodName = string.Empty;
             await LoadAsync();
@@ -331,13 +355,11 @@ public class RacksViewModel : ViewModelBase
 
     public void SelectCell(RackCellState cell)
     {
-        // Deselect previous
         if (SelectedCell != null && SelectedCell != cell)
         {
             SelectedCell.IsSelected = false;
         }
 
-        // Toggle selection
         cell.IsSelected = !cell.IsSelected;
 
         if (cell.IsSelected)
@@ -347,7 +369,6 @@ public class RacksViewModel : ViewModelBase
             ScannedPatientInfo = string.Empty;
             StatusMessage = $"Выбрана ячейка {cell.Index + 1}. Отсканируйте штрих-код пробирки.";
 
-            // If cell is already occupied, show its info without filling the barcode textbox
             if (cell.IsOccupied)
             {
                 ScannedPatientInfo = !string.IsNullOrEmpty(cell.PatientName)
@@ -364,9 +385,6 @@ public class RacksViewModel : ViewModelBase
         }
     }
 
-    /// <summary>
-    /// Finds the first empty cell (by index) in the rack, or returns null if all cells are occupied.
-    /// </summary>
     private RackCellState? FindFirstEmptyCell()
     {
         foreach (var cell in RackCells.OrderBy(c => c.Index))
@@ -379,7 +397,6 @@ public class RacksViewModel : ViewModelBase
 
     private async Task ScanBarcodeAsync()
     {
-        // Auto-select first empty cell if none selected
         if (SelectedCell == null)
         {
             var emptyCell = FindFirstEmptyCell();
@@ -402,7 +419,6 @@ public class RacksViewModel : ViewModelBase
             return;
         }
 
-        // Parse barcode as decimal
         if (!decimal.TryParse(barcodeText, out var barcodeMatId))
         {
             StatusMessage = "Некорректный формат штрих-кода.";
@@ -413,7 +429,6 @@ public class RacksViewModel : ViewModelBase
         {
             StatusMessage = "Поиск пробирки в базе данных...";
 
-            // Look up barcode in DB
             var barcodeMaterial = await AppServices.Api.GetBarcodeMaterialByBarcodeAsync(barcodeMatId);
 
             if (barcodeMaterial == null)
@@ -422,14 +437,12 @@ public class RacksViewModel : ViewModelBase
                 return;
             }
 
-            // Verify the barcode matches the department of the selected tripod
             if (SelectedTripod != null && barcodeMaterial.AnalysisDepId != SelectedTripod.AnalysisDepartmentId)
             {
                 StatusMessage = "Ошибка: отделение пробирки не соответствует отделению штатива.";
                 return;
             }
 
-            // Check if this barcode is already assigned to this tripod
             var alreadyInTripod = RackCells.Any(c =>
                 c.IsOccupied && c.BarcodeMatId == barcodeMatId && c != SelectedCell);
             if (alreadyInTripod)
@@ -438,7 +451,6 @@ public class RacksViewModel : ViewModelBase
                 return;
             }
 
-            // Get patient info
             var patientName = string.Empty;
             if (barcodeMaterial.OrderId.HasValue)
             {
@@ -456,7 +468,6 @@ public class RacksViewModel : ViewModelBase
             var materialName = barcodeMaterial.Material?.MaterialName ?? string.Empty;
             ScannedPatientInfo = $"{barcodeMatId:0} — {patientName} ({materialName})".TrimEnd(' ', '(', ')');
 
-            // If cell was already occupied with a different barcode, remove old link
             if (SelectedCell!.IsOccupied && SelectedCell.BarcodeMatId != barcodeMatId)
             {
                 try
@@ -470,11 +481,9 @@ public class RacksViewModel : ViewModelBase
                 }
             }
 
-            // Add link to tripod
             await AppServices.Api.CreateTripodBarcodeMaterialAsync(
                 SelectedTripod!.TripodId, barcodeMatId, barcodeMaterial.AnalysisDepId);
 
-            // Update cell state
             SelectedCell.IsOccupied = true;
             SelectedCell.BarcodeMatId = barcodeMatId;
             SelectedCell.AnalysisDepId = barcodeMaterial.AnalysisDepId;
@@ -482,18 +491,15 @@ public class RacksViewModel : ViewModelBase
             SelectedCell.PatientName = patientName;
             SelectedCell.MaterialType = materialName;
 
-            // Update label (last 4 digits)
             var s = barcodeMatId.ToString("0");
             s = new string(s.Where(char.IsDigit).ToArray());
             SelectedCell.Label = s.Length >= 4 ? s.Substring(s.Length - 4) : s;
 
-            // Reload the rack to get consistent state
             await LoadRackAsync(SelectedTripod.TripodId);
 
             StatusMessage = $"Пробирка {barcodeMatId:0} привязана к ячейке {SelectedCell.Index + 1}. " +
                             (string.IsNullOrEmpty(patientName) ? "" : $"Пациент: {patientName}");
 
-            // Clear the scanned barcode for next scan
             ScannedBarcode = null;
             SelectedCell = null;
             ScannedPatientInfo = string.Empty;

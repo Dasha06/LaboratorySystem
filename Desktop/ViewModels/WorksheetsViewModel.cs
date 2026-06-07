@@ -10,6 +10,8 @@ public class WorksheetsViewModel : ViewModelBase
 {
     private readonly ShellViewModel _shell;
     private string? _statusMessage;
+    private string _tripodName = string.Empty;
+    private bool _isLoaded;
 
     public WorksheetsViewModel(ShellViewModel shell)
     {
@@ -24,12 +26,24 @@ public class WorksheetsViewModel : ViewModelBase
     public ObservableCollection<WorksheetExpandedRow> ExpandedRows { get; }
     public ObservableCollection<string> AllAnalyses { get; }
     public string? StatusMessage { get => _statusMessage; set => this.RaiseAndSetIfChanged(ref _statusMessage, value); }
+    public string TripodName
+    {
+        get => _tripodName;
+        set => this.RaiseAndSetIfChanged(ref _tripodName, value);
+    }
+
+    public bool IsLoaded
+    {
+        get => _isLoaded;
+        private set => this.RaiseAndSetIfChanged(ref _isLoaded, value);
+    }
 
     public ReactiveCommand<Unit, Unit> BackCommand { get; }
     public ReactiveCommand<Unit, Unit> RefreshCommand { get; }
 
     private async Task LoadAsync()
     {
+        IsLoaded = false;
         try
         {
             var tripodId = AppServices.Session.SelectedTripodId;
@@ -39,9 +53,14 @@ public class WorksheetsViewModel : ViewModelBase
                 return;
             }
 
+            var tripods = await AppServices.Api.GetTripodsAsync();
+            var tripod = tripods.FirstOrDefault(t => t.TripodId == tripodId.Value);
+            TripodName = tripod?.TripodName ?? $"Штатив #{tripodId}";
+
             var rows = await AppServices.Api.GetWorksheetsAsync(tripodId.Value);
-            
-            // Extract all unique analyses
+
+            // Extract all unique analysis names
+            var allAnalysesList = new List<string>();
             var allAnalysesSet = new HashSet<string>();
             foreach (var row in rows)
             {
@@ -49,16 +68,17 @@ public class WorksheetsViewModel : ViewModelBase
                 {
                     var analyses = row.Analyses.Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries);
                     foreach (var a in analyses)
-                        allAnalysesSet.Add(a.Trim());
+                    {
+                        var trimmed = a.Trim();
+                        if (allAnalysesSet.Add(trimmed))
+                            allAnalysesList.Add(trimmed);
+                    }
                 }
             }
+            allAnalysesList.Sort();
 
-            AllAnalyses.Clear();
-            foreach (var a in allAnalysesSet.OrderBy(x => x))
-                AllAnalyses.Add(a);
-
-            // Transform rows
-            ExpandedRows.Clear();
+            // Prepare rows
+            var preparedRows = new List<WorksheetExpandedRow>();
             foreach (var row in rows)
             {
                 var expandedRow = new WorksheetExpandedRow
@@ -67,25 +87,43 @@ public class WorksheetsViewModel : ViewModelBase
                     Kind = row.Kind
                 };
 
-                // Parse analyses
                 if (!string.IsNullOrEmpty(row.Analyses))
                 {
-                    var rowAnalyses = row.Analyses.Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries)
+                    var rowAnalyses = row.Analyses
+                        .Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries)
                         .Select(x => x.Trim())
                         .ToHashSet();
-                    
-                    foreach (var analysis in AllAnalyses)
-                        expandedRow.Analyses[analysis] = rowAnalyses.Contains(analysis);
+
+                    foreach (var a in allAnalysesList)
+                        expandedRow.Analyses[a] = rowAnalyses.Contains(a);
+                }
+                else
+                {
+                    foreach (var a in allAnalysesList)
+                        expandedRow.Analyses[a] = false;
                 }
 
-                ExpandedRows.Add(expandedRow);
+                preparedRows.Add(expandedRow);
             }
+
+            // Populate collections atomically
+            AllAnalyses.Clear();
+            foreach (var a in allAnalysesList)
+                AllAnalyses.Add(a);
+
+            ExpandedRows.Clear();
+            foreach (var r in preparedRows)
+                ExpandedRows.Add(r);
 
             StatusMessage = rows.Count == 0 ? "Нет материалов на штативе" : null;
         }
         catch (Exception ex)
         {
             StatusMessage = ex.Message;
+        }
+        finally
+        {
+            IsLoaded = true;
         }
     }
 }
