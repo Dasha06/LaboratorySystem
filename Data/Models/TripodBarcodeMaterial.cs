@@ -11,6 +11,8 @@ public partial class TripodBarcodeMaterial
 
     public int AnalysisDepId { get; set; }
 
+    public int TripodBarcodeMatNumber { get; set; }
+
     public virtual BarcodeMaterial BarcodeMaterial { get; set; } = null!;
 
     public virtual Tripod Tripod { get; set; } = null!;

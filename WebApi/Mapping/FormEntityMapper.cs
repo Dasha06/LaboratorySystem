@@ -139,7 +139,8 @@ public static class FormEntityMapper
     {
         TripodId = form.TripodId,
         BarcodeMatId = form.BarcodeMatId,
-        AnalysisDepId = form.AnalysisDepId
+        AnalysisDepId = form.AnalysisDepId,
+        TripodBarcodeMatNumber = form.TripodBarcodeMatNumber
     };
 
     public static ReferentialGroup ToReferentialGroup(ReferentialGroupForm form) => new()

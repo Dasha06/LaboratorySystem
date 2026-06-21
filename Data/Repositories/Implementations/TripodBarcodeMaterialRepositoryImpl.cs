@@ -49,6 +49,7 @@ public class TripodBarcodeMaterialRepositoryImpl : ITripodBarcodeMaterialReposit
         var existing = _context.TripodBarcodeMaterials.First(x =>
             x.TripodId == tripodBarcodeMaterial.TripodId && x.BarcodeMatId == tripodBarcodeMaterial.BarcodeMatId);
         existing.AnalysisDepId = tripodBarcodeMaterial.AnalysisDepId;
+        existing.TripodBarcodeMatNumber = tripodBarcodeMaterial.TripodBarcodeMatNumber;
         _context.SaveChanges();
         return true;
     }

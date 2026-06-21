@@ -6,7 +6,7 @@
     <DockPanel>
         <TextBlock DockPanel.Dock="Top" Classes="page-title" Text="Трекер"/>
         <Grid ColumnDefinitions="320,*" DockPanel.Dock="Top" Margin="0,0,0,16">
-            <Border Classes="liis-card" Margin="0,0,12,0">
+            <Border Classes="liis-card" Margin="0,0,12,0" Height="520">
                 <StackPanel Spacing="8">
                     <TextBlock Text="Найти по:" FontWeight="SemiBold"/>
                     <ComboBox ItemsSource="{Binding SearchModes}" SelectedItem="{Binding SelectedSearchMode}"/>
@@ -38,7 +38,7 @@
                     <Button Classes="liis-primary" Content="Найти" Command="{Binding SearchCommand}"/>
                 </StackPanel>
             </Border>
-            <Border Classes="liis-card" Padding="0" Grid.Column="1">
+            <Border Classes="liis-card" Padding="0" Grid.Column="1" Height="520">
                 <DataGrid ItemsSource="{Binding Results}" SelectedItem="{Binding SelectedRow}" AutoGenerateColumns="False" IsReadOnly="True">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Комментарий" Binding="{Binding Comment}" Width="*"/>

@@ -1,4 +1,6 @@
-using System.Reflection;
+using System;
+using System.IO;
+using System.Net.Http;
 using Microsoft.Extensions.Configuration;
 
 namespace Desktop.Services;
@@ -8,14 +10,14 @@ public static class AppServices
     public static AppSession Session { get; } = new();
     public static LaboratoryApiClient Api { get; private set; } = null!;
     private static readonly string HostFilePath =
-        Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly()!.Location)!, "host.txt");
+        Path.Combine(AppContext.BaseDirectory, "host.txt");
 
     public static string BaseUrl { get; private set; } = "http://localhost:5037";
 
     public static void Initialize()
     {
         var config = new ConfigurationBuilder()
-            .SetBasePath(Path.GetDirectoryName(Assembly.GetExecutingAssembly()!.Location)!)
+            .SetBasePath(AppContext.BaseDirectory)
             .AddJsonFile("appsettings.json", optional: true)
             .AddEnvironmentVariables()
             .Build();

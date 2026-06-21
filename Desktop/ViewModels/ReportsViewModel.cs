@@ -25,8 +25,7 @@ public class ReportsViewModel : ViewModelBase
         {
             new() { Name = "1. Заказы по работникам за период", ReportId = 1 },
             new() { Name = "2. Заказанные анализы за период", ReportId = 2 },
-            new() { Name = "3. Анализы за период по ЛПУ", ReportId = 3 },
-            new() { Name = "4. Разрешенные услуги", ReportId = 4 },
+            new() { Name = "3. Разрешенные услуги", ReportId = 4 },
         };
         _selectedReportType = ReportTypes[0];
         _selectedReportType.IsSelected = true;
@@ -172,7 +171,6 @@ public class ReportsViewModel : ViewModelBase
             IsLoading = false;
             this.RaisePropertyChanged(nameof(IsReport1));
             this.RaisePropertyChanged(nameof(IsReport2));
-            this.RaisePropertyChanged(nameof(IsReport3));
             this.RaisePropertyChanged(nameof(IsReport4));
         }
     }

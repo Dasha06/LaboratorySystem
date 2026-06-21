@@ -2,7 +2,11 @@ using System.Text.Json.Serialization;
 using Data.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+{
+    ContentRootPath = AppContext.BaseDirectory,
+    Args = args
+});
 
 builder.Services.AddDataLayer(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("SystemDatabase")));

@@ -166,6 +166,7 @@ public class TripodBarcodeMaterialForm
     public long TripodId { get; set; }
     public decimal BarcodeMatId { get; set; }
     public int AnalysisDepId { get; set; }
+    public int TripodBarcodeMatNumber { get; set; }
 }
 
 public class ReferentialGroupForm

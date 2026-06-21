@@ -13,14 +13,14 @@
                     <TextBox Classes="liis-input" Watermark="Отчество" Text="{Binding LastName}"/>
                     <MaskedTextBox Classes="liis-input" Watermark="Дата рождения" Text="{Binding BirthDate}" Mask="0000-00-00"/>
                 </StackPanel>
-                <UniformGrid Grid.Column="1" Columns="2" Rows="2">
+                <Grid Grid.Column="1" ColumnDefinitions="275,*" RowDefinitions="*,*">
                     <Button Classes="liis-primary" Content="Найти пациента"
                     Command="{Binding SearchCommand}" Margin="4"/>
-                    <Button Classes="liis-primary" Content="Добавить пациента" 
+                    <Button Grid.Column="1" Classes="liis-primary" Content="Добавить пациента" 
                     Command="{Binding AddPatientCommand}" Margin="4"/>
-                    <Button Classes="liis-primary" Content="Создать заказ" 
+                    <Button Grid.Row="1" Classes="liis-primary" Content="Создать заказ" 
                     Command="{Binding CreateOrderCommand}" Margin="4"/>
-                </UniformGrid>
+                </Grid>
             </Grid>
             <TextBlock Text="Найдено" FontSize="20" FontWeight="SemiBold"/>
             <Border Classes="liis-card" Padding="0">

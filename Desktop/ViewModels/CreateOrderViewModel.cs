@@ -156,6 +156,7 @@ public class CreateOrderViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> CancelCommand { get; }
 
     private List<AnalysiseDto> _allAnalyses = [];
+    private Dictionary<long, MaterialDto> _analysisMaterialMap = [];
 
     private async Task InitializeAsync()
     {
@@ -166,6 +167,13 @@ public class CreateOrderViewModel : ViewModelBase
             foreach (var m in await AppServices.Api.GetMaterialsAsync()) Materials.Add(m);
             foreach (var dep in await AppServices.Api.GetAnalysisDepartmentsAsync()) Departments.Add(dep);
             _allAnalyses = await AppServices.Api.GetAnalysesAsync();
+
+            var analysisWorks = await AppServices.Api.GetAnalysisWorksAsync();
+            foreach (var aw in analysisWorks)
+            {
+                if (aw.Material != null && !_analysisMaterialMap.ContainsKey(aw.AnalysisId))
+                    _analysisMaterialMap[aw.AnalysisId] = aw.Material;
+            }
             if (Lpus.Count > 0)
             {
                 if (_editingOrder != null)
@@ -465,17 +473,10 @@ public class CreateOrderViewModel : ViewModelBase
 
     private MaterialDto? ResolveMaterialByAnalysis(AnalysisSelectionItem item)
     {
-        if (Materials.Count == 0) return null;
+        if (_analysisMaterialMap.TryGetValue(item.AnalysisId, out var material))
+            return material;
 
-        var text = $"{item.Code} {item.Name}".ToLowerInvariant();
-        var match = Materials.FirstOrDefault(m => text.Contains("кров") && m.MaterialName.Contains("кров", StringComparison.OrdinalIgnoreCase))
-            ?? Materials.FirstOrDefault(m => text.Contains("моч") && m.MaterialName.Contains("моч", StringComparison.OrdinalIgnoreCase))
-            ?? Materials.FirstOrDefault(m => text.Contains("плазм") && m.MaterialName.Contains("плазм", StringComparison.OrdinalIgnoreCase))
-            ?? Materials.FirstOrDefault(m => text.Contains("сыворот") && m.MaterialName.Contains("сыворот", StringComparison.OrdinalIgnoreCase))
-            ?? Materials.FirstOrDefault(m => text.Contains("маз") && m.MaterialName.Contains("маз", StringComparison.OrdinalIgnoreCase))
-            ?? Materials.FirstOrDefault(m => text.Contains("кал") && m.MaterialName.Contains("кал", StringComparison.OrdinalIgnoreCase));
-
-        return match ?? Materials.First();
+        return Materials.Count > 0 ? Materials[0] : null;
     }
 
     private async Task CreateOrderAsync()

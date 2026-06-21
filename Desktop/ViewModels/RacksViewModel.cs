@@ -257,19 +257,30 @@ public class RacksViewModel : ViewModelBase
             ScannedBarcode = null;
             ScannedPatientInfo = string.Empty;
 
+            // Построить словарь занятых ячеек по TripodBarcodeMatNumber
+            var occupiedByIndex = new Dictionary<int, TripodBarcodeMaterialDto>();
+            foreach (var tbm in items)
+            {
+                var cellIndex = tbm.TripodBarcodeMatNumber >= 0 && tbm.TripodBarcodeMatNumber < maxCell
+                    ? tbm.TripodBarcodeMatNumber
+                    : -1;
+                if (cellIndex >= 0 && !occupiedByIndex.ContainsKey(cellIndex))
+                    occupiedByIndex[cellIndex] = tbm;
+            }
+
             RackCells.Clear();
             for (var i = 0; i < maxCell; i++)
             {
                 var cell = new RackCellState
                 {
                     Index = i,
-                    IsOccupied = i < items.Count,
+                    IsOccupied = occupiedByIndex.ContainsKey(i),
                     SelectCommand = ReactiveCommand.Create<RackCellState>(SelectCell)
                 };
 
                 if (cell.IsOccupied)
                 {
-                    var tbm = items[i];
+                    var tbm = occupiedByIndex[i];
                     var material = tbm.BarcodeMaterial?.Material;
                     var typeName = material?.MaterialName ?? string.Empty;
                     cell.MaterialType = typeName;
@@ -399,17 +410,9 @@ public class RacksViewModel : ViewModelBase
     {
         if (SelectedCell == null)
         {
-            var emptyCell = FindFirstEmptyCell();
-            if (emptyCell == null)
-            {
-                StatusMessage = "Ошибка: все ячейки штатива заняты.";
-                ScannedBarcode = null;
-                return;
-            }
-
-            emptyCell.IsSelected = true;
-            SelectedCell = emptyCell;
-            StatusMessage = $"Автоматически выбрана ячейка {emptyCell.Index + 1}.";
+            StatusMessage = "Ошибка: выберите ячейку штатива перед сканированием штрих-кода.";
+            ScannedBarcode = null;
+            return;
         }
 
         var barcodeText = ScannedBarcode?.Trim();
@@ -482,7 +485,7 @@ public class RacksViewModel : ViewModelBase
             }
 
             await AppServices.Api.CreateTripodBarcodeMaterialAsync(
-                SelectedTripod!.TripodId, barcodeMatId, barcodeMaterial.AnalysisDepId);
+                SelectedTripod!.TripodId, barcodeMatId, barcodeMaterial.AnalysisDepId, SelectedCell.Index);
 
             SelectedCell.IsOccupied = true;
             SelectedCell.BarcodeMatId = barcodeMatId;

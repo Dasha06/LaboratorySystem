@@ -18,11 +18,42 @@
   <component name="ChangeListManager">
     <list default="true" id="f8863308-d313-4b1c-bf9f-2527ba4c7f42" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.LaboratorySistem/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.LaboratorySistem/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Models/Patient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Models/Patient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Models/SystemdatabaseContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Models/SystemdatabaseContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Models/TripodBarcodeMaterial.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Models/TripodBarcodeMaterial.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysisWorkRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/AnalysisWorkRepositoryImpl.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Repositories/Implementations/TripodBarcodeMaterialRepositoryImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Repositories/Implementations/TripodBarcodeMaterialRepositoryImpl.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/bin/Debug/net9.0/Data.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Data/bin/Debug/net9.0/Data.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/bin/Debug/net9.0/Data.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Data/bin/Debug/net9.0/Data.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/bin/Release/net9.0/Data.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Data/bin/Release/net9.0/Data.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/bin/Release/net9.0/Data.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Data/bin/Release/net9.0/Data.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/Models/ApiModels.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Models/ApiModels.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Desktop/Services/AppServices.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Services/AppServices.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/ViewModels/LoginViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/ViewModels/LoginViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/Views/LoginView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Views/LoginView.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/Services/LaboratoryApiClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Services/LaboratoryApiClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/ViewModels/CreateOrderViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/ViewModels/CreateOrderViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/ViewModels/RacksViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/ViewModels/RacksViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/Views/RegistrationView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Views/RegistrationView.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/Views/TrackerView.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/Views/TrackerView.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Desktop/bin/Debug/net9.0/Desktop.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/bin/Debug/net9.0/Desktop.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Desktop/bin/Debug/net9.0/Desktop.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/bin/Debug/net9.0/Desktop.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/bin/Release/net9.0/win-x64/Desktop.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/bin/Release/net9.0/win-x64/Desktop.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/bin/Release/net9.0/win-x64/Desktop.exe" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/bin/Release/net9.0/win-x64/Desktop.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/bin/Release/net9.0/win-x64/Desktop.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/bin/Release/net9.0/win-x64/Desktop.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/publish/Desktop/Desktop.exe" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/publish/Desktop/Desktop.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/publish/Desktop/Desktop.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/publish/Desktop/Desktop.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LaboratorySistem.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/LaboratorySistem.sln.DotSettings.user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApi/Mapping/FormEntityMapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/Mapping/FormEntityMapper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApi/Models/Forms/EntityForms.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/Models/Forms/EntityForms.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApi/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApi/bin/Debug/net9.0/Data.dll" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/bin/Debug/net9.0/Data.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApi/bin/Debug/net9.0/Data.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/bin/Debug/net9.0/Data.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApi/bin/Debug/net9.0/WebApi.dll" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/bin/Debug/net9.0/WebApi.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApi/bin/Debug/net9.0/WebApi.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/bin/Debug/net9.0/WebApi.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApi/bin/Release/net9.0/win-x64/Data.dll" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/bin/Release/net9.0/win-x64/Data.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApi/bin/Release/net9.0/win-x64/Data.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/bin/Release/net9.0/win-x64/Data.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApi/bin/Release/net9.0/win-x64/WebApi.dll" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/bin/Release/net9.0/win-x64/WebApi.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApi/bin/Release/net9.0/win-x64/WebApi.exe" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/bin/Release/net9.0/win-x64/WebApi.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApi/bin/Release/net9.0/win-x64/WebApi.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi/bin/Release/net9.0/win-x64/WebApi.pdb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,14 +80,8 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0ceaca09f3944680b668dee8e1e0370b100a00/78/fd2f2e13/UserControl.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0ceaca09f3944680b668dee8e1e0370b100a00/ff/984000d8/AppBuilder.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d19ebbe8bb7948bb9212133cdda13207e26400/2c/88da76dc/DefaultInterpolatedStringHandler.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d19ebbe8bb7948bb9212133cdda13207e26400/52/4b4cdbf8/ContinuationTaskFromTask.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock:///home/gara/RiderProjects/LaboratorySistem/Desktop/ViewModels/AdminViewModel.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d19ebbe8bb7948bb9212133cdda13207e26400/b0/c68a12e8/Assembly.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Desktop/ViewModels/CreateOrderViewModel.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock:///home/gara/RiderProjects/LaboratorySistem/Desktop/ViewModels/RacksViewModel.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///home/gara/RiderProjects/LaboratorySistem/Desktop/ViewModels/RacksViewModel.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
@@ -101,14 +126,12 @@
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="PASS_PARENT_ENVS" value="1" />
-      <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <option name="ENV_FILE_PATHS" value="" />
       <option name="REDIRECT_INPUT_PATH" value="" />
-      <option name="PTY_MODE" value="Auto" />
+      <option name="MIXED_MODE_DEBUG" value="0" />
       <option name="USE_MONO" value="0" />
       <option name="RUNTIME_ARGUMENTS" value="" />
       <option name="AUTO_ATTACH_CHILDREN" value="0" />
-      <option name="MIXED_MODE_DEBUG" value="0" />
       <option name="PROJECT_PATH" value="$PROJECT_DIR$/Data/Data.csproj" />
       <option name="PROJECT_EXE_PATH_TRACKING" value="1" />
       <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
@@ -124,14 +147,12 @@
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="PASS_PARENT_ENVS" value="1" />
-      <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <option name="ENV_FILE_PATHS" value="" />
       <option name="REDIRECT_INPUT_PATH" value="" />
-      <option name="PTY_MODE" value="Auto" />
+      <option name="MIXED_MODE_DEBUG" value="0" />
       <option name="USE_MONO" value="0" />
       <option name="RUNTIME_ARGUMENTS" value="" />
       <option name="AUTO_ATTACH_CHILDREN" value="0" />
-      <option name="MIXED_MODE_DEBUG" value="0" />
       <option name="PROJECT_PATH" value="$PROJECT_DIR$/Desktop/Desktop.csproj" />
       <option name="PROJECT_EXE_PATH_TRACKING" value="1" />
       <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
@@ -146,13 +167,14 @@
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/WebApi/WebApi.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net9.0" />
       <option name="LAUNCH_PROFILE_NAME" value="http" />
-      <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <option name="USE_MONO" value="0" />
       <option name="RUNTIME_ARGUMENTS" value="" />
       <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
       <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
       <option name="SEND_DEBUG_REQUEST" value="1" />
       <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
+      <option name="AUTO_ATTACH_CHILDREN" value="0" />
+      <option name="MIXED_MODE_DEBUG" value="0" />
       <method v="2">
         <option name="Build" />
       </method>
@@ -161,13 +183,14 @@
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/WebApi/WebApi.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net9.0" />
       <option name="LAUNCH_PROFILE_NAME" value="https" />
-      <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <option name="USE_MONO" value="0" />
       <option name="RUNTIME_ARGUMENTS" value="" />
       <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
       <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
       <option name="SEND_DEBUG_REQUEST" value="1" />
       <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
+      <option name="AUTO_ATTACH_CHILDREN" value="0" />
+      <option name="MIXED_MODE_DEBUG" value="0" />
       <method v="2">
         <option name="Build" />
       </method>
@@ -244,7 +267,14 @@
       <workItem from="1780650450796" duration="1518000" />
       <workItem from="1780687631106" duration="9033000" />
       <workItem from="1780762495928" duration="23610000" />
-      <workItem from="1780823867422" duration="2591000" />
+      <workItem from="1780823867422" duration="5632000" />
+      <workItem from="1780840600545" duration="1040000" />
+      <workItem from="1782058958960" duration="38000" />
+      <workItem from="1782059157295" duration="1071000" />
+      <workItem from="1782071348648" duration="693000" />
+      <workItem from="1782073535070" duration="820000" />
+      <workItem from="1782074955462" duration="360000" />
+      <workItem from="1782077395251" duration="2648000" />
     </task>
     <task id="LOCAL-00001" summary="init worker">
       <option name="closed" value="true" />
@@ -342,7 +372,15 @@
       <option name="project" value="LOCAL" />
       <updated>1780824796812</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="exe update">
+      <option name="closed" value="true" />
+      <created>1780826715923</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1780826715923</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -374,7 +412,8 @@
     <MESSAGE value="liiitle change" />
     <MESSAGE value="poij" />
     <MESSAGE value="added exe" />
-    <option name="LAST_COMMIT_MESSAGE" value="added exe" />
+    <MESSAGE value="exe update" />
+    <option name="LAST_COMMIT_MESSAGE" value="exe update" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -128,6 +128,7 @@ public class TripodBarcodeMaterialDto
     public long TripodId { get; set; }
     public decimal BarcodeMatId { get; set; }
     public int AnalysisDepId { get; set; }
+    public int TripodBarcodeMatNumber { get; set; }
     public BarcodeMaterialDto? BarcodeMaterial { get; set; }
 }
 
@@ -159,6 +160,15 @@ public class LpuContractDto
     public long LpuId { get; set; }
     public bool ConLpuIsActive { get; set; }
     public ContractDto? Contract { get; set; }
+}
+
+public class AnalysisWorkDto
+{
+    public long AnalysisWorkId { get; set; }
+    public string AnalysisWorkName { get; set; } = string.Empty;
+    public int MaterialId { get; set; }
+    public long AnalysisId { get; set; }
+    public MaterialDto? Material { get; set; }
 }
 
 public class AnalysisSelectionItem : ReactiveUI.ReactiveObject

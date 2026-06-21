@@ -138,6 +138,9 @@ public class LaboratoryApiClient
     public async Task<List<AnalysiseDto>> GetAnalysesAsync(CancellationToken ct = default) =>
         await _http.GetFromJsonAsync<List<AnalysiseDto>>("api/Analyses", JsonOptions, ct) ?? [];
 
+    public async Task<List<AnalysisWorkDto>> GetAnalysisWorksAsync(CancellationToken ct = default) =>
+        await _http.GetFromJsonAsync<List<AnalysisWorkDto>>("api/AnalysisWorks", JsonOptions, ct) ?? [];
+
     public async Task<List<LpuContractDto>> GetLpuContractsAsync(long lpuId, CancellationToken ct = default) =>
         await _http.GetFromJsonAsync<List<LpuContractDto>>($"api/Lpus/{lpuId}/contracts", JsonOptions, ct) ?? [];
 
@@ -571,13 +574,14 @@ public class LaboratoryApiClient
         response.EnsureSuccessStatusCode();
     }
 
-    public async Task CreateTripodBarcodeMaterialAsync(long tripodId, decimal barcodeMatId, int analysisDepId, CancellationToken ct = default)
+    public async Task CreateTripodBarcodeMaterialAsync(long tripodId, decimal barcodeMatId, int analysisDepId, int tripodBarcodeMatNumber, CancellationToken ct = default)
     {
         using var content = new MultipartFormDataContent
         {
             { new StringContent(tripodId.ToString()), "TripodId" },
             { new StringContent(barcodeMatId.ToString()), "BarcodeMatId" },
-            { new StringContent(analysisDepId.ToString()), "AnalysisDepId" }
+            { new StringContent(analysisDepId.ToString()), "AnalysisDepId" },
+            { new StringContent(tripodBarcodeMatNumber.ToString()), "TripodBarcodeMatNumber" }
         };
         var response = await _http.PostAsync("api/TripodBarcodeMaterials", content, ct);
         response.EnsureSuccessStatusCode();

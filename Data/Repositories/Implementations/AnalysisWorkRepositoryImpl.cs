@@ -1,5 +1,6 @@
 using Data.Models;
 using Data.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repositories.Implementations;
 
@@ -13,17 +14,24 @@ public class AnalysisWorkRepositoryImpl : IAnalysisWorkRepository
 
     public List<AnalysisWork> GetAllAnalysisWorks()
     {
-        return _context.AnalysisWorks.ToList();
+        return _context.AnalysisWorks
+            .Include(aw => aw.Material)
+            .ToList();
     }
 
     public AnalysisWork GetAnalysisWorkByAnalysisWorkId(long analysisWorkId)
     {
-        return _context.AnalysisWorks.First(x => x.AnalysisWorkId == analysisWorkId);
+        return _context.AnalysisWorks
+            .Include(aw => aw.Material)
+            .First(x => x.AnalysisWorkId == analysisWorkId);
     }
 
     public List<AnalysisWork> GetAnalysisWorkByAnalysis(Analysise analysis)
     {
-        return _context.AnalysisWorks.Where(x => x.AnalysisId == analysis.AnalysisId).ToList();
+        return _context.AnalysisWorks
+            .Include(aw => aw.Material)
+            .Where(x => x.AnalysisId == analysis.AnalysisId)
+            .ToList();
     }
 
     public bool CreateAnalysisWork(AnalysisWork analysisWork)

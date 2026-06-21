@@ -653,6 +653,7 @@ public partial class SystemdatabaseContext : DbContext
                 .HasPrecision(15)
                 .HasColumnName("barcode_mat_id");
             entity.Property(e => e.AnalysisDepId).HasColumnName("analysis_dep_id");
+            entity.Property(e => e.TripodBarcodeMatNumber).HasColumnName("tripod_barcode_mat_number");
 
             entity.HasOne(d => d.Tripod).WithMany(p => p.TripodBarcodeMaterials)
                 .HasForeignKey(d => d.TripodId)
